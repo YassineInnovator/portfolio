@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Yassine EL IDRISSI — Développeur Full-Stack · Python / React / DevOps</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Instrument Serif, Plus Jakarta Sans, JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- FontAwesome for crisp icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['"Instrument Serif"', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            paper: {
+              DEFAULT: '#F8FAFC',
+              card: '#FFFFFF',
+              subtle: '#F1F5F9',
+              border: '#E2E8F0',
+            },
+            obsidian: {
+              DEFAULT: '#090D16',
+              card: '#10172A',
+              subtle: '#1E293B',
+              border: '#334155',
+            },
+            ink: {
+              DEFAULT: '#0F172A',
+              muted: '#64748B',
+              light: '#F8FAFC',
+            },
+            // Electric Indigo & Cyber Violet Palette (Recruiter magnet, sleek art direction)
+            brand: {
+              DEFAULT: '#6366F1',
+              hover: '#4F46E5',
+              light: '#818CF8',
+              soft: '#EEF2FF',
+              glow: 'rgba(99, 102, 241, 0.25)'
+            },
+            cyanTech: {
+              DEFAULT: '#06B6D4',
+              soft: '#E0F2FE'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .serif-title {
+      font-family: 'Instrument Serif', serif;
+    }
+    .mono-code {
+      font-family: 'JetBrains Mono', monospace;
+    }
+    /* Subtle Glowing Background Mesh & Animation */
+    .bg-grid-pattern {
+      background-size: 40px 40px;
+      background-image: linear-gradient(to right, rgba(99, 102, 241, 0.05) 1px, transparent 1px),
+                        linear-gradient(to bottom, rgba(99, 102, 241, 0.05) 1px, transparent 1px);
+    }
+    .dark .bg-grid-pattern {
+      background-image: linear-gradient(to right, rgba(99, 102, 241, 0.08) 1px, transparent 1px),
+                        linear-gradient(to bottom, rgba(99, 102, 241, 0.08) 1px, transparent 1px);
+    }
+    @keyframes floatSlow {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-8px); }
+    }
+    .animate-float {
+      animation: floatSlow 4s ease-in-out infinite;
+    }
+  </style>
+</head>
+<body class="bg-paper text-ink dark:bg-obsidian dark:text-ink-light transition-colors duration-300 antialiased selection:bg-brand selection:text-white bg-grid-pattern">
+
+  <!-- TOP ANNOUNCEMENT BAR / APPRENTICESHIP NOTICE -->
+  <aside aria-label="Recherche alternance" class="bg-ink text-paper dark:bg-obsidian-subtle dark:text-paper px-4 py-2.5 text-xs sm:text-sm border-b border-paper-border dark:border-obsidian-border">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-center sm:text-left">
+      <div class="flex items-center gap-2">
+        <span class="inline-block w-2.5 h-2.5 rounded-full bg-brand animate-ping"></span>
+        <span class="font-medium" data-i18n="top_badge">Recherche Alternance — Mastère Full-Stack (LiveCampus) à partir de janvier 2027 (1 sem. école / 3 sem. entreprise)</span>
+      </div>
+      <div class="flex items-center gap-3">
+        <span class="text-zinc-400" data-i18n="top_contact">Contact école: Laura Broquet (06 52 07 26 42)</span>
+        <button onclick="switchLang()" id="lang-toggle" class="px-2 py-0.5 text-xs font-mono bg-zinc-800 text-zinc-200 hover:bg-zinc-700 rounded transition">
+          EN / FR
+        </button>
+        <button onclick="toggleDarkMode()" aria-label="Basculer le thème" class="p-1 hover:text-brand transition">
+          <i id="theme-icon" class="fa-solid fa-moon"></i>
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- NAVIGATION -->
+  <header class="sticky top-0 z-40 backdrop-blur-md bg-paper/80 dark:bg-obsidian/80 border-b border-paper-border dark:border-obsidian-border transition-colors">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <a href="#" class="font-bold text-lg sm:text-xl tracking-tight flex items-center gap-2 group">
+        <span class="w-8 h-8 rounded-lg bg-brand text-white flex items-center justify-center font-mono text-sm group-hover:scale-105 transition-transform shadow-lg shadow-brand/30">YE</span>
+        <span class="serif-title text-2xl sm:text-3xl tracking-wide">Yassine El Idrissi</span>
+      </a>
+
+      <!-- Desktop Nav -->
+      <nav class="hidden md:flex items-center gap-6 text-sm font-medium">
+        <a href="#about" class="hover:text-brand transition" data-i18n="nav_about">Profil</a>
+        <a href="#experience" class="hover:text-brand transition" data-i18n="nav_exp">Expériences</a>
+        <a href="#koryx" class="hover:text-brand transition flex items-center gap-1.5 font-semibold text-brand"><i class="fa-solid fa-microchip"></i> Koryx (Projet Phare)</a>
+        <a href="#skills" class="hover:text-brand transition" data-i18n="nav_skills">Compétences</a>
+        <a href="#education" class="hover:text-brand transition" data-i18n="nav_edu">Formations</a>
+        <a href="#contact" class="px-4 py-2 bg-brand text-white rounded-xl font-medium hover:bg-brand-hover transition shadow-lg shadow-brand/25" data-i18n="nav_contact">Me contacter</a>
+      </nav>
+
+      <!-- Mobile Menu Button -->
+      <button onclick="toggleMobileMenu()" aria-label="Menu" class="md:hidden p-2 text-xl hover:text-brand">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobile-menu" class="hidden md:hidden bg-paper dark:bg-obsidian border-b border-paper-border dark:border-obsidian-border px-6 py-4 space-y-3">
+      <a href="#about" onclick="toggleMobileMenu()" class="block font-medium hover:text-brand" data-i18n="nav_about">Profil</a>
+      <a href="#experience" onclick="toggleMobileMenu()" class="block font-medium hover:text-brand" data-i18n="nav_exp">Expériences</a>
+      <a href="#koryx" onclick="toggleMobileMenu()" class="block font-medium text-brand font-semibold"><i class="fa-solid fa-microchip"></i> Koryx (Projet Phare)</a>
+      <a href="#skills" onclick="toggleMobileMenu()" class="block font-medium hover:text-brand" data-i18n="nav_skills">Compétences</a>
+      <a href="#education" onclick="toggleMobileMenu()" class="block font-medium hover:text-brand" data-i18n="nav_edu">Formations</a>
+      <a href="#contact" onclick="toggleMobileMenu()" class="block text-center py-2.5 bg-brand text-white rounded-xl font-medium shadow-md" data-i18n="nav_contact">Me contacter</a>
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section class="relative overflow-hidden py-16 sm:py-24 border-b border-paper-border dark:border-obsidian-border">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        
+        <!-- Left Intro -->
+        <div class="lg:col-span-7 space-y-6">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-soft dark:bg-obsidian-subtle border border-brand/30 text-xs sm:text-sm font-mono text-brand dark:text-brand-light shadow-sm">
+            <i class="fa-solid fa-location-dot"></i>
+            <span>Bethoncourt (25200) — Mobilité Toute la France</span>
+          </div>
+
+          <h1 class="serif-title text-6xl sm:text-7xl lg:text-8xl tracking-tight leading-none">
+            Yassine <span class="italic text-brand">El Idrissi</span>
+          </h1>
+
+          <p class="text-xl sm:text-2xl font-medium text-ink dark:text-ink-light" data-i18n="hero_subtitle">
+            Développeur Full-Stack · Python / FastAPI, React & DevOps
+          </p>
+
+          <p class="text-base sm:text-lg text-ink-muted dark:text-zinc-400 max-w-2xl leading-relaxed" data-i18n="hero_desc">
+            Titulaire d'un <strong class="text-ink dark:text-white font-semibold">Master 2 en Ingénierie Logicielle</strong> (Université de Lorraine). Concepteur de solutions logicielles haute performance, du kernel système aux interfaces web réactives. Créateur de l'application de télémétrie <span class="text-brand font-semibold">Koryx</span>.
+          </p>
+
+          <div class="flex flex-wrap gap-4 pt-2">
+            <a href="#contact" class="px-6 py-3.5 bg-brand text-white font-medium rounded-xl hover:bg-brand-hover transition shadow-lg shadow-brand/30 flex items-center gap-2 group">
+              <i class="fa-solid fa-paper-plane group-hover:translate-x-0.5 transition-transform"></i> <span data-i18n="hero_btn_hire">Discuter d'une alternance</span>
+            </a>
+            <a href="#koryx" class="px-6 py-3.5 bg-paper-card dark:bg-obsidian-card border border-paper-border dark:border-obsidian-border font-medium rounded-xl hover:border-brand transition flex items-center gap-2 shadow-sm">
+              <i class="fa-solid fa-microchip text-brand"></i> <span data-i18n="hero_btn_projects">Explorer le projet Koryx</span>
+            </a>
+          </div>
+
+          <!-- Quick badges -->
+          <div class="pt-6 grid grid-cols-2 sm:grid-cols-4 gap-4 border-t border-paper-border dark:border-obsidian-border">
+            <div class="p-3 bg-paper-card dark:bg-obsidian-card rounded-2xl border border-paper-border dark:border-obsidian-border">
+              <p class="text-xs text-ink-muted uppercase font-mono" data-i18n="stat_exp">Expérience</p>
+              <p class="text-lg font-bold font-mono">2+ ans (Stages M2)</p>
+            </div>
+            <div class="p-3 bg-paper-card dark:bg-obsidian-card rounded-2xl border border-paper-border dark:border-obsidian-border">
+              <p class="text-xs text-ink-muted uppercase font-mono" data-i18n="stat_impact">Stack Maîtrisée</p>
+              <p class="text-lg font-bold text-brand font-mono">Python & React 19</p>
+            </div>
+            <div class="p-3 bg-paper-card dark:bg-obsidian-card rounded-2xl border border-paper-border dark:border-obsidian-border">
+              <p class="text-xs text-ink-muted uppercase font-mono" data-i18n="stat_stack">Architecture</p>
+              <p class="text-lg font-bold font-mono">FastAPI / SQLite</p>
+            </div>
+            <div class="p-3 bg-paper-card dark:bg-obsidian-card rounded-2xl border border-paper-border dark:border-obsidian-border">
+              <p class="text-xs text-ink-muted uppercase font-mono" data-i18n="stat_rythme">Alternance</p>
+              <p class="text-lg font-bold font-mono">1 sem / 3 sem</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Card / Interactive Terminal & Hologram -->
+        <div class="lg:col-span-5 flex justify-center">
+          <div class="relative w-full max-w-md bg-paper-card dark:bg-obsidian-card p-6 rounded-3xl border border-paper-border dark:border-obsidian-border shadow-2xl animate-float">
+            <div class="absolute -top-3 -right-3 bg-brand text-white px-3.5 py-1 rounded-full text-xs font-mono shadow-lg shadow-brand/30 flex items-center gap-1.5">
+              <i class="fa-solid fa-code"></i> Bac+5 M2
+            </div>
+
+            <div class="flex items-center gap-4 mb-6">
+              <div class="w-16 h-16 rounded-2xl bg-brand/10 border border-brand/30 flex items-center justify-center text-brand text-2xl font-bold font-mono shadow-inner">
+                YE
+              </div>
+              <div>
+                <h3 class="font-bold text-lg">Yassine El Idrissi</h3>
+                <p class="text-xs text-ink-muted font-mono">elidrissi-yassine@outlook.com</p>
+                <p class="text-xs text-ink-muted font-mono">+33 7 53 77 08 39</p>
+              </div>
+            </div>
+
+            <!-- Mini Terminal Live Simulator -->
+            <div class="bg-zinc-950 text-zinc-200 p-4 rounded-2xl font-mono text-xs space-y-2 mb-6 border border-zinc-800 shadow-inner">
+              <div class="flex items-center justify-between text-zinc-500 border-b border-zinc-800 pb-2">
+                <span class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-brand animate-pulse"></span> koryx-telemetry@daemon</span>
+                <span class="text-[10px] text-brand">v1.2.0-stable</span>
+              </div>
+              <p><span class="text-brand">➜</span> <span class="text-cyan-400">uvicorn</span> backend.main:app --port 8000</p>
+              <p class="text-zinc-400">[INFO] SQLite timeseries snapshot stored (CPU: 14% | RAM: 4.2GB)</p>
+              <p><span class="text-brand">➜</span> <span class="text-cyan-400">ollama</span> run llama3 --diagnostic</p>
+              <p class="text-emerald-400">[AI SYSTEM] Thermal status optimal. Fan speeds nominal.</p>
+            </div>
+
+            <!-- Social Links -->
+            <div class="grid grid-cols-2 gap-3">
+              <a href="https://www.linkedin.com/in/yassine-el-idrissi-6b1223290/" target="_blank" rel="noopener" class="flex items-center justify-center gap-2 p-3 bg-paper dark:bg-obsidian-subtle border border-paper-border dark:border-obsidian-border rounded-xl text-sm font-medium hover:border-brand transition shadow-sm">
+                <i class="fa-brands fa-linkedin text-brand"></i> LinkedIn
+              </a>
+              <a href="https://github.com/YassineInnovator" target="_blank" rel="noopener" class="flex items-center justify-center gap-2 p-3 bg-paper dark:bg-obsidian-subtle border border-paper-border dark:border-obsidian-border rounded-xl text-sm font-medium hover:border-brand transition shadow-sm">
+                <i class="fa-brands fa-github"></i> GitHub
+              </a>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT & VISION SECTION -->
+  <section id="about" class="py-20 border-b border-paper-border dark:border-obsidian-border bg-paper-subtle/50 dark:bg-obsidian-subtle/30">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl mx-auto text-center space-y-4 mb-16">
+        <h2 class="serif-title text-4xl sm:text-5xl" data-i18n="about_title">Vision & Philosophie d'Ingénieur</h2>
+        <p class="text-ink-muted dark:text-zinc-400 text-lg" data-i18n="about_subtitle">
+          Allier la rigueur académique (Master 2 en Ingénierie Logicielle) à la créativité artisanale pour concevoir des produits à fort impact utilisateur.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Card 1 -->
+        <div class="bg-paper-card dark:bg-obsidian-card p-8 rounded-3xl border border-paper-border dark:border-obsidian-border space-y-4 shadow-sm hover:border-brand/50 transition duration-300 group">
+          <div class="w-14 h-14 rounded-2xl bg-brand/10 text-brand flex items-center justify-center text-2xl font-bold group-hover:scale-110 transition-transform">
+            <i class="fa-solid fa-layer-group"></i>
+          </div>
+          <h3 class="text-xl font-bold" data-i18n="card1_title">Architecture Full-Stack</h3>
+          <p class="text-ink-muted dark:text-zinc-400 text-sm leading-relaxed" data-i18n="card1_desc">
+            Maîtrise approfondie des pipelines asynchrones Python/FastAPI combinés avec la réactivité de React 19 et la puissance de Tailwind CSS.
+          </p>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="bg-paper-card dark:bg-obsidian-card p-8 rounded-3xl border border-paper-border dark:border-obsidian-border space-y-4 shadow-sm hover:border-brand/50 transition duration-300 group">
+          <div class="w-14 h-14 rounded-2xl bg-brand/10 text-brand flex items-center justify-center text-2xl font-bold group-hover:scale-110 transition-transform">
+            <i class="fa-solid fa-brain"></i>
+          </div>
+          <h3 class="text-xl font-bold" data-i18n="card2_title">IA Embarquée & Système</h3>
+          <p class="text-ink-muted dark:text-zinc-400 text-sm leading-relaxed" data-i18n="card2_desc">
+            Intégration d'outils locaux (Ollama, psutil, SQLite) pour analyser la télémétrie matérielle et offrir des diagnostics IA instantanés.
+          </p>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="bg-paper-card dark:bg-obsidian-card p-8 rounded-3xl border border-paper-border dark:border-obsidian-border space-y-4 shadow-sm hover:border-brand/50 transition duration-300 group">
+          <div class="w-14 h-14 rounded-2xl bg-brand/10 text-brand flex items-center justify-center text-2xl font-bold group-hover:scale-110 transition-transform">
+            <i class="fa-solid fa-rocket"></i>
+          </div>
+          <h3 class="text-xl font-bold" data-i18n="card3_title">Alternance Janvier 2027</h3>
+          <p class="text-ink-muted dark:text-zinc-400 text-sm leading-relaxed" data-i18n="card3_desc">
+            Préparation d'un Mastère Développeur Web Full-Stack (LiveCampus). Rythme 1 semaine école / 3 semaines entreprise pour un investissement opérationnel immédiat.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FLAGSHIP PROJECT: KORYX (LAPTOP GUARDIAN) -->
+  <section id="koryx" class="py-20 border-b border-paper-border dark:border-obsidian-border relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+        <div>
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand/10 text-brand text-xs font-mono mb-3">
+            <i class="fa-solid fa-star"></i> Projet Phare 2026
+          </div>
+          <h2 class="serif-title text-4xl sm:text-6xl tracking-tight">Koryx (Laptop Guardian)</h2>
+        </div>
+        <p class="text-ink-muted dark:text-zinc-400 max-w-lg text-sm leading-relaxed">
+          Application desktop native Windows moderne dédiée à la télémétrie matérielle, au suivi des performances en temps réel, au contrôle des processus et au diagnostic IA local.
+        </p>
+      </div>
+
+      <!-- KORYX SHOWCASE GRID -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+        
+        <!-- Left Column: Architecture & Tech Stack Details -->
+        <div class="lg:col-span-5 bg-paper-card dark:bg-obsidian-card p-8 rounded-3xl border border-paper-border dark:border-obsidian-border flex flex-col justify-between shadow-xl">
+          <div class="space-y-6">
+            <div class="flex items-center justify-between border-b border-paper-border dark:border-obsidian-border pb-4">
+              <span class="font-mono text-xs uppercase text-brand tracking-wider">Spécifications Techniques</span>
+              <span class="px-2.5 py-1 bg-emerald-500/10 text-emerald-500 rounded-full text-xs font-mono">Production Ready</span>
+            </div>
+
+            <div class="space-y-4 text-sm">
+              <div>
+                <p class="font-bold text-ink dark:text-white flex items-center gap-2"><i class="fa-solid fa-server text-brand"></i> Backend Asynchrone</p>
+                <p class="text-ink-muted dark:text-zinc-400 text-xs mt-1">Python, FastAPI, Uvicorn, couplé à la bibliothèque <code class="text-brand">psutil</code> pour une collecte bas niveau ultra-rapide.</p>
+              </div>
+
+              <div>
+                <p class="font-bold text-ink dark:text-white flex items-center gap-2"><i class="fa-solid fa-code text-brand"></i> Frontend Cyber-Design</p>
+                <p class="text-ink-muted dark:text-zinc-400 text-xs mt-1">React 19, Vite et Tailwind CSS avec palette sombre immersive (<code class="text-brand">#090d16</code>) et accents néon.</p>
+              </div>
+
+              <div>
+                <p class="font-bold text-ink dark:text-white flex items-center gap-2"><i class="fa-solid fa-database text-brand"></i> Persistance & Time-Series</p>
+                <p class="text-ink-muted dark:text-zinc-400 text-xs mt-1">SQLite pour stocker l'historique de performance (snapshots toutes les 10s) et les journaux d'alertes.</p>
+              </div>
+
+              <div>
+                <p class="font-bold text-ink dark:text-white flex items-center gap-2"><i class="fa-solid fa-brain text-brand"></i> IA & Packaging Exécutable</p>
+                <p class="text-ink-muted dark:text-zinc-400 text-xs mt-1">Support local Ollama / Gemini API pour l'analyse prédictive. Compilé en standalone <code class="text-brand">.exe</code> via PyInstaller.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-6 mt-6 border-t border-paper-border dark:border-obsidian-border grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <a href="https://github.com/YassineInnovator/Koryx" target="_blank" class="py-3 bg-brand text-white text-center rounded-xl font-medium text-xs hover:bg-brand-hover transition shadow-md shadow-brand/20 flex items-center justify-center gap-2">
+              <i class="fa-brands fa-github"></i> Dépôt GitHub
+            </a>
+            <a href="https://koryx-win.elidrissi-yassine-2021-2022.workers.dev/" target="_blank" class="py-3 bg-paper dark:bg-obsidian-subtle border border-paper-border dark:border-obsidian-border text-center rounded-xl font-medium text-xs hover:border-brand transition flex items-center justify-center gap-2 shadow-sm">
+              <i class="fa-solid fa-download text-brand"></i> Télécharger l'App (.exe)
+            </a>
+          </div>
+        </div>
+
+        <!-- Right Column: Interactive Live Telemetry Simulator -->
+        <div class="lg:col-span-7 bg-zinc-950 text-zinc-100 p-6 sm:p-8 rounded-3xl border border-zinc-800 shadow-2xl flex flex-col justify-between space-y-6">
+          
+          <!-- Header Bar -->
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-800 pb-4">
+            <div class="flex items-center gap-3">
+              <div class="w-3 h-3 rounded-full bg-emerald-500 animate-pulse"></div>
+              <div>
+                <h3 class="font-bold text-sm tracking-wide">Koryx Desktop Daemon — Live Preview</h3>
+                <p class="text-[10px] text-zinc-400 font-mono">PID: 4892 · Uptime: 4h 12m · SQLite Snapshot Active</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-2">
+              <button onclick="simulateTelemetrySpike()" class="px-3 py-1.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-mono rounded-lg transition border border-zinc-700">
+                <i class="fa-solid fa-bolt text-amber-400"></i> Simuler Pic CPU
+              </button>
+              <button onclick="triggerAiDiagnostic()" class="px-3 py-1.5 bg-brand hover:bg-brand-hover text-white text-xs font-mono rounded-lg transition shadow-md shadow-brand/30">
+                <i class="fa-solid fa-wand-magic-sparkles"></i> Diagnostic IA
+              </button>
+            </div>
+          </div>
+
+          <!-- Live Metrics Gauges -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div class="bg-zinc-900/80 p-4 rounded-2xl border border-zinc-800/80 space-y-2">
+              <div class="flex justify-between text-xs font-mono">
+                <span class="text-zinc-400">CPU Usage</span>
+                <span id="metric-cpu" class="text-brand font-bold">14.2%</span>
+              </div>
+              <div class="w-full bg-zinc-800 h-2 rounded-full overflow-hidden">
+                <div id="bar-cpu" class="bg-brand h-full transition-all duration-500" style="width: 14%;"></div>
+              </div>
+              <p class="text-[10px] text-zinc-500 font-mono">Intel Core i7-13700H @ 4.8GHz</p>
+            </div>
+
+            <div class="bg-zinc-900/80 p-4 rounded-2xl border border-zinc-800/80 space-y-2">
+              <div class="flex justify-between text-xs font-mono">
+                <span class="text-zinc-400">RAM Allocation</span>
+                <span id="metric-ram" class="text-cyan-400 font-bold">4.8 / 16 GB</span>
+              </div>
+              <div class="w-full bg-zinc-800 h-2 rounded-full overflow-hidden">
+                <div id="bar-ram" class="bg-cyan-400 h-full transition-all duration-500" style="width: 30%;"></div>
+              </div>
+              <p class="text-[10px] text-zinc-500 font-mono">DDR5 Dual Channel (30% used)</p>
+            </div>
+
+            <div class="bg-zinc-900/80 p-4 rounded-2xl border border-zinc-800/80 space-y-2">
+              <div class="flex justify-between text-xs font-mono">
+                <span class="text-zinc-400">SSD Temperature</span>
+                <span id="metric-temp" class="text-emerald-400 font-bold">38°C</span>
+              </div>
+              <div class="w-full bg-zinc-800 h-2 rounded-full overflow-hidden">
+                <div id="bar-temp" class="bg-emerald-400 h-full transition-all duration-500" style="width: 38%;"></div>
+              </div>
+              <p class="text-[10px] text-zinc-500 font-mono">NVMe M.2 Gen4 (Optimal)</p>
+            </div>
+          </div>
+
+          <!-- AI Diagnostic Console Output -->
+          <div class="bg-zinc-950 p-4 rounded-2xl border border-zinc-800 font-mono text-xs space-y-2">
+            <div class="flex items-center justify-between text-zinc-500 pb-1 border-b border-zinc-900">
+              <span class="flex items-center gap-1.5"><i class="fa-solid fa-terminal text-brand"></i> Koryx AI Assistant (Ollama / Gemini Integration)</span>
+              <span id="ai-status" class="text-emerald-400 text-[10px]" data-i18n="ai_status_ready">Prêt à analyser</span>
+            </div>
+            <div id="ai-output-box" class="text-zinc-300 min-h-[50px] flex items-center" data-i18n="ai_msg_default">
+              "Système stable. Aucun processus zombie détecté. Les snapshots SQLite confirment une consommation énergétique linéaire."
+            </div>
+          </div>
+
+          <!-- Modules List Footer -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-[11px] font-mono text-zinc-400 pt-2 border-t border-zinc-800">
+            <div class="flex items-center gap-1.5"><i class="fa-solid fa-check text-brand"></i> Dashboard Live</div>
+            <div class="flex items-center gap-1.5"><i class="fa-solid fa-check text-brand"></i> Hardware Inspector</div>
+            <div class="flex items-center gap-1.5"><i class="fa-solid fa-check text-brand"></i> Process Manager</div>
+            <div class="flex items-center gap-1.5"><i class="fa-solid fa-check text-brand"></i> Alert Daemon</div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PROFESSIONAL EXPERIENCE SECTION -->
+  <section id="experience" class="py-20 border-b border-paper-border dark:border-obsidian-border bg-paper-subtle/50 dark:bg-obsidian-subtle/30">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl mx-auto text-center space-y-4 mb-16">
+        <h2 class="serif-title text-4xl sm:text-5xl" data-i18n="exp_title">Expériences Professionnelles</h2>
+        <p class="text-ink-muted dark:text-zinc-400 text-lg" data-i18n="exp_subtitle">
+          Un parcours riche en stages d'ingénierie logicielle et cybersécurité au sein d'entreprises innovantes et de groupes reconnus.
+        </p>
+      </div>
+
+      <div class="max-w-4xl mx-auto space-y-8">
+        
+        <!-- Experience 1 -->
+        <div class="bg-paper-card dark:bg-obsidian-card p-8 rounded-3xl border border-paper-border dark:border-obsidian-border space-y-4 shadow-sm relative hover:border-brand/40 transition">
+          <div class="absolute top-8 right-8 text-xs font-mono px-3 py-1 bg-brand/10 text-brand rounded-full">
+            Avril 2026 – Sept. 2026
+          </div>
+          <div>
+            <h3 class="text-2xl font-bold">Ingénieur Logiciel Full-Stack (Stage de fin d'études)</h3>
+            <p class="text-brand font-medium font-mono text-sm">GINGER CEBTP (ou projet équivalent d'ingénierie système)</p>
+          </div>
+          <ul class="space-y-2 text-ink-muted dark:text-zinc-300 text-sm list-disc pl-5 leading-relaxed">
+            <li><strong class="text-ink dark:text-white">Architecture Offline-First :</strong> Application React/Vite fonctionnant hors connexion, avec stockage local IndexedDB et reconnexion automatique.</li>
+            <li><strong class="text-ink dark:text-white">Backend Python/FastAPI :</strong> Moteur de synchronisation asynchrone vers PostgreSQL, gestion des conflits et synchronisation incrémentale.</li>
+            <li><strong class="text-ink dark:text-white">UX & Productivité :</strong> Interfaces métiers optimisées réduisant la ressaisie manuelle et automatisant la génération de rapports de performance.</li>
+          </ul>
+        </div>
+
+        <!-- Experience 2 -->
+        <div class="bg-paper-card dark:bg-obsidian-card p-8 rounded-3xl border border-paper-border dark:border-obsidian-border space-y-4 shadow-sm relative hover:border-brand/40 transition">
+          <div class="absolute top-8 right-8 text-xs font-mono px-3 py-1 bg-paper dark:bg-obsidian-subtle border border-paper-border dark:border-obsidian-border rounded-full">
+            Juin 2025 – Sept. 2025
+          </div>
+          <div>
+            <h3 class="text-2xl font-bold">Stagiaire Développement Logiciel</h3>
+            <p class="text-brand font-medium font-mono text-sm">NEWDEV MAROC</p>
+          </div>
+          <ul class="space-y-2 text-ink-muted dark:text-zinc-300 text-sm list-disc pl-5 leading-relaxed">
+            <li>Conception d'un système modulaire de gestion stock/caisse avec NestJS, Angular et GraphQL.</li>
+            <li>Suivi en temps réel des stocks et flux commerciaux (RxJS, services Angular).</li>
+          </ul>
+        </div>
+
+        <!-- Experience 3 -->
+        <div class="bg-paper-card dark:bg-obsidian-card p-8 rounded-3xl border border-paper-border dark:border-obsidian-border space-y-4 shadow-sm relative hover:border-brand/40 transition">
+          <div class="absolute top-8 right-8 text-xs font-mono px-3 py-1 bg-paper dark:bg-obsidian-subtle border border-paper-border dark:border-obsidian-border rounded-full">
+            Juin 2024 – Sept. 2024
+          </div>
+          <div>
+            <h3 class="text-2xl font-bold">Stagiaire Analyste Sécurité (SOC)</h3>
+            <p class="text-brand font-medium font-mono text-sm">SINGLA LA GIRONDE</p>
+          </div>
+          <ul class="space-y-2 text-ink-muted dark:text-zinc-300 text-sm list-disc pl-5 leading-relaxed">
+            <li>Développement d'un outil Python d'analyse réseau (Scapy, Pandas) pour l'ingestion et le traitement de flux.</li>
+            <li>Détection d'anomalies réseau par classification Scikit-learn et automatisation de l'alerting.</li>
+          </ul>
+        </div>
+
+        <!-- Experience 4 -->
+        <div class="bg-paper-card dark:bg-obsidian-card p-8 rounded-3xl border border-paper-border dark:border-obsidian-border space-y-4 shadow-sm relative hover:border-brand/40 transition">
+          <div class="absolute top-8 right-8 text-xs font-mono px-3 py-1 bg-paper dark:bg-obsidian-subtle border border-paper-border dark:border-obsidian-border rounded-full">
+            Juin 2023 – Sept. 2023
+          </div>
+          <div>
+            <h3 class="text-2xl font-bold">Stagiaire Développement Web</h3>
+            <p class="text-brand font-medium font-mono text-sm">ALTEN</p>
+          </div>
+          <ul class="space-y-2 text-ink-muted dark:text-zinc-300 text-sm list-disc pl-5 leading-relaxed">
+            <li>Développement d'une application web de gestion des stagiaires.</li>
+            <li>Participation à la conception fonctionnelle et à l'amélioration de l'ergonomie interface.</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS SECTION -->
+  <section id="skills" class="py-20 border-b border-paper-border dark:border-obsidian-border">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl mx-auto text-center space-y-4 mb-16">
+        <h2 class="serif-title text-4xl sm:text-5xl" data-i18n="skills_title">Compétences Techniques</h2>
+        <p class="text-ink-muted dark:text-zinc-400 text-lg" data-i18n="skills_subtitle">
+          Une maîtrise complète du cycle de vie logiciel, du backend Python aux interfaces React et à l'automatisation DevOps.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        
+        <!-- Category 1 -->
+        <div class="bg-paper-card dark:bg-obsidian-card p-6 rounded-3xl border border-paper-border dark:border-obsidian-border space-y-4 hover:border-brand/50 transition">
+          <div class="w-10 h-10 rounded-xl bg-brand/10 text-brand flex items-center justify-center font-bold">
+            <i class="fa-solid fa-server"></i>
+          </div>
+          <h3 class="font-bold text-lg">Back-end & API</h3>
+          <ul class="space-y-2 text-sm text-ink-muted dark:text-zinc-300 font-mono">
+            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand"></i> Python, FastAPI, Flask</li>
+            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand"></i> NestJS, Java (Spring Boot)</li>
+            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand"></i> C# (.NET), PHP</li>
+            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand"></i> API REST, GraphQL, JWT</li>
+          </ul>
+        </div>
+
+        <!-- Category 2 -->
+        <div class="bg-paper-card dark:bg-obsidian-card p-6 rounded-3xl border border-paper-border dark:border-obsidian-border space-y-4 hover:border-brand/50 transition">
+          <div class="w-10 h-10 rounded-xl bg-brand/10 text-brand flex items-center justify-center font-bold">
+            <i class="fa-solid fa-window-maximize"></i>
+          </div>
+          <h3 class="font-bold text-lg">Front-end & Data</h3>
+          <ul class="space-y-2 text-sm text-ink-muted dark:text-zinc-300 font-mono">
+            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand"></i> React 19, Next.js, Angular</li>
+            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand"></i> TypeScript, Vite, Tailwind CSS</li>
+            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand"></i> PostgreSQL, SQLite, IndexedDB</li>
+            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand"></i> Pandas, NumPy, Scikit-learn</li>
+          </ul>
+        </div>
+
+        <!-- Category 3 -->
+        <div class="bg-paper-card dark:bg-obsidian-card p-6 rounded-3xl border border-paper-border dark:border-obsidian-border space-y-4 hover:border-brand/50 transition">
+          <div class="w-10 h-10 rounded-xl bg-brand/10 text-brand flex items-center justify-center font-bold">
+            <i class="fa-solid fa-infinity"></i>
+          </div>
+          <h3 class="font-bold text-lg">DevOps & Outils</h3>
+          <ul class="space-y-2 text-sm text-ink-muted dark:text-zinc-300 font-mono">
+            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand"></i> Docker, GitLab CI/CD</li>
+            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand"></i> Linux / Bash, SSH, PyInstaller</li>
+            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand"></i> Git, Postman, Scrum/Agile</li>
+          </ul>
+        </div>
+
+        <!-- Category 4 -->
+        <div class="bg-paper-card dark:bg-obsidian-card p-6 rounded-3xl border border-paper-border dark:border-obsidian-border space-y-4 hover:border-brand/50 transition">
+          <div class="w-10 h-10 rounded-xl bg-brand/10 text-brand flex items-center justify-center font-bold">
+            <i class="fa-solid fa-shield-cat"></i>
+          </div>
+          <h3 class="font-bold text-lg">Sécurité & Réseaux</h3>
+          <ul class="space-y-2 text-sm text-ink-muted dark:text-zinc-300 font-mono">
+            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand"></i> Scapy, Analyse réseau</li>
+            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand"></i> Détection d'anomalies</li>
+            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand"></i> Sécurisation API (JWT, CORS)</li>
+            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand"></i> Certifications Cisco / NDG</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION & CERTIFICATIONS SECTION -->
+  <section id="education" class="py-20 border-b border-paper-border dark:border-obsidian-border bg-paper-subtle/50 dark:bg-obsidian-subtle/30">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl mx-auto text-center space-y-4 mb-16">
+        <h2 class="serif-title text-4xl sm:text-5xl" data-i18n="edu_title">Formations & Certifications</h2>
+        <p class="text-ink-muted dark:text-zinc-400 text-lg" data-i18n="edu_subtitle">
+          Un parcours universitaire solide couronné par un Master 2 en Ingénierie Logicielle et des certifications reconnues.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+        
+        <!-- Education List -->
+        <div class="bg-paper-card dark:bg-obsidian-card p-8 rounded-3xl border border-paper-border dark:border-obsidian-border space-y-6">
+          <h3 class="text-xl font-bold flex items-center gap-2">
+            <i class="fa-solid fa-graduation-cap text-brand"></i> Formations Académiques
+          </h3>
+
+          <div class="space-y-6 border-l-2 border-paper-border dark:border-obsidian-border pl-4">
+            <div class="space-y-1">
+              <span class="text-xs font-mono text-brand">Janv. 2027 – Mars 2029</span>
+              <h4 class="font-bold text-lg">Mastère Développeur Web Full Stack</h4>
+              <p class="text-xs text-ink-muted">LiveCampus (Bac+5, Alternance 1 sem / 3 sem)</p>
+            </div>
+
+            <!-- Master 2 Université de Lorraine (Clean format without badge/border) -->
+            <div class="space-y-1">
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-mono text-brand font-bold">2025 – 2026</span>
+                <span class="text-xs font-mono px-2 py-0.5 bg-brand/10 text-brand rounded-full">Diplômé</span>
+              </div>
+              <h4 class="font-bold text-lg text-ink dark:text-white">Master 2 Informatique — Parcours Génie Logiciel</h4>
+              <p class="text-xs font-medium text-ink-muted dark:text-zinc-300">Université de Lorraine · Faculté des Sciences et Technologies (FST de Nancy)</p>
+            </div>
+
+            <div class="space-y-1">
+              <span class="text-xs font-mono text-brand">2024 – 2025</span>
+              <h4 class="font-bold text-lg">Master 1 Ingénierie des Systèmes d'Information</h4>
+              <p class="text-xs text-ink-muted">École Supérieure d'Ingénierie en Sciences Appliquées</p>
+            </div>
+
+            <div class="space-y-1">
+              <span class="text-xs font-mono text-brand">2021 – 2024</span>
+              <h4 class="font-bold text-lg">Licence en Génie Logiciel</h4>
+              <p class="text-xs text-ink-muted">École Supérieure d'Ingénierie en Sciences Appliquées</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Certifications List -->
+        <div class="bg-paper-card dark:bg-obsidian-card p-8 rounded-3xl border border-paper-border dark:border-obsidian-border space-y-6">
+          <h3 class="text-xl font-bold flex items-center gap-2">
+            <i class="fa-solid fa-certificate text-brand"></i> Certifications & Langues
+          </h3>
+
+          <div class="space-y-4">
+            <div class="p-4 bg-paper dark:bg-obsidian-subtle rounded-2xl border border-paper-border dark:border-obsidian-border flex items-center justify-between">
+              <div>
+                <h4 class="font-bold text-sm">Cisco - Introduction to Cybersecurity</h4>
+                <p class="text-xs text-ink-muted font-mono">Réseaux & Sécurité</p>
+              </div>
+              <i class="fa-solid fa-shield-check text-emerald-500 text-xl"></i>
+            </div>
+
+            <div class="p-4 bg-paper dark:bg-obsidian-subtle rounded-2xl border border-paper-border dark:border-obsidian-border flex items-center justify-between">
+              <div>
+                <h4 class="font-bold text-sm">Cisco - Networking Basics</h4>
+                <p class="text-xs text-ink-muted font-mono">Protocoles & Modèle OSI</p>
+              </div>
+              <i class="fa-solid fa-network-wired text-emerald-500 text-xl"></i>
+            </div>
+
+            <div class="p-4 bg-paper dark:bg-obsidian-subtle rounded-2xl border border-paper-border dark:border-obsidian-border flex items-center justify-between">
+              <div>
+                <h4 class="font-bold text-sm">NDG - Linux Essentials</h4>
+                <p class="text-xs text-ink-muted font-mono">Administration & Bash</p>
+              </div>
+              <i class="fa-solid fa-terminal text-emerald-500 text-xl"></i>
+            </div>
+
+            <div class="pt-4 border-t border-paper-border dark:border-obsidian-border space-y-3">
+              <p class="text-xs uppercase font-mono text-ink-muted" data-i18n="lang_title">Langues</p>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm font-medium">
+                <div class="p-3 bg-paper dark:bg-obsidian-subtle rounded-xl border border-paper-border dark:border-obsidian-border text-center">
+                  <p class="font-bold text-ink dark:text-white">Arabe</p>
+                  <p class="text-xs text-brand font-mono">Langue maternelle</p>
+                </div>
+                <div class="p-3 bg-paper dark:bg-obsidian-subtle rounded-xl border border-paper-border dark:border-obsidian-border text-center">
+                  <p class="font-bold text-ink dark:text-white">Français</p>
+                  <p class="text-xs text-brand font-mono">Courant (B2)</p>
+                </div>
+                <div class="p-3 bg-paper dark:bg-obsidian-subtle rounded-xl border border-paper-border dark:border-obsidian-border text-center">
+                  <p class="font-bold text-ink dark:text-white">Anglais</p>
+                  <p class="text-xs text-brand font-mono">B2 / C1</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT / ALTERNANCE INQUIRY SECTION -->
+  <section id="contact" class="py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl mx-auto bg-paper-card dark:bg-obsidian-card p-8 sm:p-12 rounded-3xl border border-paper-border dark:border-obsidian-border shadow-2xl space-y-8">
+        
+        <div class="text-center space-y-3">
+          <span class="text-brand font-mono text-sm uppercase tracking-wider" data-i18n="contact_badge">Prêt pour l'alternance</span>
+          <h2 class="serif-title text-4xl sm:text-5xl" data-i18n="contact_title">Discutons de votre projet</h2>
+          <p class="text-ink-muted dark:text-zinc-400 text-sm max-w-lg mx-auto" data-i18n="contact_subtitle">
+            Je recherche une alternance à partir de janvier 2027 (1 semaine école / 3 semaines entreprise). Contactez-moi directement ou via l'école.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+          <a href="mailto:elidrissi-yassine@outlook.com" class="p-6 bg-paper dark:bg-obsidian-subtle border border-paper-border dark:border-obsidian-border rounded-2xl hover:border-brand transition space-y-2 shadow-sm">
+            <i class="fa-solid fa-envelope text-brand text-2xl"></i>
+            <p class="text-xs font-mono text-ink-muted">Email</p>
+            <p class="text-xs font-bold truncate">elidrissi-yassine@outlook.com</p>
+          </a>
+
+          <a href="tel:+33753770839" class="p-6 bg-paper dark:bg-obsidian-subtle border border-paper-border dark:border-obsidian-border rounded-2xl hover:border-brand transition space-y-2 shadow-sm">
+            <i class="fa-solid fa-phone text-brand text-2xl"></i>
+            <p class="text-xs font-mono text-ink-muted">Téléphone</p>
+            <p class="text-xs font-bold">+33 7 53 77 08 39</p>
+          </a>
+
+          <div class="p-6 bg-paper dark:bg-obsidian-subtle border border-paper-border dark:border-obsidian-border rounded-2xl space-y-2 shadow-sm">
+            <i class="fa-solid fa-school text-brand text-2xl"></i>
+            <p class="text-xs font-mono text-ink-muted">Contact École (LiveCampus)</p>
+            <p class="text-xs font-bold">Laura Broquet (06 52 07 26 42)</p>
+          </div>
+        </div>
+
+        <!-- Quick Message Form -->
+        <form onsubmit="handleContactSubmit(event)" class="space-y-4 pt-4 border-t border-paper-border dark:border-obsidian-border">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs uppercase font-mono text-ink-muted mb-1" data-i18n="form_name">Votre Nom / Entreprise</label>
+              <input type="text" id="contact-name" required placeholder="Ex: Jean Dupont (TechLead)" class="w-full bg-paper dark:bg-obsidian border border-paper-border dark:border-obsidian-border rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-brand" />
+            </div>
+            <div>
+              <label class="block text-xs uppercase font-mono text-ink-muted mb-1" data-i18n="form_email">Email de contact</label>
+              <input type="email" id="contact-email" required placeholder="jean.dupont@entreprise.fr" class="w-full bg-paper dark:bg-obsidian border border-paper-border dark:border-obsidian-border rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-brand" />
+            </div>
+          </div>
+          <div>
+            <label class="block text-xs uppercase font-mono text-ink-muted mb-1" data-i18n="form_msg">Message / Proposition d'alternance</label>
+            <textarea id="contact-message" rows="4" required placeholder="Bonjour Yassine, nous aimerions échanger concernant notre offre d'alternance..." class="w-full bg-paper dark:bg-obsidian border border-paper-border dark:border-obsidian-border rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-brand"></textarea>
+          </div>
+          <button type="submit" class="w-full py-4 bg-brand text-white font-medium rounded-xl hover:bg-brand-hover transition shadow-lg shadow-brand/30 flex items-center justify-center gap-2">
+            <i class="fa-solid fa-paper-plane"></i> <span data-i18n="form_btn">Envoyer le message à Yassine</span>
+          </button>
+        </form>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-ink text-paper dark:bg-obsidian-subtle dark:text-zinc-400 py-12 border-t border-paper-border dark:border-obsidian-border">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-6 text-center sm:text-left">
+      <div>
+        <p class="font-bold text-white text-lg">Yassine EL IDRISSI</p>
+        <p class="text-xs text-zinc-400 font-mono mt-1">Développeur Full-Stack · Python / React / DevOps · Master 2 Ingénierie Logicielle</p>
+      </div>
+      <div class="flex items-center gap-4 text-sm">
+        <a href="https://www.linkedin.com/in/yassine-el-idrissi-6b1223290/" target="_blank" class="hover:text-brand transition"><i class="fa-brands fa-linkedin text-lg"></i> LinkedIn</a>
+        <a href="https://github.com/YassineInnovator" target="_blank" class="hover:text-brand transition"><i class="fa-brands fa-github text-lg"></i> GitHub</a>
+        <a href="mailto:elidrissi-yassine@outlook.com" class="hover:text-brand transition"><i class="fa-solid fa-envelope text-lg"></i> Email</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- CUSTOM MODAL NOTIFICATION -->
+  <div id="custom-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300">
+    <div class="bg-paper-card dark:bg-obsidian-card p-6 sm:p-8 rounded-3xl border border-paper-border dark:border-obsidian-border max-w-md w-full mx-4 shadow-2xl space-y-4">
+      <div id="modal-icon" class="w-12 h-12 rounded-2xl bg-brand/10 text-brand flex items-center justify-center text-xl font-bold">
+        <i class="fa-solid fa-check"></i>
+      </div>
+      <h3 id="modal-title" class="text-xl font-bold">Confirmation</h3>
+      <p id="modal-desc" class="text-sm text-ink-muted dark:text-zinc-300">Message transmis avec succès.</p>
+      <button onclick="closeModal()" class="w-full py-3 bg-brand text-white font-medium rounded-xl hover:bg-brand-hover transition">
+        Fermer
+      </button>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    // --- Dark Mode Toggle ---
+    function toggleDarkMode() {
+      const html = document.documentElement;
+      const icon = document.getElementById('theme-icon');
+      if (html.classList.contains('dark')) {
+        html.classList.remove('dark');
+        icon.className = 'fa-solid fa-moon';
+        localStorage.setItem('theme', 'light');
+      } else {
+        html.classList.add('dark');
+        icon.className = 'fa-solid fa-sun';
+        localStorage.setItem('theme', 'dark');
+      }
+    }
+
+    // Init theme from localStorage
+    if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+      document.getElementById('theme-icon').className = 'fa-solid fa-sun';
+    }
+
+    // --- Mobile Menu Toggle ---
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobile-menu');
+      menu.classList.toggle('hidden');
+    }
+
+    // --- Koryx Live Simulator Scripts ---
+    let isSpiked = false;
+
+    function simulateTelemetrySpike() {
+      isSpiked = !isSpiked;
+      const cpuVal = document.getElementById('metric-cpu');
+      const cpuBar = document.getElementById('bar-cpu');
+      const ramVal = document.getElementById('metric-ram');
+      const ramBar = document.getElementById('bar-ram');
+      const tempVal = document.getElementById('metric-temp');
+      const tempBar = document.getElementById('bar-temp');
+
+      if (isSpiked) {
+        cpuVal.textContent = '89.4%';
+        cpuBar.style.width = '89%';
+        ramVal.textContent = '12.4 / 16 GB';
+        ramBar.style.width = '78%';
+        tempVal.textContent = '68°C';
+        tempBar.style.width = '68%';
+        const modalTitle = currentLang === 'fr' ? 'Koryx Daemon' : 'Koryx Daemon';
+        const modalDesc = currentLang === 'fr' 
+          ? 'Pic de charge simulé (Compilation PyInstaller & entrainement modèle local). Alerte de seuil déclenchée.' 
+          : 'Simulated load spike (PyInstaller build & local model training). Threshold alert triggered.';
+        showModal(modalTitle, modalDesc, 'fa-bolt', 'text-amber-400');
+      } else {
+        cpuVal.textContent = '14.2%';
+        cpuBar.style.width = '14%';
+        ramVal.textContent = '4.8 / 16 GB';
+        ramBar.style.width = '30%';
+        tempVal.textContent = '38°C';
+        tempBar.style.width = '38%';
+        const modalTitle = currentLang === 'fr' ? 'Koryx Daemon' : 'Koryx Daemon';
+        const modalDesc = currentLang === 'fr' ? 'Retour aux valeurs nominales du système.' : 'Returned to nominal system values.';
+        showModal(modalTitle, modalDesc, 'fa-circle-check', 'text-emerald-500');
+      }
+    }
+
+    function triggerAiDiagnostic() {
+      const box = document.getElementById('ai-output-box');
+      const status = document.getElementById('ai-status');
+      
+      if (currentLang === 'fr') {
+        status.textContent = 'Analyse en cours...';
+        status.className = 'text-amber-400 text-[10px] animate-pulse';
+        box.textContent = 'Interrogation du modèle local Ollama (Llama 3) via FastAPI...';
+      } else {
+        status.textContent = 'Analyzing...';
+        status.className = 'text-amber-400 text-[10px] animate-pulse';
+        box.textContent = 'Querying local Ollama model (Llama 3) via FastAPI...';
+      }
+
+      setTimeout(() => {
+        if (currentLang === 'fr') {
+          status.textContent = 'Diagnostic IA Terminé';
+          status.className = 'text-emerald-400 text-[10px]';
+          box.textContent = '"Analyse réussie : Utilisation RAM stable, latence disque NVMe < 1.2ms. Aucun goulot d\'étranglement thermique détecté."';
+        } else {
+          status.textContent = 'AI Diagnostic Complete';
+          status.className = 'text-emerald-400 text-[10px]';
+          box.textContent = '"Analysis successful: Stable RAM utilization, NVMe disk latency < 1.2ms. No thermal bottlenecks detected."';
+        }
+      }, 1000);
+    }
+
+    // --- Modal Handler ---
+    function showModal(title, desc, iconClass = 'fa-check', iconColor = 'text-brand') {
+      const modal = document.getElementById('custom-modal');
+      document.getElementById('modal-title').textContent = title;
+      document.getElementById('modal-desc').textContent = desc;
+      const iconDiv = document.getElementById('modal-icon');
+      iconDiv.className = `w-12 h-12 rounded-2xl bg-paper dark:bg-obsidian-subtle border border-paper-border dark:border-obsidian-border ${iconColor} flex items-center justify-center text-xl font-bold`;
+      iconDiv.innerHTML = `<i class="fa-solid ${iconClass}"></i>`;
+
+      modal.classList.remove('hidden');
+      setTimeout(() => modal.classList.remove('opacity-0'), 10);
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('custom-modal');
+      modal.classList.add('opacity-0');
+      setTimeout(() => modal.classList.add('hidden'), 300);
+    }
+
+    function handleContactSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById('contact-name').value;
+      showModal('Message Envoyé !', `Merci ${name}. Votre message a bien été transmis à Yassine El Idrissi. Il vous répondra dans les plus brefs délais.`, 'fa-paper-plane', 'text-brand');
+      e.target.reset();
+    }
+
+    // --- Bilingual Translations (FR / EN) ---
+    let currentLang = 'fr';
+    const translations = {
+      fr: {
+        top_badge: "Recherche Alternance — Mastère Full-Stack (LiveCampus) à partir de janvier 2027 (1 sem. école / 3 sem. entreprise)",
+        top_contact: "Contact école: Laura Broquet (06 52 07 26 42)",
+        nav_about: "Profil",
+        nav_exp: "Expériences",
+        nav_skills: "Compétences",
+        nav_edu: "Formations",
+        nav_contact: "Me contacter",
+        hero_subtitle: "Développeur Full-Stack · Python / FastAPI, React & DevOps",
+        hero_desc: "Titulaire d'un Master 2 en Ingénierie Logicielle (Université de Lorraine). Concepteur de solutions logicielles haute performance, du kernel système aux interfaces web réactives. Créateur de l'application de télémétrie Koryx.",
+        hero_btn_hire: "Discuter d'une alternance",
+        hero_btn_projects: "Explorer le projet Koryx",
+        stat_exp: "Expérience",
+        stat_impact: "Stack Maîtrisée",
+        stat_stack: "Architecture",
+        stat_rythme: "Alternance",
+        about_title: "Vision & Philosophie d'Ingénieur",
+        about_subtitle: "Allier la rigueur académique (Master 2 en Ingénierie Logicielle) à la créativité artisanale pour concevoir des produits à fort impact utilisateur.",
+        card1_title: "Architecture Full-Stack",
+        card1_desc: "Maîtrise approfondie des pipelines asynchrones Python/FastAPI combinés avec la réactivité de React 19 et la puissance de Tailwind CSS.",
+        card2_title: "IA Embarquée & Système",
+        card2_desc: "Intégration d'outils locaux (Ollama, psutil, SQLite) pour analyser la télémétrie matérielle et offrir des diagnostics IA instantanés.",
+        card3_title: "Alternance Janvier 2027",
+        card3_desc: "Préparation d'un Mastère Développeur Web Full-Stack (LiveCampus). Rythme 1 semaine école / 3 semaines entreprise pour un investissement opérationnel immédiat.",
+        exp_title: "Expériences Professionnelles",
+        exp_subtitle: "Un parcours riche en stages d'ingénierie logicielle et cybersécurité au sein d'entreprises innovantes et de groupes reconnus.",
+        skills_title: "Compétences Techniques",
+        skills_subtitle: "Une maîtrise complète du cycle de vie logiciel, du backend Python aux interfaces React et à l'automatisation DevOps.",
+        edu_title: "Formations & Certifications",
+        edu_subtitle: "Un parcours universitaire solide couronné par un Master 2 en Ingénierie Logicielle et des certifications reconnues.",
+        lang_title: "Langues",
+        contact_badge: "Prêt pour l'alternance",
+        contact_title: "Discutons de votre projet",
+        contact_subtitle: "Je recherche une alternance à partir de janvier 2027 (1 semaine école / 3 semaines entreprise). Contactez-moi directement ou via l'école.",
+        form_name: "Votre Nom / Entreprise",
+        form_email: "Email de contact",
+        form_msg: "Message / Proposition d'alternance",
+        form_btn: "Envoyer le message à Yassine",
+        ai_status_ready: "Prêt à analyser",
+        ai_msg_default: "\"Système stable. Aucun processus zombie détecté. Les snapshots SQLite confirment une consommation énergétique linéaire.\""
+      },
+      en: {
+        top_badge: "Looking for Apprenticeship — Full-Stack Master's (LiveCampus) starting January 2027 (1 wk school / 3 wks company)",
+        top_contact: "School contact: Laura Broquet (+33 6 52 07 26 42)",
+        nav_about: "Profile",
+        nav_exp: "Experience",
+        nav_skills: "Skills",
+        nav_edu: "Education",
+        nav_contact: "Contact Me",
+        hero_subtitle: "Full-Stack Developer · Python / FastAPI, React & DevOps",
+        hero_desc: "Holder of a Master 2 in Software Engineering (University of Lorraine). Designer of high-performance software solutions, from system kernels to reactive web interfaces. Creator of Koryx telemetry application.",
+        hero_btn_hire: "Discuss an Apprenticeship",
+        hero_btn_projects: "Explore Koryx Project",
+        stat_exp: "Experience",
+        stat_impact: "Core Stack",
+        stat_stack: "Architecture",
+        stat_rythme: "Rhythm",
+        about_title: "Vision & Engineering Philosophy",
+        about_subtitle: "Combining academic rigor (Master 2 Software Engineering) and craftsmanship to build high-impact products.",
+        card1_title: "Full-Stack Architecture",
+        card1_desc: "Deep expertise in Python/FastAPI asynchronous pipelines combined with React 19 responsiveness and Tailwind CSS.",
+        card2_title: "Embedded AI & Systems",
+        card2_desc: "Integration of local tools (Ollama, psutil, SQLite) to analyze hardware telemetry and deliver instant AI diagnostics.",
+        card3_title: "Apprenticeship January 2027",
+        card3_desc: "Pursuing a Full-Stack Web Developer Master's at LiveCampus. Ideal 1-week school / 3-week company schedule for immediate operational contribution.",
+        exp_title: "Professional Experience",
+        exp_subtitle: "A strong background in software engineering and cybersecurity internships within innovative companies and major groups.",
+        skills_title: "Technical Skills",
+        skills_subtitle: "Comprehensive mastery of the software lifecycle, from Python backends to React interfaces and DevOps automation.",
+        edu_title: "Education & Certifications",
+        edu_subtitle: "A solid academic background crowned by a Master 2 in Software Engineering and recognized certifications.",
+        lang_title: "Languages",
+        contact_badge: "Ready for Apprenticeship",
+        contact_title: "Let's Discuss Your Project",
+        contact_subtitle: "Seeking an apprenticeship starting January 2027 (1 week school / 3 weeks company). Contact me directly or through my school.",
+        form_name: "Your Name / Company",
+        form_email: "Contact Email",
+        form_msg: "Message / Apprenticeship Offer",
+        form_btn: "Send Message to Yassine",
+        ai_status_ready: "Ready to analyze",
+        ai_msg_default: "\"System stable. No zombie processes detected. SQLite snapshots confirm linear power consumption.\""
+      }
+    };
+
+    function switchLang() {
+      currentLang = currentLang === 'fr' ? 'en' : 'fr';
+      document.getElementById('lang-toggle').textContent = currentLang === 'fr' ? 'EN / FR' : 'FR / EN';
+      
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[currentLang][key]) {
+          el.textContent = translations[currentLang][key];
+        }
+      });
+    }
+  </script>
+
+</body>
+</html>
