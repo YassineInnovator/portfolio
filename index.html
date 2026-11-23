@@ -197,34 +197,56 @@
           </div>
         </div>
 
-        <!-- Right Card / Interactive Terminal & Hologram -->
+        <!-- Right Card / Human Profile & Photo -->
         <div class="lg:col-span-5 flex justify-center">
-          <div class="relative w-full max-w-md bg-paper-card dark:bg-obsidian-card p-6 rounded-3xl border border-paper-border dark:border-obsidian-border shadow-2xl animate-float">
+          <div class="relative w-full max-w-md bg-paper-card dark:bg-obsidian-card p-6 sm:p-7 rounded-3xl border border-paper-border dark:border-obsidian-border shadow-2xl animate-float">
             <div class="absolute -top-3 -right-3 bg-brand text-white px-3.5 py-1 rounded-full text-xs font-mono shadow-lg shadow-brand/30 flex items-center gap-1.5">
-              <i class="fa-solid fa-code"></i> Bac+5 M2
+              <i class="fa-solid fa-graduation-cap"></i> Master 2 · Bac+5
             </div>
 
-            <div class="flex items-center gap-4 mb-6">
-              <div class="w-16 h-16 rounded-2xl bg-brand/10 border border-brand/30 flex items-center justify-center text-brand text-2xl font-bold font-mono shadow-inner">
-                YE
+            <!-- Profile Photo & Identity -->
+            <div class="flex items-center gap-4 mb-5">
+              <div class="relative shrink-0">
+                <!-- Placez votre photo nommée "photoPortfolio.jpeg" à la racine de votre dépôt GitHub (au même niveau que index.html) -->
+                <img
+                  src="photoPortfolio.jpeg"
+                  alt="Photo de profil de Yassine El Idrissi"
+                  onerror="this.onerror=null; this.src='https://placehold.co/160x160/6366F1/FFFFFF?text=YE';"
+                  class="w-20 h-20 rounded-2xl object-cover border-2 border-brand/40 shadow-md"
+                />
+                <span title="Disponible pour alternance" class="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-emerald-500 border-2 border-paper-card dark:border-obsidian-card"></span>
               </div>
-              <div>
-                <h3 class="font-bold text-lg">Yassine El Idrissi</h3>
-                <p class="text-xs text-ink-muted font-mono">elidrissi-yassine@outlook.com</p>
+              <div class="min-w-0">
+                <h3 class="font-bold text-lg text-ink dark:text-white truncate">Yassine El Idrissi</h3>
+                <p class="text-xs font-medium text-brand mb-1" data-i18n="profile_role">Ingénieur Logiciel Full-Stack · 25 ans</p>
+                <p class="text-xs text-ink-muted font-mono truncate">elidrissi-yassine@outlook.com</p>
                 <p class="text-xs text-ink-muted font-mono">+33 7 53 77 08 39</p>
               </div>
             </div>
 
-            <!-- Mini Terminal Live Simulator -->
-            <div class="bg-zinc-950 text-zinc-200 p-4 rounded-2xl font-mono text-xs space-y-2 mb-6 border border-zinc-800 shadow-inner">
-              <div class="flex items-center justify-between text-zinc-500 border-b border-zinc-800 pb-2">
-                <span class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-brand animate-pulse"></span> koryx-telemetry@daemon</span>
-                <span class="text-[10px] text-brand">v1.2.0-stable</span>
+            <!-- Human Bio Card -->
+            <div class="bg-paper-subtle/80 dark:bg-obsidian-subtle/70 p-4 rounded-2xl border border-paper-border dark:border-obsidian-border mb-5 space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-[11px] font-mono uppercase tracking-wider text-brand font-semibold" data-i18n="profile_bio_label">À propos de moi</span>
+                <span class="text-[11px] text-emerald-600 dark:text-emerald-400 font-medium flex items-center gap-1.5">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                  <span data-i18n="profile_status">À l'écoute</span>
+                </span>
               </div>
-              <p><span class="text-brand">➜</span> <span class="text-cyan-400">uvicorn</span> backend.main:app --port 8000</p>
-              <p class="text-zinc-400">[INFO] SQLite timeseries snapshot stored (CPU: 14% | RAM: 4.2GB)</p>
-              <p><span class="text-brand">➜</span> <span class="text-cyan-400">ollama</span> run llama3 --diagnostic</p>
-              <p class="text-emerald-400">[AI SYSTEM] Thermal status optimal. Fan speeds nominal.</p>
+              <p class="text-sm text-ink-muted dark:text-zinc-300 leading-relaxed" data-i18n="profile_bio_text">
+                Curieux, pragmatique et orienté résultats, j'aime concevoir des applications fiables qui simplifient vraiment le quotidien des utilisateurs. Du backend Python aux interfaces React, je privilégie un code propre, durable et pensé pour le travail en équipe.
+              </p>
+              <div class="flex flex-wrap gap-2 pt-1">
+                <span class="px-2.5 py-1 rounded-lg bg-paper-card dark:bg-obsidian border border-paper-border dark:border-obsidian-border text-[11px] font-medium text-ink dark:text-zinc-200 flex items-center gap-1.5">
+                  <i class="fa-solid fa-car text-brand text-[10px]"></i> <span data-i18n="profile_tag_license">Permis B</span>
+                </span>
+                <span class="px-2.5 py-1 rounded-lg bg-paper-card dark:bg-obsidian border border-paper-border dark:border-obsidian-border text-[11px] font-medium text-ink dark:text-zinc-200 flex items-center gap-1.5">
+                  <i class="fa-solid fa-map-pin text-brand text-[10px]"></i> <span data-i18n="profile_tag_mobility">Mobilité France</span>
+                </span>
+                <span class="px-2.5 py-1 rounded-lg bg-paper-card dark:bg-obsidian border border-paper-border dark:border-obsidian-border text-[11px] font-medium text-ink dark:text-zinc-200 flex items-center gap-1.5">
+                  <i class="fa-solid fa-people-group text-brand text-[10px]"></i> <span data-i18n="profile_tag_team">Esprit d'équipe</span>
+                </span>
+              </div>
             </div>
 
             <!-- Social Links -->
@@ -310,43 +332,51 @@
       <!-- KORYX SHOWCASE GRID -->
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
         
-        <!-- Left Column: Architecture & Tech Stack Details -->
+        <!-- Left Column: High-Level Overview & Architecture (Human & Clear) -->
         <div class="lg:col-span-5 bg-paper-card dark:bg-obsidian-card p-8 rounded-3xl border border-paper-border dark:border-obsidian-border flex flex-col justify-between shadow-xl">
           <div class="space-y-6">
             <div class="flex items-center justify-between border-b border-paper-border dark:border-obsidian-border pb-4">
-              <span class="font-mono text-xs uppercase text-brand tracking-wider">Spécifications Techniques</span>
-              <span class="px-2.5 py-1 bg-emerald-500/10 text-emerald-500 rounded-full text-xs font-mono">Production Ready</span>
+              <span class="font-mono text-xs uppercase text-brand tracking-wider" data-i18n="koryx_overview_label">Vue d'ensemble & Architecture</span>
+              <span class="px-2.5 py-1 bg-emerald-500/10 text-emerald-500 rounded-full text-xs font-mono">Desktop Windows</span>
             </div>
 
             <div class="space-y-4 text-sm">
               <div>
-                <p class="font-bold text-ink dark:text-white flex items-center gap-2"><i class="fa-solid fa-server text-brand"></i> Backend Asynchrone</p>
-                <p class="text-ink-muted dark:text-zinc-400 text-xs mt-1">Python, FastAPI, Uvicorn, couplé à la bibliothèque <code class="text-brand">psutil</code> pour une collecte bas niveau ultra-rapide.</p>
+                <p class="font-bold text-ink dark:text-white flex items-center gap-2"><i class="fa-solid fa-server text-brand"></i> <span data-i18n="koryx_p1_title">Moteur Backend Temps Réel</span></p>
+                <p class="text-ink-muted dark:text-zinc-400 text-xs mt-1 leading-relaxed" data-i18n="koryx_p1_desc">Architecture asynchrone en Python et FastAPI conçue pour collecter les métriques système en continu avec une empreinte très légère.</p>
               </div>
 
               <div>
-                <p class="font-bold text-ink dark:text-white flex items-center gap-2"><i class="fa-solid fa-code text-brand"></i> Frontend Cyber-Design</p>
-                <p class="text-ink-muted dark:text-zinc-400 text-xs mt-1">React 19, Vite et Tailwind CSS avec palette sombre immersive (<code class="text-brand">#090d16</code>) et accents néon.</p>
+                <p class="font-bold text-ink dark:text-white flex items-center gap-2"><i class="fa-solid fa-desktop text-brand"></i> <span data-i18n="koryx_p2_title">Interface Fluide & Lisible</span></p>
+                <p class="text-ink-muted dark:text-zinc-400 text-xs mt-1 leading-relaxed" data-i18n="koryx_p2_desc">Tableau de bord moderne conçu avec React et Tailwind CSS pour rendre l'état du matériel compréhensible au premier coup d'œil.</p>
               </div>
 
               <div>
-                <p class="font-bold text-ink dark:text-white flex items-center gap-2"><i class="fa-solid fa-database text-brand"></i> Persistance & Time-Series</p>
-                <p class="text-ink-muted dark:text-zinc-400 text-xs mt-1">SQLite pour stocker l'historique de performance (snapshots toutes les 10s) et les journaux d'alertes.</p>
+                <p class="font-bold text-ink dark:text-white flex items-center gap-2"><i class="fa-solid fa-chart-line text-brand"></i> <span data-i18n="koryx_p3_title">Suivi Continu & Alertes</span></p>
+                <p class="text-ink-muted dark:text-zinc-400 text-xs mt-1 leading-relaxed" data-i18n="koryx_p3_desc">Stockage local embarqué (SQLite) permettant de consulter l'historique des performances et d'anticiper les pics de charge sans surcharge.</p>
               </div>
 
               <div>
-                <p class="font-bold text-ink dark:text-white flex items-center gap-2"><i class="fa-solid fa-brain text-brand"></i> IA & Packaging Exécutable</p>
-                <p class="text-ink-muted dark:text-zinc-400 text-xs mt-1">Support local Ollama / Gemini API pour l'analyse prédictive. Compilé en standalone <code class="text-brand">.exe</code> via PyInstaller.</p>
+                <p class="font-bold text-ink dark:text-white flex items-center gap-2"><i class="fa-solid fa-wand-magic-sparkles text-brand"></i> <span data-i18n="koryx_p4_title">Diagnostic IA & Application Autonome</span></p>
+                <p class="text-ink-muted dark:text-zinc-400 text-xs mt-1 leading-relaxed" data-i18n="koryx_p4_desc">Assistant IA intégré pour traduire les données techniques en conseils clairs, livré sous forme d'exécutable Windows prêt à l'emploi.</p>
               </div>
+            </div>
+
+            <!-- High-level tech stack pills -->
+            <div class="flex flex-wrap gap-2 pt-2">
+              <span class="px-2.5 py-1 rounded-lg bg-brand/10 text-brand text-[11px] font-mono">Python / FastAPI</span>
+              <span class="px-2.5 py-1 rounded-lg bg-brand/10 text-brand text-[11px] font-mono">React</span>
+              <span class="px-2.5 py-1 rounded-lg bg-brand/10 text-brand text-[11px] font-mono">SQLite</span>
+              <span class="px-2.5 py-1 rounded-lg bg-brand/10 text-brand text-[11px] font-mono">IA Embarquée</span>
             </div>
           </div>
 
           <div class="pt-6 mt-6 border-t border-paper-border dark:border-obsidian-border grid grid-cols-1 sm:grid-cols-2 gap-3">
             <a href="https://github.com/YassineInnovator/Koryx" target="_blank" class="py-3 bg-brand text-white text-center rounded-xl font-medium text-xs hover:bg-brand-hover transition shadow-md shadow-brand/20 flex items-center justify-center gap-2">
-              <i class="fa-brands fa-github"></i> Dépôt GitHub
+              <i class="fa-brands fa-github"></i> <span data-i18n="koryx_btn_repo">Dépôt GitHub</span>
             </a>
             <a href="https://koryx-win.elidrissi-yassine-2021-2022.workers.dev/" target="_blank" class="py-3 bg-paper dark:bg-obsidian-subtle border border-paper-border dark:border-obsidian-border text-center rounded-xl font-medium text-xs hover:border-brand transition flex items-center justify-center gap-2 shadow-sm">
-              <i class="fa-solid fa-download text-brand"></i> Télécharger l'App (.exe)
+              <i class="fa-solid fa-download text-brand"></i> <span data-i18n="koryx_btn_dl">Télécharger l'App (.exe)</span>
             </a>
           </div>
         </div>
@@ -935,7 +965,25 @@
         form_msg: "Message / Proposition d'alternance",
         form_btn: "Envoyer le message à Yassine",
         ai_status_ready: "Prêt à analyser",
-        ai_msg_default: "\"Système stable. Aucun processus zombie détecté. Les snapshots SQLite confirment une consommation énergétique linéaire.\""
+        ai_msg_default: "\"Système stable. Aucun processus zombie détecté. Les snapshots SQLite confirment une consommation énergétique linéaire.\"",
+        profile_role: "Ingénieur Logiciel Full-Stack · 25 ans",
+        profile_bio_label: "À propos de moi",
+        profile_status: "À l'écoute",
+        profile_bio_text: "Curieux, pragmatique et orienté résultats, j'aime concevoir des applications fiables qui simplifient vraiment le quotidien des utilisateurs. Du backend Python aux interfaces React, je privilégie un code propre, durable et pensé pour le travail en équipe.",
+        profile_tag_license: "Permis B",
+        profile_tag_mobility: "Mobilité France",
+        profile_tag_team: "Esprit d'équipe",
+        koryx_overview_label: "Vue d'ensemble & Architecture",
+        koryx_p1_title: "Moteur Backend Temps Réel",
+        koryx_p1_desc: "Architecture asynchrone en Python et FastAPI conçue pour collecter les métriques système en continu avec une empreinte très légère.",
+        koryx_p2_title: "Interface Fluide & Lisible",
+        koryx_p2_desc: "Tableau de bord moderne conçu avec React et Tailwind CSS pour rendre l'état du matériel compréhensible au premier coup d'œil.",
+        koryx_p3_title: "Suivi Continu & Alertes",
+        koryx_p3_desc: "Stockage local embarqué (SQLite) permettant de consulter l'historique des performances et d'anticiper les pics de charge sans surcharge.",
+        koryx_p4_title: "Diagnostic IA & Application Autonome",
+        koryx_p4_desc: "Assistant IA intégré pour traduire les données techniques en conseils clairs, livré sous forme d'exécutable Windows prêt à l'emploi.",
+        koryx_btn_repo: "Dépôt GitHub",
+        koryx_btn_dl: "Télécharger l'App (.exe)"
       },
       en: {
         top_badge: "Looking for Apprenticeship — Full-Stack Master's (LiveCampus) starting January 2027 (1 wk school / 3 wks company)",
@@ -976,7 +1024,25 @@
         form_msg: "Message / Apprenticeship Offer",
         form_btn: "Send Message to Yassine",
         ai_status_ready: "Ready to analyze",
-        ai_msg_default: "\"System stable. No zombie processes detected. SQLite snapshots confirm linear power consumption.\""
+        ai_msg_default: "\"System stable. No zombie processes detected. SQLite snapshots confirm linear power consumption.\"",
+        profile_role: "Full-Stack Software Engineer · 25 y/o",
+        profile_bio_label: "About me",
+        profile_status: "Open to opportunities",
+        profile_bio_text: "Curious, pragmatic, and impact-driven, I enjoy building reliable applications that genuinely make everyday tasks easier. From Python backends to React interfaces, I value clean, maintainable code and strong team collaboration.",
+        profile_tag_license: "Driver's License",
+        profile_tag_mobility: "France-wide Mobility",
+        profile_tag_team: "Team Player",
+        koryx_overview_label: "Overview & Architecture",
+        koryx_p1_title: "Real-Time Backend Engine",
+        koryx_p1_desc: "Asynchronous Python & FastAPI architecture built to gather live system metrics continuously with a lightweight footprint.",
+        koryx_p2_title: "Clean & Responsive Interface",
+        koryx_p2_desc: "Modern dashboard built with React and Tailwind CSS to make hardware telemetry easy to read at a glance.",
+        koryx_p3_title: "Continuous Tracking & Alerts",
+        koryx_p3_desc: "Embedded local storage (SQLite) to monitor performance trends over time and catch resource spikes proactively.",
+        koryx_p4_title: "AI Diagnostics & Standalone App",
+        koryx_p4_desc: "Built-in AI assistant turning hardware data into clear, actionable advice, packaged as a ready-to-use Windows desktop app.",
+        koryx_btn_repo: "GitHub Repo",
+        koryx_btn_dl: "Download App (.exe)"
       }
     };
 
