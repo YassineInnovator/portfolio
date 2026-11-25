@@ -227,7 +227,7 @@
         </div>
 
         <!-- Right Column: DEZOOMED, WELL-BREATHED EDITORIAL PORTRAIT CARD -->
-        <div class="lg:col-span-4 order-1 lg:order-2 flex justify-center lg:justify-end">
+        <div class="lg:col-span-4 order-1 lg:order-2 flex justify-center lg:justify-end lg:-mt-4">
           <div class="relative w-full max-w-[235px] sm:max-w-[260px] group">
             <!-- Subtle warm organic glow behind card -->
             <div class="absolute -inset-3 rounded-[2.1rem] bg-gradient-to-br from-accent/12 via-canvas-soft/80 to-transparent dark:from-accent/18 dark:via-night-soft dark:to-transparent -z-10 transition-transform duration-500 group-hover:scale-[1.02]"></div>
@@ -235,13 +235,13 @@
             <!-- Studio Portrait Monograph Card -->
             <div class="bg-canvas-card dark:bg-night-card p-2.5 rounded-[1.75rem] border border-canvas-border dark:border-night-border shadow-lg shadow-ink/[0.05] dark:shadow-black/40 transition-all duration-500 group-hover:-translate-y-1 group-hover:shadow-xl">
 
-              <!-- Dezoomed Frame: true 100% scale, comfortable headroom via 10:11 ratio & 50%/76% crop -->
+              <!-- Dezoomed Frame: true 100% scale, nudged gently upward via 50%/92% vertical crop -->
               <div class="relative aspect-[10/11] w-full overflow-hidden rounded-[1.25rem] bg-[#EFF2F6] dark:bg-night-soft ring-1 ring-inset ring-ink/[0.05]">
                 <img
                   src="photoPortfolio.jpg"
                   alt="Portrait de Yassine El Idrissi"
                   onerror="this.onerror=null; this.src='https://placehold.co/500x550/EAE3D9/1A1816?text=Yassine+El+Idrissi';"
-                  class="w-full h-full object-cover object-[50%_76%] scale-100 portrait-photo transition-transform duration-700 group-hover:scale-[1.025]"
+                  class="w-full h-full object-cover object-[50%_92%] scale-100 portrait-photo transition-transform duration-700 group-hover:scale-[1.025]"
                 />
                 <!-- Subtle warm editorial tint + soft edge vignette so studio backdrop harmonizes with cream canvas -->
                 <div class="absolute inset-0 bg-amber-100/[0.08] mix-blend-multiply pointer-events-none"></div>
@@ -252,7 +252,7 @@
               <div class="px-2 pt-3 pb-1 flex items-center justify-between gap-2">
                 <div class="min-w-0">
                   <p class="text-[13px] font-semibold text-ink dark:text-white leading-tight truncate">Yassine El Idrissi</p>
-                  <p class="text-[11px] text-ink-muted dark:text-ink-lightMuted truncate mt-0.5">Full-Stack · Python & React</p>
+                  <p class="text-[11px] text-ink-muted dark:text-ink-lightMuted truncate mt-0.5">Full-Stack · Python/React</p>
                 </div>
                 <span class="inline-flex items-center gap-1.5 text-[11px] font-medium text-sage dark:text-emerald-400 bg-sage-soft dark:bg-emerald-950/50 px-2.5 py-1 rounded-full shrink-0">
                   <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
@@ -898,70 +898,100 @@
   <script>
     // --- Theme Toggle (Warm Light Editorial by default) ---
     function toggleDarkMode() {
-      const html = document.documentElement;
-      const icon = document.getElementById('theme-icon');
-      if (html.classList.contains('dark')) {
-        html.classList.remove('dark');
-        icon.className = 'fa-regular fa-moon text-sm';
-        localStorage.setItem('theme_s1', 'light');
-      } else {
-        html.classList.add('dark');
-        icon.className = 'fa-regular fa-sun text-sm';
-        localStorage.setItem('theme_s1', 'dark');
+      try {
+        const html = document.documentElement;
+        const icon = document.getElementById('theme-icon');
+        if (html.classList.contains('dark')) {
+          html.classList.remove('dark');
+          if (icon) icon.className = 'fa-regular fa-moon text-sm';
+          localStorage.setItem('theme_s1', 'light');
+        } else {
+          html.classList.add('dark');
+          if (icon) icon.className = 'fa-regular fa-sun text-sm';
+          localStorage.setItem('theme_s1', 'dark');
+        }
+      } catch (err) {
+        console.error('Theme toggle error:', err);
       }
     }
 
-    if (localStorage.getItem('theme_s1') === 'dark') {
-      document.documentElement.classList.add('dark');
-      document.getElementById('theme-icon').className = 'fa-regular fa-sun text-sm';
-    }
+    // Restore saved theme preference on load
+    (function initTheme() {
+      try {
+        if (localStorage.getItem('theme_s1') === 'dark') {
+          document.documentElement.classList.add('dark');
+          const icon = document.getElementById('theme-icon');
+          if (icon) icon.className = 'fa-regular fa-sun text-sm';
+        }
+      } catch (err) {
+        console.error('Theme init error:', err);
+      }
+    })();
 
-    // --- Mobile Navigation Toggle ---
+    // --- Mobile Navigation Drawer Toggle ---
     function toggleMobileMenu() {
-      document.getElementById('mobile-menu').classList.toggle('hidden');
+      const menu = document.getElementById('mobile-menu');
+      if (menu) {
+        menu.classList.toggle('hidden');
+      }
     }
 
-    // --- Hero Quick-Copy Email (iframe-safe via execCommand) ---
+    // --- 1-Click Copy Email (Iframe-safe via execCommand) ---
     function copyHeroEmail() {
       const email = 'elidrissi-yassine@outlook.com';
-      const label = document.getElementById('hero-copy-text');
-      const icon = document.getElementById('hero-copy-icon');
-      try {
-        const temp = document.createElement('textarea');
-        temp.value = email;
-        temp.setAttribute('readonly', '');
-        temp.style.position = 'absolute';
-        temp.style.left = '-9999px';
-        document.body.appendChild(temp);
-        temp.select();
-        document.execCommand('copy');
-        document.body.removeChild(temp);
+      const textEl = document.getElementById('hero-copy-text');
+      const iconEl = document.getElementById('hero-copy-icon');
 
-        label.textContent = currentLang === 'fr' ? 'Copié !' : 'Copied!';
-        icon.className = 'fa-solid fa-check text-xs text-emerald-500';
+      try {
+        const tempInput = document.createElement('textarea');
+        tempInput.value = email;
+        tempInput.setAttribute('readonly', '');
+        tempInput.style.position = 'absolute';
+        tempInput.style.left = '-9999px';
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        document.execCommand('copy');
+        document.body.removeChild(tempInput);
+
+        if (textEl) textEl.textContent = currentLang === 'fr' ? 'Copié !' : 'Copied!';
+        if (iconEl) iconEl.className = 'fa-solid fa-check text-xs text-emerald-500';
+
         setTimeout(() => {
-          label.textContent = translations[currentLang].hero_copy_email;
-          icon.className = 'fa-regular fa-copy text-xs';
+          if (textEl) textEl.textContent = translations[currentLang].hero_copy_email;
+          if (iconEl) iconEl.className = 'fa-regular fa-copy text-xs';
         }, 2000);
       } catch (err) {
-        showModal('Email', email);
+        showModal('Email', email, 'fa-envelope');
       }
     }
 
-    // --- Scroll Reveal Observer ---
-    const revealObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          revealObserver.unobserve(entry.target);
+    // --- Smooth Scroll Reveal Observer ---
+    (function initScrollReveal() {
+      try {
+        const revealEls = document.querySelectorAll('.reveal');
+        if ('IntersectionObserver' in window) {
+          const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
+              }
+            });
+          }, { threshold: 0.08 });
+
+          revealEls.forEach((el) => observer.observe(el));
+        } else {
+          // Fallback for older browsers
+          revealEls.forEach((el) => el.classList.add('visible'));
         }
-      });
-    }, { threshold: 0.08 });
+      } catch (err) {
+        document.querySelectorAll('.reveal').forEach((el) => el.classList.add('visible'));
+      }
+    })();
 
-    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
-
-    // --- Koryx Live Interactive Demo ---
+    // --- Koryx Live Interactive Telemetry Simulator ---
     let isSpiked = false;
+
     function simulateTelemetrySpike() {
       isSpiked = !isSpiked;
       const cpuVal = document.getElementById('metric-cpu');
@@ -970,78 +1000,126 @@
       const ramBar = document.getElementById('bar-ram');
       const tempVal = document.getElementById('metric-temp');
       const tempBar = document.getElementById('bar-temp');
-      const aiBox = document.getElementById('ai-output-box');
+      const aiOutput = document.getElementById('ai-output-box');
 
       if (isSpiked) {
-        cpuVal.textContent = '86.4%';
-        cpuBar.style.width = '86%';
-        ramVal.textContent = '12.2 / 16 GB';
-        ramBar.style.width = '76%';
-        tempVal.textContent = '68°C';
-        tempVal.className = 'font-mono font-semibold text-amber-400';
-        tempBar.style.width = '68%';
-        tempBar.className = 'bg-amber-400 h-full rounded-full transition-all duration-500';
-        aiBox.textContent = currentLang === 'fr'
-          ? 'Pic de charge détecté. Koryx surveille la température et identifie les processus les plus sollicités.'
-          : 'Workload spike detected. Koryx monitors thermal limits and highlights the most active processes.';
+        if (cpuVal) cpuVal.textContent = '86.4%';
+        if (cpuBar) {
+          cpuBar.style.width = '86%';
+          cpuBar.className = 'bg-amber-400 h-full rounded-full transition-all duration-500';
+        }
+        if (ramVal) ramVal.textContent = '12.1 / 16 GB';
+        if (ramBar) ramBar.style.width = '76%';
+        if (tempVal) {
+          tempVal.textContent = '69°C';
+          tempVal.className = 'font-mono font-semibold text-amber-400';
+        }
+        if (tempBar) {
+          tempBar.style.width = '69%';
+          tempBar.className = 'bg-amber-400 h-full rounded-full transition-all duration-500';
+        }
+        if (aiOutput) {
+          aiOutput.textContent = currentLang === 'fr'
+            ? 'Pic de charge détecté. Koryx surveille la dissipation thermique et identifie les processus les plus sollicités.'
+            : 'Load spike detected. Koryx is monitoring thermal dissipation and highlighting the heaviest active processes.';
+        }
       } else {
-        cpuVal.textContent = '14.2%';
-        cpuBar.style.width = '14%';
-        ramVal.textContent = '4.8 / 16 GB';
-        ramBar.style.width = '30%';
-        tempVal.textContent = '38°C';
-        tempVal.className = 'font-mono font-semibold text-emerald-400';
-        tempBar.style.width = '38%';
-        tempBar.className = 'bg-emerald-400 h-full rounded-full transition-all duration-500';
-        aiBox.textContent = translations[currentLang].ai_msg_default;
+        if (cpuVal) cpuVal.textContent = '14.2%';
+        if (cpuBar) {
+          cpuBar.style.width = '14%';
+          cpuBar.className = 'bg-accent h-full rounded-full transition-all duration-500';
+        }
+        if (ramVal) ramVal.textContent = '4.8 / 16 GB';
+        if (ramBar) ramBar.style.width = '30%';
+        if (tempVal) {
+          tempVal.textContent = '38°C';
+          tempVal.className = 'font-mono font-semibold text-emerald-400';
+        }
+        if (tempBar) {
+          tempBar.style.width = '38%';
+          tempBar.className = 'bg-emerald-400 h-full rounded-full transition-all duration-500';
+        }
+        if (aiOutput) {
+          aiOutput.textContent = translations[currentLang].ai_msg_default;
+        }
       }
     }
 
     function triggerAiDiagnostic() {
-      const box = document.getElementById('ai-output-box');
       const status = document.getElementById('ai-status');
-      status.textContent = currentLang === 'fr' ? 'Analyse...' : 'Analyzing...';
-      status.className = 'font-mono text-[11px] text-amber-400 animate-pulse';
-      box.textContent = currentLang === 'fr'
-        ? 'Lecture des derniers relevés système et vérification thermique...'
-        : 'Reviewing recent system snapshots and thermal stability...';
+      const output = document.getElementById('ai-output-box');
+
+      if (status) {
+        status.textContent = currentLang === 'fr' ? 'Analyse...' : 'Analyzing...';
+        status.className = 'font-mono text-[11px] text-amber-400 animate-pulse';
+      }
+      if (output) {
+        output.textContent = currentLang === 'fr'
+          ? 'Analyse des derniers relevés système et de l\'équilibre thermique en cours...'
+          : 'Analyzing recent system snapshots and thermal balance...';
+      }
 
       setTimeout(() => {
-        status.textContent = currentLang === 'fr' ? 'Terminé' : 'Complete';
-        status.className = 'font-mono text-[11px] text-emerald-400';
-        box.textContent = currentLang === 'fr'
-          ? 'Tout est au vert : mémoire bien répartie, disque réactif et refroidissement parfaitement silencieux.'
-          : 'All green: balanced memory usage, responsive storage, and quiet thermal behavior.';
+        if (status) {
+          status.textContent = currentLang === 'fr' ? 'Terminé' : 'Done';
+          status.className = 'font-mono text-[11px] text-emerald-400';
+        }
+        if (output) {
+          output.textContent = currentLang === 'fr'
+            ? 'Diagnostic favorable : mémoire bien répartie, disque réactif et fonctionnement silencieux sans surchauffe.'
+            : 'Healthy diagnostic: well-balanced memory usage, responsive storage, and quiet thermal performance.';
+        }
       }, 850);
     }
 
-    // --- Modal Helper ---
-    function showModal(title, desc) {
+    // --- Custom Modal Notification (Replaces native alert()) ---
+    function showModal(title, desc, iconClass = 'fa-check') {
       const modal = document.getElementById('custom-modal');
-      document.getElementById('modal-title').textContent = title;
-      document.getElementById('modal-desc').textContent = desc;
-      modal.classList.remove('hidden');
-      setTimeout(() => modal.classList.remove('opacity-0'), 10);
+      const modalTitle = document.getElementById('modal-title');
+      const modalDesc = document.getElementById('modal-desc');
+      const modalIcon = document.getElementById('modal-icon');
+
+      if (modalTitle) modalTitle.textContent = title;
+      if (modalDesc) modalDesc.textContent = desc;
+      if (modalIcon) modalIcon.innerHTML = `<i class="fa-solid ${iconClass}"></i>`;
+
+      if (modal) {
+        modal.classList.remove('hidden');
+        setTimeout(() => modal.classList.remove('opacity-0'), 10);
+      }
     }
 
     function closeModal() {
       const modal = document.getElementById('custom-modal');
-      modal.classList.add('opacity-0');
-      setTimeout(() => modal.classList.add('hidden'), 300);
+      if (modal) {
+        modal.classList.add('opacity-0');
+        setTimeout(() => modal.classList.add('hidden'), 300);
+      }
     }
 
+    // Allow closing modal via backdrop click or Escape key
+    document.getElementById('custom-modal')?.addEventListener('click', function (e) {
+      if (e.target === this) closeModal();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeModal();
+    });
+
+    // --- Contact Form Submission Handler ---
     function handleContactSubmit(e) {
       e.preventDefault();
-      const name = document.getElementById('contact-name').value;
+      const nameInput = document.getElementById('contact-name');
+      const name = nameInput ? nameInput.value.trim() : '';
       const title = currentLang === 'fr' ? 'Message envoyé' : 'Message sent';
       const desc = currentLang === 'fr'
-        ? `Merci ${name} ! Votre message a bien été enregistré. Vous pouvez également me joindre directement à elidrissi-yassine@outlook.com.`
+        ? `Merci ${name} ! Votre message a bien été enregistré. Vous pouvez aussi me contacter directement à elidrissi-yassine@outlook.com.`
         : `Thank you ${name}! Your message has been noted. You can also reach me directly at elidrissi-yassine@outlook.com.`;
-      showModal(title, desc);
+
+      showModal(title, desc, 'fa-paper-plane');
       e.target.reset();
     }
 
-    // --- Bilingual FR / EN Translations ---
+    // --- Bilingual Translations (FR / EN) ---
     let currentLang = 'fr';
     const translations = {
       fr: {
@@ -1126,46 +1204,46 @@
         nav_skills: "Skills",
         nav_edu: "Education",
         nav_contact: "Contact Me",
-        hero_pill: "Open for Apprenticeship · January 2027 (1 wk / 3 wks)",
+        hero_pill: "Open for an Apprenticeship · January 2027 (1 wk / 3 wks)",
         hero_hello: "Hi, I'm Yassine El Idrissi",
-        hero_headline: 'I build <span class="italic text-accent">reliable</span> software and interfaces crafted for real people.',
-        hero_desc: 'Holder of a <strong class="text-ink dark:text-white font-semibold">Master 2 in Software Engineering</strong> (University of Lorraine), I develop end-to-end applications in <strong class="text-ink dark:text-white font-semibold">Python, FastAPI, and React</strong>. I am joining the LiveCampus Full-Stack Master\'s in January 2027 to bring technical rigor and team spirit to a company.',
+        hero_headline: 'I build <span class="italic text-accent">reliable</span> software and interfaces crafted for people.',
+        hero_desc: 'Graduated with a <strong class="text-ink dark:text-white font-semibold">Master 2 in Software Engineering</strong> (University of Lorraine), I develop end-to-end applications with <strong class="text-ink dark:text-white font-semibold">Python, FastAPI and React</strong>. I am joining the LiveCampus Full-Stack Master\'s in January 2027 to bring technical rigor and strong teamwork to a company.',
         hero_cta_primary: "Discuss an apprenticeship",
         hero_cta_secondary: "Explore Koryx",
         hero_copy_email: "Copy email",
-        meta_loc: "Bethoncourt (France) · Nationwide mobility",
-        meta_license: "Driver's license",
-        card_status: "Available",
-        about_eyebrow: "About me",
-        about_title: "A curious, pragmatic engineer focused on software craft.",
+        meta_loc: "Bethoncourt (25) · Nationwide mobility (France)",
+        meta_license: "Driver's License",
+        card_status: "Open to work",
+        about_eyebrow: "About",
+        about_title: "A curious, pragmatic engineer committed to craftsmanship.",
         bento_story_tag: "My approach",
-        bento_story_p1: "What drives me in software engineering is turning real-world problems into simple, dependable tools that people genuinely enjoy using every day.",
-        bento_story_p2: "Through my Master's degree and four company internships — spanning full-stack web development to cybersecurity (SOC) — I learned to write maintainable code, collaborate smoothly in Agile teams, and keep end users at the center of every technical choice.",
+        bento_story_p1: "What drives me in software engineering is turning real-world problems into simple, dependable tools that feel great to use every day.",
+        bento_story_p2: "Through my Master 2 and four company internships — from web development to cybersecurity (SOC) — I learned to write clean code, collaborate smoothly in Agile teams, and always keep end users at the center of technical decisions.",
         tag_team: "Team spirit",
         tag_clean: "Maintainable code",
         tag_curious: "Product mindset",
-        tag_agile: "Agile & DevOps",
+        tag_agile: "Agile & DevOps culture",
         bento_alt_eyebrow: "Next chapter",
         bento_alt_title: "Apprenticeship from Jan. 2027",
-        bento_alt_desc: 'Full-Stack Web Developer Master\'s with <strong class="text-white">LiveCampus</strong> on a company-first rhythm: <strong class="text-white">1 week school / 3 weeks company</strong>.',
-        bento_alt_school: "School contact: Laura Broquet",
+        bento_alt_desc: 'Full-Stack Web Developer Master\'s with <strong class="text-white">LiveCampus</strong> on a company-focused schedule: <strong class="text-white">1 week school / 3 weeks company</strong>.',
+        bento_alt_school: "School advisor: Laura Broquet",
         pillar1_title: "Modern Full-Stack",
-        pillar1_desc: "From asynchronous Python/FastAPI backends to responsive React and TypeScript interfaces built with clarity.",
+        pillar1_desc: "From asynchronous Python/FastAPI backends to responsive React and TypeScript interfaces, built with clarity in mind.",
         pillar2_title: "Reliability & Security",
-        pillar2_desc: "Trained in network analysis (SOC) and DevOps habits (Docker, CI/CD) to ship calm, resilient production apps.",
+        pillar2_desc: "Trained in network analysis (SOC) and DevOps best practices (Docker, CI/CD) to ship dependable production software.",
         pillar3_title: "Applied AI",
-        pillar3_desc: "Pragmatic integration of local models and AI APIs to automate diagnostics and elevate the user experience.",
-        koryx_eyebrow: "Featured Project · 2026",
-        koryx_intro: "A Windows desktop application designed to make computer health immediately understandable: real-time monitoring, process control, and AI-assisted diagnostics.",
+        pillar3_desc: "Pragmatic integration of local models and AI APIs to automate diagnostics and elevate user experience.",
+        koryx_eyebrow: "Flagship Project · 2026",
+        koryx_intro: "A Windows desktop application designed to make computer hardware health immediately understandable: live monitoring, process management, and AI-assisted diagnostics.",
         koryx_repo: "View on GitHub",
         koryx_dl: "Download App (.exe)",
-        koryx_arch_title: "High-level overview",
-        k_item1_t: "Real-Time Telemetry",
-        k_item1_d: "Asynchronous Python & FastAPI backend built for lightweight, continuous system tracking.",
-        k_item2_t: "Clear & Responsive UI",
-        k_item2_d: "Modern React and Tailwind CSS dashboard designed to read hardware health at a glance.",
-        k_item3_t: "History & Embedded AI",
-        k_item3_d: "Local SQLite persistence to analyze performance trends with an integrated AI advisor, shipped as a standalone app.",
+        koryx_arch_title: "Overview",
+        k_item1_t: "Real-Time Collection",
+        k_item1_d: "Asynchronous Python & FastAPI backend built for lightweight, continuous system resource tracking.",
+        k_item2_t: "Clean & Responsive UI",
+        k_item2_d: "Modern dashboard built with React and Tailwind CSS to read hardware status at a glance.",
+        k_item3_t: "History & AI Diagnostics",
+        k_item3_d: "Local SQLite persistence to track performance trends alongside an integrated AI assistant, packaged as a standalone app.",
         koryx_btn_spike: "Simulate load",
         koryx_btn_ai: "AI Diagnostic",
         koryx_cpu_sub: "Nominal load",
@@ -1177,27 +1255,29 @@
         exp_title: "Work history",
         skills_eyebrow: "Capabilities",
         skills_title: "Technical skills",
-        edu_eyebrow: "Background",
-        edu_title: "Education & Certifications",
+        edu_eyebrow: "Education",
+        edu_title: "Degrees & Certifications",
         edu_academic: "Academic Background",
         edu_certs: "Certifications",
         lang_title: "Languages",
         contact_badge: "Ready for apprenticeship",
         contact_title: "Let's talk",
-        contact_subtitle: "Seeking a Full-Stack apprenticeship starting January 2027 (1 wk school / 3 wks company). Reach out directly or through my school.",
+        contact_subtitle: "I am looking for a Full-Stack apprenticeship starting January 2027 (1 week school / 3 weeks company). Reach out directly or contact my school.",
         contact_phone: "Phone",
         contact_school: "School Contact (LiveCampus)",
         form_name: "Your Name / Company",
         form_email: "Contact Email",
-        form_msg: "Message / Apprenticeship Offer",
+        form_msg: "Message / Apprenticeship Inquiry",
         form_btn: "Send message"
       }
     };
 
     function switchLang() {
       currentLang = currentLang === 'fr' ? 'en' : 'fr';
-      document.getElementById('lang-toggle').textContent = currentLang === 'fr' ? 'EN' : 'FR';
-      document.querySelectorAll('[data-i18n]').forEach(el => {
+      const toggleBtn = document.getElementById('lang-toggle');
+      if (toggleBtn) toggleBtn.textContent = currentLang === 'fr' ? 'EN' : 'FR';
+
+      document.querySelectorAll('[data-i18n]').forEach((el) => {
         const key = el.getAttribute('data-i18n');
         if (translations[currentLang][key]) {
           el.innerHTML = translations[currentLang][key];
