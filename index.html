@@ -14,7 +14,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <!-- FontAwesome -->
+  <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
   <script>
@@ -35,7 +35,7 @@
               soft: '#F3EFE9',
               border: '#E7E1D8',
             },
-            // Warm Espresso Dark Palette (Cozy & refined, never cold neon)
+            // Warm Espresso Dark Palette (Cozy & refined)
             night: {
               DEFAULT: '#121110',
               card: '#1B1917',
@@ -73,16 +73,23 @@
       font-family: 'Fraunces', Georgia, serif;
       font-variation-settings: "SOFT" 50, "WONK" 0;
     }
-    /* Natural portrait tone without washing out light backgrounds */
-    .portrait-enhance {
-      filter: contrast(1.03) saturate(1.04);
+    /* Balanced natural portrait tone & warm studio blending */
+    .portrait-photo {
+      filter: contrast(1.02) saturate(1.03);
       image-rendering: -webkit-optimize-contrast;
     }
-    /* Smooth reveal transitions */
+    /* Subtle radial studio softness around the portrait frame edges */
+    .portrait-vignette {
+      background: radial-gradient(circle at 50% 48%, rgba(250, 248, 245, 0) 58%, rgba(231, 225, 216, 0.32) 100%);
+    }
+    .dark .portrait-vignette {
+      background: radial-gradient(circle at 50% 48%, rgba(18, 17, 16, 0) 55%, rgba(18, 17, 16, 0.25) 100%);
+    }
+    /* Smooth scroll reveal transitions */
     .reveal {
       opacity: 0;
-      transform: translateY(18px);
-      transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1), transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+      transform: translateY(16px);
+      transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
     }
     .reveal.visible {
       opacity: 1;
@@ -92,10 +99,10 @@
 </head>
 <body class="bg-canvas text-ink dark:bg-night dark:text-ink-light transition-colors duration-300 antialiased selection:bg-accent selection:text-white">
 
-  <!-- TOP FLOATING NAVIGATION -->
+  <!-- TOP STICKY NAVIGATION -->
   <header class="sticky top-0 z-40 backdrop-blur-xl bg-canvas/85 dark:bg-night/85 border-b border-canvas-border/80 dark:border-night-border transition-colors">
-    <div class="max-w-6xl mx-auto px-5 sm:px-8 h-16 sm:h-20 flex items-center justify-between">
-      <!-- Brand / Name -->
+    <div class="max-w-6xl mx-auto px-5 sm:px-8 h-16 flex items-center justify-between">
+      <!-- Brand / Identity -->
       <a href="#" class="flex items-center gap-3 group">
         <span class="w-9 h-9 rounded-full bg-ink dark:bg-ink-light text-canvas dark:text-night flex items-center justify-center font-editorial font-semibold text-base group-hover:bg-accent dark:group-hover:bg-accent dark:group-hover:text-white transition-colors">
           Y.
@@ -106,7 +113,7 @@
         </div>
       </a>
 
-      <!-- Desktop Links -->
+      <!-- Desktop Navigation Links -->
       <nav class="hidden md:flex items-center gap-7 text-sm font-medium text-ink-muted dark:text-ink-lightMuted">
         <a href="#about" class="hover:text-ink dark:hover:text-white transition" data-i18n="nav_about">À propos</a>
         <a href="#koryx" class="hover:text-ink dark:hover:text-white transition flex items-center gap-1.5">
@@ -119,8 +126,8 @@
       </nav>
 
       <!-- Right Controls -->
-      <div class="flex items-center gap-2 sm:gap-3">
-        <button onclick="switchLang()" id="lang-toggle" aria-label="Changer de langue" class="px-2.5 py-1.5 text-xs font-mono font-medium rounded-full bg-canvas-soft dark:bg-night-soft border border-canvas-border dark:border-night-border hover:border-accent transition">
+      <div class="flex items-center gap-2 sm:gap-2.5">
+        <button onclick="switchLang()" id="lang-toggle" aria-label="Changer de langue" class="px-3 py-1.5 text-xs font-mono font-medium rounded-full bg-canvas-soft dark:bg-night-soft border border-canvas-border dark:border-night-border hover:border-accent transition">
           EN
         </button>
         <button onclick="toggleDarkMode()" aria-label="Basculer le thème" class="w-9 h-9 rounded-full bg-canvas-soft dark:bg-night-soft border border-canvas-border dark:border-night-border flex items-center justify-center text-ink-muted dark:text-ink-lightMuted hover:text-accent dark:hover:text-accent transition">
@@ -135,7 +142,7 @@
       </div>
     </div>
 
-    <!-- Mobile Drawer -->
+    <!-- Mobile Navigation Drawer -->
     <div id="mobile-menu" class="hidden md:hidden bg-canvas dark:bg-night border-b border-canvas-border dark:border-night-border px-6 py-5 space-y-3.5 text-sm font-medium">
       <a href="#about" onclick="toggleMobileMenu()" class="block hover:text-accent" data-i18n="nav_about">À propos</a>
       <a href="#koryx" onclick="toggleMobileMenu()" class="block text-accent font-semibold" data-i18n="nav_koryx">Projet Koryx</a>
@@ -146,58 +153,64 @@
     </div>
   </header>
 
-  <!-- HERO SECTION: HUMAN EDITORIAL + BALANCED PORTRAIT -->
-  <section class="pt-12 pb-20 sm:pt-20 sm:pb-28">
+  <!-- HERO SECTION: ABOVE-THE-FOLD EDITORIAL BALANCE + DEZOOMED STUDIO PORTRAIT -->
+  <section class="pt-9 pb-14 sm:pt-14 sm:pb-20 lg:pt-16 lg:pb-24">
     <div class="max-w-6xl mx-auto px-5 sm:px-8">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-9 lg:gap-10 items-center">
 
-        <!-- Left Editorial Copy -->
-        <div class="lg:col-span-8 space-y-7 order-2 lg:order-1">
-          <!-- Availability pill -->
-          <div class="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-canvas-card dark:bg-night-card border border-canvas-border dark:border-night-border shadow-sm text-xs sm:text-sm">
-            <span class="relative flex h-2.5 w-2.5">
+        <!-- Left Editorial Copy (Proportioned so full hero + trust row fit above the fold) -->
+        <div class="lg:col-span-8 space-y-5 sm:space-y-6 order-2 lg:order-1">
+          <!-- Availability Pill -->
+          <div class="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-canvas-card dark:bg-night-card border border-canvas-border dark:border-night-border shadow-sm text-xs sm:text-[13px]">
+            <span class="relative flex h-2 w-2">
               <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
             </span>
             <span class="font-medium text-ink dark:text-ink-light" data-i18n="hero_pill">Disponible pour une alternance · Janvier 2027 (1 sem / 3 sem)</span>
           </div>
 
           <!-- Warm Human Headline -->
-          <div class="space-y-4">
-            <p class="text-sm sm:text-base font-medium text-accent tracking-wide" data-i18n="hero_hello">
+          <div class="space-y-2.5">
+            <p class="text-sm font-medium text-accent tracking-wide" data-i18n="hero_hello">
               Bonjour, je suis Yassine El Idrissi
             </p>
-            <h1 class="font-editorial text-4xl sm:text-6xl lg:text-[3.85rem] leading-[1.08] tracking-tight text-ink dark:text-white" data-i18n="hero_headline">
+            <h1 class="font-editorial text-4xl sm:text-5xl lg:text-[3.45rem] leading-[1.08] tracking-tight text-ink dark:text-white" data-i18n="hero_headline">
               Je conçois des logiciels <span class="italic text-accent">fiables</span> et des interfaces pensées pour les humains.
             </h1>
           </div>
 
-          <!-- Natural, grounded intro paragraph -->
-          <p class="text-base sm:text-lg text-ink-muted dark:text-ink-lightMuted leading-relaxed max-w-2xl" data-i18n="hero_desc">
+          <!-- Natural, Grounded Intro -->
+          <p class="text-[15px] sm:text-base lg:text-[17px] text-ink-muted dark:text-ink-lightMuted leading-relaxed max-w-2xl" data-i18n="hero_desc">
             Diplômé d'un <strong class="text-ink dark:text-white font-semibold">Master 2 en Génie Logiciel</strong> (Université de Lorraine), je développe des applications complètes en <strong class="text-ink dark:text-white font-semibold">Python, FastAPI et React</strong>. Je rejoins le Mastère Full-Stack LiveCampus dès janvier 2027 pour apporter ma rigueur technique et mon esprit d'équipe en entreprise.
           </p>
 
-          <!-- Primary & Secondary CTAs -->
-          <div class="flex flex-wrap items-center gap-3.5 pt-1">
-            <a href="#contact" class="px-6 py-3.5 rounded-full bg-accent text-white text-sm sm:text-base font-medium hover:bg-accent-hover transition shadow-lg shadow-accent/20 inline-flex items-center gap-2.5">
+          <!-- Primary & Secondary CTAs + Quick Copy Email -->
+          <div class="flex flex-wrap items-center gap-3 pt-1">
+            <a href="#contact" class="px-5 py-3 rounded-full bg-accent text-white text-sm font-medium hover:bg-accent-hover transition shadow-md shadow-accent/20 inline-flex items-center gap-2">
               <span data-i18n="hero_cta_primary">Parler d'une alternance</span>
               <i class="fa-solid fa-arrow-right text-xs"></i>
             </a>
-            <a href="#koryx" class="px-6 py-3.5 rounded-full bg-canvas-card dark:bg-night-card border border-canvas-border dark:border-night-border text-sm sm:text-base font-medium hover:border-ink dark:hover:border-white transition inline-flex items-center gap-2.5">
+            <a href="#koryx" class="px-5 py-3 rounded-full bg-canvas-card dark:bg-night-card border border-canvas-border dark:border-night-border text-sm font-medium hover:border-ink dark:hover:border-white transition inline-flex items-center gap-2">
               <span data-i18n="hero_cta_secondary">Découvrir Koryx</span>
             </a>
-            <div class="flex items-center gap-2 pl-1">
-              <a href="https://www.linkedin.com/in/yassine-el-idrissi-6b1223290/" target="_blank" rel="noopener" aria-label="LinkedIn" class="w-11 h-11 rounded-full bg-canvas-card dark:bg-night-card border border-canvas-border dark:border-night-border flex items-center justify-center text-ink-muted dark:text-ink-lightMuted hover:text-accent hover:border-accent transition">
-                <i class="fa-brands fa-linkedin-in text-base"></i>
+
+            <!-- Compact Utility Icon Group -->
+            <div class="flex items-center gap-2 pl-0.5">
+              <a href="https://www.linkedin.com/in/yassine-el-idrissi-6b1223290/" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn" class="w-10 h-10 rounded-full bg-canvas-card dark:bg-night-card border border-canvas-border dark:border-night-border flex items-center justify-center text-ink-muted dark:text-ink-lightMuted hover:text-accent hover:border-accent transition">
+                <i class="fa-brands fa-linkedin-in text-sm"></i>
               </a>
-              <a href="https://github.com/YassineInnovator" target="_blank" rel="noopener" aria-label="GitHub" class="w-11 h-11 rounded-full bg-canvas-card dark:bg-night-card border border-canvas-border dark:border-night-border flex items-center justify-center text-ink-muted dark:text-ink-lightMuted hover:text-accent hover:border-accent transition">
-                <i class="fa-brands fa-github text-base"></i>
+              <a href="https://github.com/YassineInnovator" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub" class="w-10 h-10 rounded-full bg-canvas-card dark:bg-night-card border border-canvas-border dark:border-night-border flex items-center justify-center text-ink-muted dark:text-ink-lightMuted hover:text-accent hover:border-accent transition">
+                <i class="fa-brands fa-github text-sm"></i>
               </a>
+              <button onclick="copyHeroEmail()" id="hero-copy-btn" aria-label="Copier mon adresse email" title="Copier elidrissi-yassine@outlook.com" class="h-10 px-3.5 rounded-full bg-canvas-card dark:bg-night-card border border-canvas-border dark:border-night-border inline-flex items-center gap-2 text-xs font-medium text-ink-muted dark:text-ink-lightMuted hover:text-accent hover:border-accent transition">
+                <i id="hero-copy-icon" class="fa-regular fa-copy text-xs"></i>
+                <span id="hero-copy-text" data-i18n="hero_copy_email">Copier email</span>
+              </button>
             </div>
           </div>
 
-          <!-- Subtle Human Meta Row -->
-          <div class="pt-5 flex flex-wrap items-center gap-x-6 gap-y-2 text-xs sm:text-sm text-ink-muted dark:text-ink-lightMuted border-t border-canvas-border dark:border-night-border">
+          <!-- Credibility & Mobility Meta Bar (Visible Above the Fold) -->
+          <div class="pt-4 flex flex-wrap items-center gap-x-6 gap-y-2 text-xs sm:text-[13px] text-ink-muted dark:text-ink-lightMuted border-t border-canvas-border dark:border-night-border">
             <span class="inline-flex items-center gap-2">
               <i class="fa-solid fa-location-dot text-accent"></i>
               <span data-i18n="meta_loc">Bethoncourt (25) · Mobilité toute la France</span>
@@ -213,33 +226,44 @@
           </div>
         </div>
 
-        <!-- Right Column: COMPACT, BALANCED & CRISP PORTRAIT -->
-        <div class="lg:col-span-4 order-1 lg:order-2 flex justify-center lg:justify-end lg:-mt-8">
-          <div class="relative w-full max-w-[230px] sm:max-w-[270px]">
-            <!-- Soft warm backdrop shape -->
-            <div class="absolute -inset-2.5 rounded-[2rem] bg-gradient-to-br from-accent/15 via-canvas-soft to-transparent dark:from-accent/20 dark:via-night-soft dark:to-transparent -z-10"></div>
+        <!-- Right Column: DEZOOMED, WELL-BREATHED EDITORIAL PORTRAIT CARD -->
+        <div class="lg:col-span-4 order-1 lg:order-2 flex justify-center lg:justify-end">
+          <div class="relative w-full max-w-[235px] sm:max-w-[260px] group">
+            <!-- Subtle warm organic glow behind card -->
+            <div class="absolute -inset-3 rounded-[2.1rem] bg-gradient-to-br from-accent/12 via-canvas-soft/80 to-transparent dark:from-accent/18 dark:via-night-soft dark:to-transparent -z-10 transition-transform duration-500 group-hover:scale-[1.02]"></div>
 
-            <!-- Framed Portrait Card -->
-            <div class="bg-canvas-card dark:bg-night-card p-2.5 sm:p-3 rounded-[1.75rem] border border-canvas-border dark:border-night-border shadow-lg shadow-ink/5 dark:shadow-black/40">
-              <div class="relative aspect-square w-full overflow-hidden rounded-[1.25rem] bg-canvas-soft dark:bg-night-soft">
+            <!-- Studio Portrait Monograph Card -->
+            <div class="bg-canvas-card dark:bg-night-card p-2.5 rounded-[1.75rem] border border-canvas-border dark:border-night-border shadow-lg shadow-ink/[0.05] dark:shadow-black/40 transition-all duration-500 group-hover:-translate-y-1 group-hover:shadow-xl">
+
+              <!-- Dezoomed Frame: true 100% scale, comfortable headroom via 10:11 ratio & 50%/76% crop -->
+              <div class="relative aspect-[10/11] w-full overflow-hidden rounded-[1.25rem] bg-[#EFF2F6] dark:bg-night-soft ring-1 ring-inset ring-ink/[0.05]">
                 <img
                   src="photoPortfolio.jpg"
                   alt="Portrait de Yassine El Idrissi"
-                  onerror="this.onerror=null; this.src='https://placehold.co/500x500/EAE3D9/1A1816?text=Yassine+El+Idrissi';"
-                  class="w-full h-full object-cover object-bottom origin-bottom scale-[1.08] portrait-enhance transition-transform duration-700 hover:scale-[1.12]"
+                  onerror="this.onerror=null; this.src='https://placehold.co/500x550/EAE3D9/1A1816?text=Yassine+El+Idrissi';"
+                  class="w-full h-full object-cover object-[50%_76%] scale-100 portrait-photo transition-transform duration-700 group-hover:scale-[1.025]"
                 />
+                <!-- Subtle warm editorial tint + soft edge vignette so studio backdrop harmonizes with cream canvas -->
+                <div class="absolute inset-0 bg-amber-100/[0.08] mix-blend-multiply pointer-events-none"></div>
+                <div class="absolute inset-0 portrait-vignette pointer-events-none"></div>
               </div>
 
-              <!-- Clean caption below portrait so the image stays completely clear -->
-              <div class="pt-3 px-1.5 pb-1 flex items-center justify-between gap-2">
+              <!-- Clean Editorial Caption Bar -->
+              <div class="px-2 pt-3 pb-1 flex items-center justify-between gap-2">
                 <div class="min-w-0">
-                  <p class="text-xs font-bold text-ink dark:text-white truncate">Yassine El Idrissi</p>
-                  <p class="text-[11px] text-ink-muted dark:text-ink-lightMuted truncate" data-i18n="portrait_role">Full-Stack · Python & React</p>
+                  <p class="text-[13px] font-semibold text-ink dark:text-white leading-tight truncate">Yassine El Idrissi</p>
+                  <p class="text-[11px] text-ink-muted dark:text-ink-lightMuted truncate mt-0.5">Full-Stack · Python & React</p>
                 </div>
-                <span class="shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-sage-soft dark:bg-emerald-950/70 text-sage dark:text-emerald-400 text-[10px] font-semibold">
+                <span class="inline-flex items-center gap-1.5 text-[11px] font-medium text-sage dark:text-emerald-400 bg-sage-soft dark:bg-emerald-950/50 px-2.5 py-1 rounded-full shrink-0">
                   <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                  <span data-i18n="portrait_status">À l'écoute</span>
+                  <span data-i18n="card_status">À l'écoute</span>
                 </span>
+              </div>
+
+              <!-- Micro Human Footer Strip inside Card -->
+              <div class="mt-2 pt-2 px-2 border-t border-canvas-border/70 dark:border-night-border flex items-center justify-between text-[10.5px] font-mono text-ink-muted dark:text-ink-lightMuted">
+                <span>M2 Génie Logiciel</span>
+                <span class="text-accent font-medium">Janv. 2027</span>
               </div>
             </div>
           </div>
@@ -249,102 +273,133 @@
     </div>
   </section>
 
-  <!-- ABOUT / BENTO GRID SECTION (HUMAN STORY) -->
-  <section id="about" class="py-20 sm:py-24 border-t border-canvas-border dark:border-night-border bg-canvas-soft/60 dark:bg-night-soft/30">
+  <!-- ABOUT ME: BENTO GRID SECTION -->
+  <section id="about" class="py-16 sm:py-24 border-t border-canvas-border dark:border-night-border bg-canvas-soft/60 dark:bg-night-soft/40">
     <div class="max-w-6xl mx-auto px-5 sm:px-8">
 
       <div class="max-w-2xl mb-12 reveal">
-        <p class="text-xs font-mono uppercase tracking-widest text-accent mb-3" data-i18n="about_eyebrow">À propos</p>
-        <h2 class="font-editorial text-3xl sm:text-5xl tracking-tight text-ink dark:text-white" data-i18n="about_title">
-          Derrière le code, une approche pragmatique et humaine.
+        <p class="text-xs font-mono uppercase tracking-widest text-accent mb-2.5" data-i18n="about_eyebrow">À propos</p>
+        <h2 class="font-editorial text-3xl sm:text-5xl text-ink dark:text-white leading-tight" data-i18n="about_title">
+          Un ingénieur curieux, pragmatique et attaché à la qualité.
         </h2>
       </div>
 
       <!-- Bento Grid -->
       <div class="grid grid-cols-1 md:grid-cols-12 gap-5 sm:gap-6">
 
-        <!-- Main Bio Tile -->
+        <!-- Bento 1: Human Story (7 cols) -->
         <div class="md:col-span-7 bg-canvas-card dark:bg-night-card p-7 sm:p-9 rounded-3xl border border-canvas-border dark:border-night-border flex flex-col justify-between gap-6 reveal">
           <div class="space-y-4">
-            <span class="inline-flex items-center gap-2 text-xs font-mono text-accent">
-              <i class="fa-regular fa-comment-dots"></i>
-              <span data-i18n="bio_tag">Mon état d'esprit</span>
+            <span class="inline-flex items-center gap-2 text-xs font-mono text-accent bg-accent-soft dark:bg-accent-darkSoft px-3 py-1 rounded-full" data-i18n="bento_story_tag">
+              Ma démarche
             </span>
-            <p class="text-base sm:text-lg text-ink dark:text-ink-light leading-relaxed" data-i18n="bio_p1">
-              Curieux, pragmatique et orienté résultats, j'aime concevoir des applications fiables qui simplifient vraiment le quotidien des utilisateurs.
+            <p class="text-base sm:text-lg text-ink dark:text-ink-light leading-relaxed" data-i18n="bento_story_p1">
+              Ce qui me motive dans le développement logiciel, c'est de transformer un problème concret en un outil simple, stable et agréable à utiliser au quotidien.
             </p>
-            <p class="text-sm sm:text-base text-ink-muted dark:text-ink-lightMuted leading-relaxed" data-i18n="bio_p2">
-              Au fil de mon Master 2 et de mes quatre stages en entreprise, j'ai appris à faire le pont entre des backends robustes en Python et des interfaces web fluides en React. Ce qui m'anime le plus : comprendre un besoin concret, écrire un code clair et durable, et progresser collectivement au sein d'une équipe produit.
+            <p class="text-sm sm:text-base text-ink-muted dark:text-ink-lightMuted leading-relaxed" data-i18n="bento_story_p2">
+              Au fil de mon Master 2 et de mes quatre stages en entreprise — du développement web à la cybersécurité (SOC) — j'ai appris à écrire du code clair, à collaborer efficacement en Agile et à garder toujours l'utilisateur final au centre des décisions techniques.
             </p>
           </div>
-
           <div class="flex flex-wrap gap-2 pt-2">
-            <span class="px-3.5 py-1.5 rounded-full bg-canvas-soft dark:bg-night-soft text-xs font-medium text-ink dark:text-ink-light" data-i18n="val_1">Code clair & maintenable</span>
-            <span class="px-3.5 py-1.5 rounded-full bg-canvas-soft dark:bg-night-soft text-xs font-medium text-ink dark:text-ink-light" data-i18n="val_2">Sens du produit</span>
-            <span class="px-3.5 py-1.5 rounded-full bg-canvas-soft dark:bg-night-soft text-xs font-medium text-ink dark:text-ink-light" data-i18n="val_3">Esprit d'équipe</span>
-            <span class="px-3.5 py-1.5 rounded-full bg-canvas-soft dark:bg-night-soft text-xs font-medium text-ink dark:text-ink-light" data-i18n="val_4">Autonomie & curiosité</span>
+            <span class="px-3 py-1.5 rounded-full bg-canvas-soft dark:bg-night-soft text-xs font-medium text-ink-muted dark:text-ink-lightMuted" data-i18n="tag_team">Esprit d'équipe</span>
+            <span class="px-3 py-1.5 rounded-full bg-canvas-soft dark:bg-night-soft text-xs font-medium text-ink-muted dark:text-ink-lightMuted" data-i18n="tag_clean">Code maintenable</span>
+            <span class="px-3 py-1.5 rounded-full bg-canvas-soft dark:bg-night-soft text-xs font-medium text-ink-muted dark:text-ink-lightMuted" data-i18n="tag_curious">Curiosité produit</span>
+            <span class="px-3 py-1.5 rounded-full bg-canvas-soft dark:bg-night-soft text-xs font-medium text-ink-muted dark:text-ink-lightMuted" data-i18n="tag_agile">Culture Agile & DevOps</span>
           </div>
         </div>
 
-        <!-- Right Stacked Bento Tiles -->
-        <div class="md:col-span-5 grid grid-cols-1 gap-5 sm:gap-6">
-
-          <!-- Alternance Tile -->
-          <div class="bg-ink text-canvas dark:bg-night-card dark:text-ink-light p-7 rounded-3xl border border-ink dark:border-night-border flex flex-col justify-between gap-4 reveal">
+        <!-- Bento 2: Alternance Highlight (5 cols) -->
+        <div class="md:col-span-5 bg-ink dark:bg-night-card text-canvas dark:text-ink-light p-7 sm:p-9 rounded-3xl border border-ink dark:border-night-border flex flex-col justify-between gap-6 reveal">
+          <div class="space-y-4">
             <div class="flex items-center justify-between">
-              <span class="text-xs font-mono uppercase tracking-wider text-accent" data-i18n="alt_label">Objectif 2027</span>
-              <span class="px-2.5 py-1 rounded-full bg-white/10 text-[11px] font-mono">LiveCampus</span>
+              <span class="text-xs font-mono uppercase tracking-wider text-accent" data-i18n="bento_alt_eyebrow">Prochaine étape</span>
+              <i class="fa-solid fa-calendar-check text-accent text-lg"></i>
             </div>
-            <div>
-              <h3 class="font-editorial text-2xl text-white mb-2" data-i18n="alt_title">Alternance Full-Stack dès janvier 2027</h3>
-              <p class="text-sm text-zinc-300 dark:text-ink-lightMuted leading-relaxed" data-i18n="alt_desc">
-                Mastère Développeur Web Full-Stack avec un rythme idéal pour s'impliquer pleinement sur vos projets : <strong class="text-white">1 semaine école / 3 semaines entreprise</strong>.
-              </p>
-            </div>
+            <h3 class="font-editorial text-2xl sm:text-3xl leading-snug text-white" data-i18n="bento_alt_title">
+              Alternance dès janvier 2027
+            </h3>
+            <p class="text-sm text-stone-300 dark:text-ink-lightMuted leading-relaxed" data-i18n="bento_alt_desc">
+              Mastère Développeur Web Full-Stack avec <strong class="text-white">LiveCampus</strong> sur un rythme très opérationnel : <strong class="text-white">1 semaine école / 3 semaines entreprise</strong>.
+            </p>
           </div>
-
-          <!-- Key Numbers Mini Grid -->
-          <div class="grid grid-cols-2 gap-5 reveal">
-            <div class="bg-canvas-card dark:bg-night-card p-6 rounded-3xl border border-canvas-border dark:border-night-border">
-              <p class="font-editorial text-3xl sm:text-4xl text-accent">Bac+5</p>
-              <p class="text-xs text-ink-muted dark:text-ink-lightMuted mt-1.5 leading-snug" data-i18n="bento_m2">Master 2 Génie Logiciel (Univ. de Lorraine)</p>
-            </div>
-            <div class="bg-canvas-card dark:bg-night-card p-6 rounded-3xl border border-canvas-border dark:border-night-border">
-              <p class="font-editorial text-3xl sm:text-4xl text-ink dark:text-white">4 stages</p>
-              <p class="text-xs text-ink-muted dark:text-ink-lightMuted mt-1.5 leading-snug" data-i18n="bento_exp">Full-Stack, Sécurité SOC & Développement Web</p>
-            </div>
+          <div class="pt-4 border-t border-white/10 flex items-center justify-between text-xs text-stone-300">
+            <span data-i18n="bento_alt_school">Référente : Laura Broquet</span>
+            <a href="tel:+33652072642" class="font-mono text-white hover:text-accent transition whitespace-nowrap">06 52 07 26 42</a>
           </div>
-
         </div>
-      </div>
 
+        <!-- Bento 3, 4, 5: 3 Balanced Pillars -->
+        <div class="md:col-span-4 bg-canvas-card dark:bg-night-card p-6 sm:p-7 rounded-3xl border border-canvas-border dark:border-night-border space-y-3 reveal">
+          <div class="w-10 h-10 rounded-2xl bg-accent-soft dark:bg-accent-darkSoft text-accent flex items-center justify-center">
+            <i class="fa-solid fa-layer-group"></i>
+          </div>
+          <h3 class="font-semibold text-base sm:text-lg" data-i18n="pillar1_title">Full-Stack Moderne</h3>
+          <p class="text-sm text-ink-muted dark:text-ink-lightMuted leading-relaxed" data-i18n="pillar1_desc">
+            Du backend asynchrone Python/FastAPI aux interfaces réactives React et TypeScript, avec un souci constant de clarté.
+          </p>
+        </div>
+
+        <div class="md:col-span-4 bg-canvas-card dark:bg-night-card p-6 sm:p-7 rounded-3xl border border-canvas-border dark:border-night-border space-y-3 reveal">
+          <div class="w-10 h-10 rounded-2xl bg-accent-soft dark:bg-accent-darkSoft text-accent flex items-center justify-center">
+            <i class="fa-solid fa-shield-halved"></i>
+          </div>
+          <h3 class="font-semibold text-base sm:text-lg" data-i18n="pillar2_title">Fiabilité & Sécurité</h3>
+          <p class="text-sm text-ink-muted dark:text-ink-lightMuted leading-relaxed" data-i18n="pillar2_desc">
+            Formé à l'analyse réseau (SOC) et aux bonnes pratiques DevOps (Docker, CI/CD) pour livrer des applications sereines en production.
+          </p>
+        </div>
+
+        <div class="md:col-span-4 bg-canvas-card dark:bg-night-card p-6 sm:p-7 rounded-3xl border border-canvas-border dark:border-night-border space-y-3 reveal">
+          <div class="w-10 h-10 rounded-2xl bg-accent-soft dark:bg-accent-darkSoft text-accent flex items-center justify-center">
+            <i class="fa-solid fa-sparkles"></i>
+          </div>
+          <h3 class="font-semibold text-base sm:text-lg" data-i18n="pillar3_title">IA Appliquée</h3>
+          <p class="text-sm text-ink-muted dark:text-ink-lightMuted leading-relaxed" data-i18n="pillar3_desc">
+            Intégration pragmatique de modèles locaux et d'API IA pour automatiser les diagnostics et enrichir l'expérience utilisateur.
+          </p>
+        </div>
+
+      </div>
     </div>
   </section>
 
   <!-- FLAGSHIP PROJECT: KORYX -->
-  <section id="koryx" class="py-20 sm:py-28 border-t border-canvas-border dark:border-night-border">
+  <section id="koryx" class="py-16 sm:py-24 border-t border-canvas-border dark:border-night-border">
     <div class="max-w-6xl mx-auto px-5 sm:px-8">
 
-      <!-- Section Heading -->
+      <!-- Section Header -->
       <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 reveal">
-        <div class="max-w-2xl">
-          <p class="text-xs font-mono uppercase tracking-widest text-accent mb-3" data-i18n="koryx_eyebrow">Projet phare · 2026</p>
-          <h2 class="font-editorial text-3xl sm:text-5xl tracking-tight text-ink dark:text-white">Koryx — Laptop Guardian</h2>
+        <div class="space-y-2.5 max-w-2xl">
+          <div class="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-accent">
+            <i class="fa-solid fa-star text-[10px]"></i>
+            <span data-i18n="koryx_eyebrow">Projet Phare · 2026</span>
+          </div>
+          <h2 class="font-editorial text-3xl sm:text-5xl text-ink dark:text-white">Koryx — Laptop Guardian</h2>
+          <p class="text-sm sm:text-base text-ink-muted dark:text-ink-lightMuted leading-relaxed" data-i18n="koryx_intro">
+            Une application desktop Windows pensée pour rendre la santé matérielle d'un ordinateur immédiatement compréhensible : suivi en temps réel, gestion des processus et diagnostic assisté par IA.
+          </p>
         </div>
-        <p class="text-sm sm:text-base text-ink-muted dark:text-ink-lightMuted max-w-md leading-relaxed" data-i18n="koryx_intro">
-          Une application desktop Windows conçue pour suivre la santé d'un ordinateur en temps réel et obtenir des diagnostics clairs grâce à l'IA embarquée.
-        </p>
+        <div class="flex flex-wrap gap-3 shrink-0">
+          <a href="https://github.com/YassineInnovator/Koryx" target="_blank" rel="noopener" class="px-5 py-2.5 rounded-full bg-ink dark:bg-ink-light text-canvas dark:text-night text-xs sm:text-sm font-medium hover:bg-accent dark:hover:bg-accent dark:hover:text-white transition inline-flex items-center gap-2">
+            <i class="fa-brands fa-github"></i>
+            <span data-i18n="koryx_repo">Voir sur GitHub</span>
+          </a>
+          <a href="https://koryx-win.elidrissi-yassine-2021-2022.workers.dev/" target="_blank" rel="noopener" class="px-5 py-2.5 rounded-full bg-canvas-card dark:bg-night-card border border-canvas-border dark:border-night-border text-xs sm:text-sm font-medium hover:border-accent transition inline-flex items-center gap-2">
+            <i class="fa-solid fa-download text-accent"></i>
+            <span data-i18n="koryx_dl">Télécharger l'App (.exe)</span>
+          </a>
+        </div>
       </div>
 
-      <!-- Showcase Layout -->
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+      <!-- Koryx Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-stretch">
 
-        <!-- Left: Human-Friendly Architecture Overview -->
-        <div class="lg:col-span-5 bg-canvas-card dark:bg-night-card p-7 sm:p-8 rounded-3xl border border-canvas-border dark:border-night-border flex flex-col justify-between gap-8 reveal">
+        <!-- Left: Concise, Human High-Level Overview -->
+        <div class="lg:col-span-5 bg-canvas-card dark:bg-night-card p-7 sm:p-8 rounded-3xl border border-canvas-border dark:border-night-border flex flex-col justify-between gap-6 reveal">
           <div class="space-y-6">
             <div class="flex items-center justify-between pb-4 border-b border-canvas-border dark:border-night-border">
-              <span class="text-xs font-mono uppercase tracking-wider text-ink-muted dark:text-ink-lightMuted" data-i18n="koryx_overview_label">Vue d'ensemble</span>
-              <span class="px-2.5 py-1 rounded-full bg-sage-soft dark:bg-emerald-950/60 text-sage dark:text-emerald-400 text-[11px] font-medium">Windows Desktop</span>
+              <span class="text-xs font-mono uppercase tracking-wider text-ink-muted dark:text-ink-lightMuted" data-i18n="koryx_arch_title">Vue d'ensemble</span>
+              <span class="px-2.5 py-1 rounded-full bg-sage-soft dark:bg-emerald-950/60 text-sage dark:text-emerald-400 text-[11px] font-medium">Production Ready</span>
             </div>
 
             <div class="space-y-5">
@@ -353,359 +408,340 @@
                   <i class="fa-solid fa-bolt text-sm"></i>
                 </div>
                 <div>
-                  <h3 class="text-sm font-bold text-ink dark:text-white" data-i18n="koryx_p1_title">Moteur Backend Temps Réel</h3>
-                  <p class="text-xs sm:text-sm text-ink-muted dark:text-ink-lightMuted mt-1 leading-relaxed" data-i18n="koryx_p1_desc">Architecture asynchrone en Python et FastAPI conçue pour collecter les métriques système en continu avec une empreinte légère.</p>
+                  <h3 class="font-semibold text-sm text-ink dark:text-white" data-i18n="k_item1_t">Collecte Temps Réel</h3>
+                  <p class="text-xs sm:text-sm text-ink-muted dark:text-ink-lightMuted mt-1 leading-relaxed" data-i18n="k_item1_d">
+                    Backend asynchrone Python & FastAPI dédié au suivi léger et continu des ressources système.
+                  </p>
                 </div>
               </div>
 
               <div class="flex gap-3.5">
                 <div class="w-9 h-9 rounded-xl bg-accent-soft dark:bg-accent-darkSoft text-accent flex items-center justify-center shrink-0 mt-0.5">
-                  <i class="fa-solid fa-layer-group text-sm"></i>
+                  <i class="fa-solid fa-display text-sm"></i>
                 </div>
                 <div>
-                  <h3 class="text-sm font-bold text-ink dark:text-white" data-i18n="koryx_p2_title">Interface Claire & Réactive</h3>
-                  <p class="text-xs sm:text-sm text-ink-muted dark:text-ink-lightMuted mt-1 leading-relaxed" data-i18n="koryx_p2_desc">Tableau de bord moderne conçu avec React et Tailwind CSS pour rendre l'état du matériel lisible au premier coup d'œil.</p>
+                  <h3 class="font-semibold text-sm text-ink dark:text-white" data-i18n="k_item2_t">Interface Claire & Réactive</h3>
+                  <p class="text-xs sm:text-sm text-ink-muted dark:text-ink-lightMuted mt-1 leading-relaxed" data-i18n="k_item2_d">
+                    Tableau de bord moderne conçu en React et Tailwind CSS pour lire l'état matériel d'un seul coup d'œil.
+                  </p>
                 </div>
               </div>
 
               <div class="flex gap-3.5">
                 <div class="w-9 h-9 rounded-xl bg-accent-soft dark:bg-accent-darkSoft text-accent flex items-center justify-center shrink-0 mt-0.5">
-                  <i class="fa-solid fa-chart-line text-sm"></i>
+                  <i class="fa-solid fa-brain text-sm"></i>
                 </div>
                 <div>
-                  <h3 class="text-sm font-bold text-ink dark:text-white" data-i18n="koryx_p3_title">Suivi Continu & Alertes</h3>
-                  <p class="text-xs sm:text-sm text-ink-muted dark:text-ink-lightMuted mt-1 leading-relaxed" data-i18n="koryx_p3_desc">Stockage local embarqué (SQLite) permettant de suivre l'historique des performances et d'anticiper les pics de charge.</p>
+                  <h3 class="font-semibold text-sm text-ink dark:text-white" data-i18n="k_item3_t">Historique & Diagnostic IA</h3>
+                  <p class="text-xs sm:text-sm text-ink-muted dark:text-ink-lightMuted mt-1 leading-relaxed" data-i18n="k_item3_d">
+                    Persistance locale SQLite pour analyser les tendances et assistant IA intégré, distribué en exécutable autonome.
+                  </p>
                 </div>
               </div>
-
-              <div class="flex gap-3.5">
-                <div class="w-9 h-9 rounded-xl bg-accent-soft dark:bg-accent-darkSoft text-accent flex items-center justify-center shrink-0 mt-0.5">
-                  <i class="fa-solid fa-wand-magic-sparkles text-sm"></i>
-                </div>
-                <div>
-                  <h3 class="text-sm font-bold text-ink dark:text-white" data-i18n="koryx_p4_title">Diagnostic IA & App Autonome</h3>
-                  <p class="text-xs sm:text-sm text-ink-muted dark:text-ink-lightMuted mt-1 leading-relaxed" data-i18n="koryx_p4_desc">Assistant IA intégré traduisant les données techniques en conseils simples, livré en exécutable Windows prêt à l'emploi.</p>
-                </div>
-              </div>
-            </div>
-
-            <!-- Concise Stack Pills -->
-            <div class="flex flex-wrap gap-2 pt-1">
-              <span class="px-3 py-1 rounded-full bg-canvas-soft dark:bg-night-soft text-xs font-mono text-ink-muted dark:text-ink-lightMuted">Python / FastAPI</span>
-              <span class="px-3 py-1 rounded-full bg-canvas-soft dark:bg-night-soft text-xs font-mono text-ink-muted dark:text-ink-lightMuted">React</span>
-              <span class="px-3 py-1 rounded-full bg-canvas-soft dark:bg-night-soft text-xs font-mono text-ink-muted dark:text-ink-lightMuted">SQLite</span>
-              <span class="px-3 py-1 rounded-full bg-canvas-soft dark:bg-night-soft text-xs font-mono text-ink-muted dark:text-ink-lightMuted">IA Embarquée</span>
             </div>
           </div>
 
-          <!-- Action Buttons -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-4 border-t border-canvas-border dark:border-night-border">
-            <a href="https://github.com/YassineInnovator/Koryx" target="_blank" rel="noopener" class="py-3 px-4 rounded-full bg-ink dark:bg-ink-light text-canvas dark:text-night text-xs font-semibold hover:bg-accent dark:hover:bg-accent dark:hover:text-white transition flex items-center justify-center gap-2">
-              <i class="fa-brands fa-github text-sm"></i>
-              <span data-i18n="koryx_btn_repo">Voir sur GitHub</span>
-            </a>
-            <a href="https://koryx-win.elidrissi-yassine-2021-2022.workers.dev/" target="_blank" rel="noopener" class="py-3 px-4 rounded-full bg-canvas-soft dark:bg-night-soft border border-canvas-border dark:border-night-border text-ink dark:text-ink-light text-xs font-semibold hover:border-accent hover:text-accent transition flex items-center justify-center gap-2">
-              <i class="fa-solid fa-download text-accent"></i>
-              <span data-i18n="koryx_btn_dl">Télécharger (.exe)</span>
-            </a>
+          <!-- High-level Stack Pills -->
+          <div class="pt-5 border-t border-canvas-border dark:border-night-border flex flex-wrap gap-2">
+            <span class="px-3 py-1 rounded-full bg-canvas-soft dark:bg-night-soft text-xs font-mono text-ink-muted dark:text-ink-lightMuted">Python / FastAPI</span>
+            <span class="px-3 py-1 rounded-full bg-canvas-soft dark:bg-night-soft text-xs font-mono text-ink-muted dark:text-ink-lightMuted">React</span>
+            <span class="px-3 py-1 rounded-full bg-canvas-soft dark:bg-night-soft text-xs font-mono text-ink-muted dark:text-ink-lightMuted">SQLite</span>
+            <span class="px-3 py-1 rounded-full bg-canvas-soft dark:bg-night-soft text-xs font-mono text-ink-muted dark:text-ink-lightMuted">IA Embarquée</span>
           </div>
         </div>
 
-        <!-- Right: Clean Interactive App Preview Frame -->
-        <div class="lg:col-span-7 bg-[#161514] text-stone-100 p-6 sm:p-8 rounded-3xl border border-stone-800 shadow-2xl flex flex-col justify-between gap-6 reveal">
+        <!-- Right: Interactive Live Preview Widget -->
+        <div class="lg:col-span-7 bg-[#161514] text-stone-100 p-6 sm:p-8 rounded-3xl border border-stone-800 shadow-xl flex flex-col justify-between gap-6 reveal">
 
           <!-- Window Top Bar -->
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-stone-800">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-white/10">
             <div class="flex items-center gap-3">
-              <div class="flex items-center gap-1.5">
+              <div class="flex gap-1.5">
                 <span class="w-2.5 h-2.5 rounded-full bg-stone-600"></span>
                 <span class="w-2.5 h-2.5 rounded-full bg-stone-600"></span>
                 <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
               </div>
-              <div class="pl-2">
-                <p class="text-sm font-semibold tracking-tight text-white">Koryx — Aperçu Interactif</p>
-                <p class="text-[11px] text-stone-400 font-mono">Télémétrie locale · Diagnostic IA actif</p>
+              <div>
+                <h3 class="text-sm font-semibold text-white">Koryx Desktop — Aperçu interactif</h3>
+                <p class="text-[11px] text-stone-400 font-mono">Télémétrie temps réel · Mode démo</p>
               </div>
             </div>
             <div class="flex items-center gap-2">
-              <button onclick="simulateTelemetrySpike()" class="px-3.5 py-2 rounded-full bg-stone-800 hover:bg-stone-700 text-stone-200 text-xs font-medium transition border border-stone-700 inline-flex items-center gap-1.5">
+              <button onclick="simulateTelemetrySpike()" class="px-3.5 py-2 rounded-full bg-white/10 hover:bg-white/15 text-stone-200 text-xs font-medium transition inline-flex items-center gap-1.5">
                 <i class="fa-solid fa-bolt text-amber-400"></i>
-                <span data-i18n="sim_spike">Simuler charge</span>
+                <span data-i18n="koryx_btn_spike">Simuler charge</span>
               </button>
               <button onclick="triggerAiDiagnostic()" class="px-3.5 py-2 rounded-full bg-accent hover:bg-accent-hover text-white text-xs font-medium transition inline-flex items-center gap-1.5">
                 <i class="fa-solid fa-wand-magic-sparkles"></i>
-                <span data-i18n="sim_ai">Diagnostic IA</span>
+                <span data-i18n="koryx_btn_ai">Diagnostic IA</span>
               </button>
             </div>
           </div>
 
-          <!-- Clean Metrics Cards -->
+          <!-- Live Metric Gauges -->
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div class="bg-stone-900/90 p-5 rounded-2xl border border-stone-800 space-y-3">
-              <div class="flex items-center justify-between text-xs">
+            <div class="bg-white/[0.04] p-4 rounded-2xl border border-white/10 space-y-2.5">
+              <div class="flex justify-between text-xs">
                 <span class="text-stone-400">CPU</span>
-                <span id="metric-cpu" class="font-mono font-semibold text-white">14.2%</span>
+                <span id="metric-cpu" class="font-mono font-semibold text-accent">14.2%</span>
               </div>
-              <div class="w-full bg-stone-800 h-2 rounded-full overflow-hidden">
+              <div class="w-full bg-white/10 h-1.5 rounded-full overflow-hidden">
                 <div id="bar-cpu" class="bg-accent h-full rounded-full transition-all duration-500" style="width: 14%;"></div>
               </div>
-              <p class="text-[11px] text-stone-500 font-mono">Charge nominale</p>
+              <p class="text-[11px] text-stone-500 font-mono" data-i18n="koryx_cpu_sub">Charge nominale</p>
             </div>
 
-            <div class="bg-stone-900/90 p-5 rounded-2xl border border-stone-800 space-y-3">
-              <div class="flex items-center justify-between text-xs">
-                <span class="text-stone-400">Mémoire RAM</span>
-                <span id="metric-ram" class="font-mono font-semibold text-white">4.8 / 16 GB</span>
+            <div class="bg-white/[0.04] p-4 rounded-2xl border border-white/10 space-y-2.5">
+              <div class="flex justify-between text-xs">
+                <span class="text-stone-400">RAM</span>
+                <span id="metric-ram" class="font-mono font-semibold text-sky-400">4.8 / 16 GB</span>
               </div>
-              <div class="w-full bg-stone-800 h-2 rounded-full overflow-hidden">
-                <div id="bar-ram" class="bg-amber-400 h-full rounded-full transition-all duration-500" style="width: 30%;"></div>
+              <div class="w-full bg-white/10 h-1.5 rounded-full overflow-hidden">
+                <div id="bar-ram" class="bg-sky-400 h-full rounded-full transition-all duration-500" style="width: 30%;"></div>
               </div>
-              <p class="text-[11px] text-stone-500 font-mono">30% utilisée</p>
+              <p class="text-[11px] text-stone-500 font-mono">30% active</p>
             </div>
 
-            <div class="bg-stone-900/90 p-5 rounded-2xl border border-stone-800 space-y-3">
-              <div class="flex items-center justify-between text-xs">
-                <span class="text-stone-400">Température</span>
+            <div class="bg-white/[0.04] p-4 rounded-2xl border border-white/10 space-y-2.5">
+              <div class="flex justify-between text-xs">
+                <span class="text-stone-400" data-i18n="koryx_temp_lbl">Température</span>
                 <span id="metric-temp" class="font-mono font-semibold text-emerald-400">38°C</span>
               </div>
-              <div class="w-full bg-stone-800 h-2 rounded-full overflow-hidden">
+              <div class="w-full bg-white/10 h-1.5 rounded-full overflow-hidden">
                 <div id="bar-temp" class="bg-emerald-400 h-full rounded-full transition-all duration-500" style="width: 38%;"></div>
               </div>
-              <p class="text-[11px] text-stone-500 font-mono">Refroidissement optimal</p>
+              <p class="text-[11px] text-stone-500 font-mono" data-i18n="koryx_temp_sub">Optimal</p>
             </div>
           </div>
 
-          <!-- AI Assistant Summary Panel -->
-          <div class="bg-stone-900/70 p-5 rounded-2xl border border-stone-800 space-y-2.5">
+          <!-- AI Assistant Box -->
+          <div class="bg-white/[0.04] p-4 sm:p-5 rounded-2xl border border-white/10 space-y-2">
             <div class="flex items-center justify-between text-xs">
-              <span class="font-medium text-stone-300 flex items-center gap-2">
+              <span class="font-medium text-stone-200 flex items-center gap-2">
                 <i class="fa-solid fa-sparkles text-accent"></i>
-                <span>Assistant Koryx</span>
+                <span>Assistant IA Koryx</span>
               </span>
-              <span id="ai-status" class="text-emerald-400 font-mono text-[11px]" data-i18n="ai_status_ready">Prêt à analyser</span>
+              <span id="ai-status" class="font-mono text-[11px] text-emerald-400" data-i18n="ai_status_ready">Prêt</span>
             </div>
-            <p id="ai-output-box" class="text-sm text-stone-300 leading-relaxed min-h-[48px] flex items-center" data-i18n="ai_msg_default">
-              Système fluide et silencieux. Aucun processus bloquant détecté et températures parfaitement maîtrisées.
+            <p id="ai-output-box" class="text-xs sm:text-sm text-stone-300 leading-relaxed min-h-[44px] flex items-center" data-i18n="ai_msg_default">
+              Système fluide et silencieux. Aucun processus bloquant détecté et températures parfaitement équilibrées.
             </p>
           </div>
 
-          <!-- Feature Strip -->
-          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4 border-t border-stone-800 text-xs text-stone-400">
-            <span class="flex items-center gap-2"><i class="fa-solid fa-check text-accent"></i> Suivi Live</span>
-            <span class="flex items-center gap-2"><i class="fa-solid fa-check text-accent"></i> Santé Matérielle</span>
-            <span class="flex items-center gap-2"><i class="fa-solid fa-check text-accent"></i> Processus</span>
-            <span class="flex items-center gap-2"><i class="fa-solid fa-check text-accent"></i> Alertes IA</span>
+          <!-- Included Modules -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-[11px] text-stone-400 pt-3 border-t border-white/10">
+            <span class="flex items-center gap-1.5"><i class="fa-solid fa-check text-accent"></i> Dashboard Live</span>
+            <span class="flex items-center gap-1.5"><i class="fa-solid fa-check text-accent"></i> Hardware View</span>
+            <span class="flex items-center gap-1.5"><i class="fa-solid fa-check text-accent"></i> Process Control</span>
+            <span class="flex items-center gap-1.5"><i class="fa-solid fa-check text-accent"></i> Alertes IA</span>
           </div>
 
         </div>
       </div>
-
     </div>
   </section>
 
-  <!-- EXPERIENCE SECTION: CLEAN EDITORIAL TIMELINE -->
-  <section id="experience" class="py-20 sm:py-24 border-t border-canvas-border dark:border-night-border bg-canvas-soft/60 dark:bg-night-soft/30">
-    <div class="max-w-6xl mx-auto px-5 sm:px-8">
+  <!-- EXPERIENCE TIMELINE -->
+  <section id="experience" class="py-16 sm:py-24 border-t border-canvas-border dark:border-night-border bg-canvas-soft/60 dark:bg-night-soft/40">
+    <div class="max-w-5xl mx-auto px-5 sm:px-8">
 
       <div class="max-w-2xl mb-14 reveal">
-        <p class="text-xs font-mono uppercase tracking-widest text-accent mb-3" data-i18n="exp_eyebrow">Expériences</p>
-        <h2 class="font-editorial text-3xl sm:text-5xl tracking-tight text-ink dark:text-white" data-i18n="exp_title">
-          Parcours en entreprise
-        </h2>
+        <p class="text-xs font-mono uppercase tracking-widest text-accent mb-2.5" data-i18n="exp_eyebrow">Expériences</p>
+        <h2 class="font-editorial text-3xl sm:text-5xl text-ink dark:text-white" data-i18n="exp_title">Parcours professionnel</h2>
       </div>
 
-      <div class="divide-y divide-canvas-border dark:divide-night-border border-t border-b border-canvas-border dark:border-night-border">
+      <!-- Clean Editorial List -->
+      <div class="space-y-6">
 
         <!-- Exp 1 -->
-        <article class="py-9 grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8 reveal">
-          <div class="md:col-span-4 space-y-1">
-            <p class="text-xs font-mono text-accent font-medium">Avril 2026 – Sept. 2026</p>
-            <h3 class="font-bold text-lg text-ink dark:text-white">GINGER CEBTP</h3>
-            <p class="text-xs text-ink-muted dark:text-ink-lightMuted">Stage de fin d'études (M2)</p>
+        <article class="bg-canvas-card dark:bg-night-card p-6 sm:p-8 rounded-3xl border border-canvas-border dark:border-night-border reveal">
+          <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-2 mb-4">
+            <div>
+              <h3 class="text-lg sm:text-xl font-bold text-ink dark:text-white">Ingénieur Logiciel Full-Stack <span class="font-normal text-ink-muted dark:text-ink-lightMuted">(Stage M2)</span></h3>
+              <p class="text-sm font-medium text-accent mt-0.5">GINGER CEBTP</p>
+            </div>
+            <span class="text-xs font-mono px-3 py-1 rounded-full bg-accent-soft dark:bg-accent-darkSoft text-accent self-start shrink-0">Avril 2026 – Sept. 2026</span>
           </div>
-          <div class="md:col-span-8 space-y-3">
-            <h4 class="text-lg sm:text-xl font-semibold text-ink dark:text-white">Ingénieur Logiciel Full-Stack</h4>
-            <ul class="space-y-2 text-sm sm:text-base text-ink-muted dark:text-ink-lightMuted leading-relaxed">
-              <li class="flex gap-2.5"><span class="text-accent mt-1.5 text-[8px]"><i class="fa-solid fa-circle"></i></span><span><strong class="text-ink dark:text-white font-medium">Application Offline-First :</strong> Conception d'une application React/Vite utilisable sur le terrain hors connexion avec synchronisation automatique (IndexedDB).</span></li>
-              <li class="flex gap-2.5"><span class="text-accent mt-1.5 text-[8px]"><i class="fa-solid fa-circle"></i></span><span><strong class="text-ink dark:text-white font-medium">Backend Python & FastAPI :</strong> Synchronisation asynchrone vers PostgreSQL et gestion fiable des conflits de données.</span></li>
-              <li class="flex gap-2.5"><span class="text-accent mt-1.5 text-[8px]"><i class="fa-solid fa-circle"></i></span><span><strong class="text-ink dark:text-white font-medium">Impact métier :</strong> Réduction de la ressaisie manuelle et génération automatisée des rapports.</span></li>
-            </ul>
-          </div>
+          <ul class="space-y-2 text-sm text-ink-muted dark:text-ink-lightMuted leading-relaxed">
+            <li class="flex gap-2.5"><span class="text-accent mt-1.5 text-[7px]"><i class="fa-solid fa-circle"></i></span><span><strong class="text-ink dark:text-white">Architecture Offline-First :</strong> Application React/Vite opérationnelle hors connexion avec stockage local IndexedDB et synchronisation automatique.</span></li>
+            <li class="flex gap-2.5"><span class="text-accent mt-1.5 text-[7px]"><i class="fa-solid fa-circle"></i></span><span><strong class="text-ink dark:text-white">Backend Python / FastAPI :</strong> Synchronisation asynchrone vers PostgreSQL et gestion fiable des conflits de données.</span></li>
+            <li class="flex gap-2.5"><span class="text-accent mt-1.5 text-[7px]"><i class="fa-solid fa-circle"></i></span><span><strong class="text-ink dark:text-white">Ergonomie terrain :</strong> Réduction de la ressaisie manuelle et automatisation de la génération de rapports.</span></li>
+          </ul>
         </article>
 
         <!-- Exp 2 -->
-        <article class="py-9 grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8 reveal">
-          <div class="md:col-span-4 space-y-1">
-            <p class="text-xs font-mono text-ink-muted dark:text-ink-lightMuted">Juin 2025 – Sept. 2025</p>
-            <h3 class="font-bold text-lg text-ink dark:text-white">NEWDEV MAROC</h3>
-            <p class="text-xs text-ink-muted dark:text-ink-lightMuted">Stage M1</p>
+        <article class="bg-canvas-card dark:bg-night-card p-6 sm:p-8 rounded-3xl border border-canvas-border dark:border-night-border reveal">
+          <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-2 mb-4">
+            <div>
+              <h3 class="text-lg sm:text-xl font-bold text-ink dark:text-white">Stagiaire Développement Logiciel</h3>
+              <p class="text-sm font-medium text-accent mt-0.5">NEWDEV MAROC</p>
+            </div>
+            <span class="text-xs font-mono px-3 py-1 rounded-full bg-canvas-soft dark:bg-night-soft text-ink-muted dark:text-ink-lightMuted self-start shrink-0">Juin 2025 – Sept. 2025</span>
           </div>
-          <div class="md:col-span-8 space-y-3">
-            <h4 class="text-lg sm:text-xl font-semibold text-ink dark:text-white">Stagiaire Développement Logiciel</h4>
-            <ul class="space-y-2 text-sm sm:text-base text-ink-muted dark:text-ink-lightMuted leading-relaxed">
-              <li class="flex gap-2.5"><span class="text-accent mt-1.5 text-[8px]"><i class="fa-solid fa-circle"></i></span><span>Conception d'un outil modulaire de gestion stock et caisse avec NestJS, Angular et GraphQL.</span></li>
-              <li class="flex gap-2.5"><span class="text-accent mt-1.5 text-[8px]"><i class="fa-solid fa-circle"></i></span><span>Suivi temps réel des flux commerciaux et des stocks (RxJS, services Angular).</span></li>
-            </ul>
-          </div>
+          <ul class="space-y-2 text-sm text-ink-muted dark:text-ink-lightMuted leading-relaxed">
+            <li class="flex gap-2.5"><span class="text-accent mt-1.5 text-[7px]"><i class="fa-solid fa-circle"></i></span><span>Conception d'un système modulaire de gestion stock et caisse avec <strong class="text-ink dark:text-white">NestJS, Angular et GraphQL</strong>.</span></li>
+            <li class="flex gap-2.5"><span class="text-accent mt-1.5 text-[7px]"><i class="fa-solid fa-circle"></i></span><span>Suivi en temps réel des stocks et des flux commerciaux via RxJS.</span></li>
+          </ul>
         </article>
 
         <!-- Exp 3 -->
-        <article class="py-9 grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8 reveal">
-          <div class="md:col-span-4 space-y-1">
-            <p class="text-xs font-mono text-ink-muted dark:text-ink-lightMuted">Juin 2024 – Sept. 2024</p>
-            <h3 class="font-bold text-lg text-ink dark:text-white">SINGLA LA GIRONDE</h3>
-            <p class="text-xs text-ink-muted dark:text-ink-lightMuted">Stage Cybersécurité</p>
+        <article class="bg-canvas-card dark:bg-night-card p-6 sm:p-8 rounded-3xl border border-canvas-border dark:border-night-border reveal">
+          <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-2 mb-4">
+            <div>
+              <h3 class="text-lg sm:text-xl font-bold text-ink dark:text-white">Stagiaire Analyste Sécurité (SOC)</h3>
+              <p class="text-sm font-medium text-accent mt-0.5">SINGLA LA GIRONDE</p>
+            </div>
+            <span class="text-xs font-mono px-3 py-1 rounded-full bg-canvas-soft dark:bg-night-soft text-ink-muted dark:text-ink-lightMuted self-start shrink-0">Juin 2024 – Sept. 2024</span>
           </div>
-          <div class="md:col-span-8 space-y-3">
-            <h4 class="text-lg sm:text-xl font-semibold text-ink dark:text-white">Stagiaire Analyste Sécurité (SOC)</h4>
-            <ul class="space-y-2 text-sm sm:text-base text-ink-muted dark:text-ink-lightMuted leading-relaxed">
-              <li class="flex gap-2.5"><span class="text-accent mt-1.5 text-[8px]"><i class="fa-solid fa-circle"></i></span><span>Développement d'un outil Python d'analyse réseau (Scapy, Pandas) pour le traitement de flux.</span></li>
-              <li class="flex gap-2.5"><span class="text-accent mt-1.5 text-[8px]"><i class="fa-solid fa-circle"></i></span><span>Détection d'anomalies par classification (Scikit-learn) et automatisation de l'alerting.</span></li>
-            </ul>
-          </div>
+          <ul class="space-y-2 text-sm text-ink-muted dark:text-ink-lightMuted leading-relaxed">
+            <li class="flex gap-2.5"><span class="text-accent mt-1.5 text-[7px]"><i class="fa-solid fa-circle"></i></span><span>Développement d'un outil Python d'analyse réseau (<strong class="text-ink dark:text-white">Scapy, Pandas</strong>) pour l'ingestion et le traitement de flux.</span></li>
+            <li class="flex gap-2.5"><span class="text-accent mt-1.5 text-[7px]"><i class="fa-solid fa-circle"></i></span><span>Détection d'anomalies réseau par classification Scikit-learn et automatisation des alertes.</span></li>
+          </ul>
         </article>
 
         <!-- Exp 4 -->
-        <article class="py-9 grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8 reveal">
-          <div class="md:col-span-4 space-y-1">
-            <p class="text-xs font-mono text-ink-muted dark:text-ink-lightMuted">Juin 2023 – Sept. 2023</p>
-            <h3 class="font-bold text-lg text-ink dark:text-white">ALTEN</h3>
-            <p class="text-xs text-ink-muted dark:text-ink-lightMuted">Stage Développement</p>
+        <article class="bg-canvas-card dark:bg-night-card p-6 sm:p-8 rounded-3xl border border-canvas-border dark:border-night-border reveal">
+          <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-2 mb-4">
+            <div>
+              <h3 class="text-lg sm:text-xl font-bold text-ink dark:text-white">Stagiaire Développement Web</h3>
+              <p class="text-sm font-medium text-accent mt-0.5">ALTEN</p>
+            </div>
+            <span class="text-xs font-mono px-3 py-1 rounded-full bg-canvas-soft dark:bg-night-soft text-ink-muted dark:text-ink-lightMuted self-start shrink-0">Juin 2023 – Sept. 2023</span>
           </div>
-          <div class="md:col-span-8 space-y-3">
-            <h4 class="text-lg sm:text-xl font-semibold text-ink dark:text-white">Stagiaire Développement Web</h4>
-            <ul class="space-y-2 text-sm sm:text-base text-ink-muted dark:text-ink-lightMuted leading-relaxed">
-              <li class="flex gap-2.5"><span class="text-accent mt-1.5 text-[8px]"><i class="fa-solid fa-circle"></i></span><span>Développement d'une application web de gestion des stagiaires.</span></li>
-              <li class="flex gap-2.5"><span class="text-accent mt-1.5 text-[8px]"><i class="fa-solid fa-circle"></i></span><span>Contribution à la conception fonctionnelle et à l'amélioration de l'ergonomie.</span></li>
-            </ul>
-          </div>
+          <ul class="space-y-2 text-sm text-ink-muted dark:text-ink-lightMuted leading-relaxed">
+            <li class="flex gap-2.5"><span class="text-accent mt-1.5 text-[7px]"><i class="fa-solid fa-circle"></i></span><span>Développement d'une application web complète de gestion des stagiaires.</span></li>
+            <li class="flex gap-2.5"><span class="text-accent mt-1.5 text-[7px]"><i class="fa-solid fa-circle"></i></span><span>Participation à la conception fonctionnelle et à l'amélioration de l'ergonomie d'interface.</span></li>
+          </ul>
         </article>
 
       </div>
     </div>
   </section>
 
-  <!-- SKILLS & TOOLKIT -->
-  <section id="skills" class="py-20 sm:py-24 border-t border-canvas-border dark:border-night-border">
+  <!-- SKILLS SECTION -->
+  <section id="skills" class="py-16 sm:py-24 border-t border-canvas-border dark:border-night-border">
     <div class="max-w-6xl mx-auto px-5 sm:px-8">
 
       <div class="max-w-2xl mb-12 reveal">
-        <p class="text-xs font-mono uppercase tracking-widest text-accent mb-3" data-i18n="skills_eyebrow">Savoir-faire</p>
-        <h2 class="font-editorial text-3xl sm:text-5xl tracking-tight text-ink dark:text-white" data-i18n="skills_title">
-          Boîte à outils technique
-        </h2>
+        <p class="text-xs font-mono uppercase tracking-widest text-accent mb-2.5" data-i18n="skills_eyebrow">Savoir-faire</p>
+        <h2 class="font-editorial text-3xl sm:text-5xl text-ink dark:text-white" data-i18n="skills_title">Compétences techniques</h2>
       </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
-
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
         <div class="bg-canvas-card dark:bg-night-card p-6 rounded-3xl border border-canvas-border dark:border-night-border space-y-4 reveal">
-          <div class="w-10 h-10 rounded-2xl bg-accent-soft dark:bg-accent-darkSoft text-accent flex items-center justify-center">
-            <i class="fa-solid fa-server"></i>
+          <div class="flex items-center gap-2.5">
+            <span class="w-8 h-8 rounded-xl bg-accent-soft dark:bg-accent-darkSoft text-accent flex items-center justify-center text-sm"><i class="fa-solid fa-server"></i></span>
+            <h3 class="font-semibold text-base">Back-end & API</h3>
           </div>
-          <h3 class="font-bold text-base">Back-end & API</h3>
           <div class="flex flex-wrap gap-2 text-xs">
-            <span class="px-2.5 py-1 rounded-lg bg-canvas-soft dark:bg-night-soft">Python</span>
-            <span class="px-2.5 py-1 rounded-lg bg-canvas-soft dark:bg-night-soft">FastAPI</span>
-            <span class="px-2.5 py-1 rounded-lg bg-canvas-soft dark:bg-night-soft">Flask</span>
-            <span class="px-2.5 py-1 rounded-lg bg-canvas-soft dark:bg-night-soft">NestJS</span>
-            <span class="px-2.5 py-1 rounded-lg bg-canvas-soft dark:bg-night-soft">Spring Boot</span>
-            <span class="px-2.5 py-1 rounded-lg bg-canvas-soft dark:bg-night-soft">REST / GraphQL</span>
+            <span class="px-3 py-1.5 rounded-full bg-canvas-soft dark:bg-night-soft">Python</span>
+            <span class="px-3 py-1.5 rounded-full bg-canvas-soft dark:bg-night-soft">FastAPI</span>
+            <span class="px-3 py-1.5 rounded-full bg-canvas-soft dark:bg-night-soft">Flask</span>
+            <span class="px-3 py-1.5 rounded-full bg-canvas-soft dark:bg-night-soft">NestJS</span>
+            <span class="px-3 py-1.5 rounded-full bg-canvas-soft dark:bg-night-soft">Java / Spring</span>
+            <span class="px-3 py-1.5 rounded-full bg-canvas-soft dark:bg-night-soft">REST & GraphQL</span>
           </div>
         </div>
 
         <div class="bg-canvas-card dark:bg-night-card p-6 rounded-3xl border border-canvas-border dark:border-night-border space-y-4 reveal">
-          <div class="w-10 h-10 rounded-2xl bg-accent-soft dark:bg-accent-darkSoft text-accent flex items-center justify-center">
-            <i class="fa-solid fa-window-maximize"></i>
+          <div class="flex items-center gap-2.5">
+            <span class="w-8 h-8 rounded-xl bg-accent-soft dark:bg-accent-darkSoft text-accent flex items-center justify-center text-sm"><i class="fa-solid fa-code"></i></span>
+            <h3 class="font-semibold text-base">Front-end & Data</h3>
           </div>
-          <h3 class="font-bold text-base">Front-end & Data</h3>
           <div class="flex flex-wrap gap-2 text-xs">
-            <span class="px-2.5 py-1 rounded-lg bg-canvas-soft dark:bg-night-soft">React 19</span>
-            <span class="px-2.5 py-1 rounded-lg bg-canvas-soft dark:bg-night-soft">Next.js</span>
-            <span class="px-2.5 py-1 rounded-lg bg-canvas-soft dark:bg-night-soft">Angular</span>
-            <span class="px-2.5 py-1 rounded-lg bg-canvas-soft dark:bg-night-soft">TypeScript</span>
-            <span class="px-2.5 py-1 rounded-lg bg-canvas-soft dark:bg-night-soft">Tailwind CSS</span>
-            <span class="px-2.5 py-1 rounded-lg bg-canvas-soft dark:bg-night-soft">PostgreSQL / SQLite</span>
+            <span class="px-3 py-1.5 rounded-full bg-canvas-soft dark:bg-night-soft">React 19</span>
+            <span class="px-3 py-1.5 rounded-full bg-canvas-soft dark:bg-night-soft">Next.js</span>
+            <span class="px-3 py-1.5 rounded-full bg-canvas-soft dark:bg-night-soft">Angular</span>
+            <span class="px-3 py-1.5 rounded-full bg-canvas-soft dark:bg-night-soft">TypeScript</span>
+            <span class="px-3 py-1.5 rounded-full bg-canvas-soft dark:bg-night-soft">Tailwind CSS</span>
+            <span class="px-3 py-1.5 rounded-full bg-canvas-soft dark:bg-night-soft">PostgreSQL / SQLite</span>
           </div>
         </div>
 
         <div class="bg-canvas-card dark:bg-night-card p-6 rounded-3xl border border-canvas-border dark:border-night-border space-y-4 reveal">
-          <div class="w-10 h-10 rounded-2xl bg-accent-soft dark:bg-accent-darkSoft text-accent flex items-center justify-center">
-            <i class="fa-solid fa-gears"></i>
+          <div class="flex items-center gap-2.5">
+            <span class="w-8 h-8 rounded-xl bg-accent-soft dark:bg-accent-darkSoft text-accent flex items-center justify-center text-sm"><i class="fa-solid fa-infinity"></i></span>
+            <h3 class="font-semibold text-base">DevOps & Outils</h3>
           </div>
-          <h3 class="font-bold text-base">DevOps & Qualité</h3>
           <div class="flex flex-wrap gap-2 text-xs">
-            <span class="px-2.5 py-1 rounded-lg bg-canvas-soft dark:bg-night-soft">Docker</span>
-            <span class="px-2.5 py-1 rounded-lg bg-canvas-soft dark:bg-night-soft">GitLab CI/CD</span>
-            <span class="px-2.5 py-1 rounded-lg bg-canvas-soft dark:bg-night-soft">Linux / Bash</span>
-            <span class="px-2.5 py-1 rounded-lg bg-canvas-soft dark:bg-night-soft">Git</span>
-            <span class="px-2.5 py-1 rounded-lg bg-canvas-soft dark:bg-night-soft">Scrum / Agile</span>
+            <span class="px-3 py-1.5 rounded-full bg-canvas-soft dark:bg-night-soft">Docker</span>
+            <span class="px-3 py-1.5 rounded-full bg-canvas-soft dark:bg-night-soft">GitLab CI/CD</span>
+            <span class="px-3 py-1.5 rounded-full bg-canvas-soft dark:bg-night-soft">Linux / Bash</span>
+            <span class="px-3 py-1.5 rounded-full bg-canvas-soft dark:bg-night-soft">Git</span>
+            <span class="px-3 py-1.5 rounded-full bg-canvas-soft dark:bg-night-soft">Scrum / Agile</span>
           </div>
         </div>
 
         <div class="bg-canvas-card dark:bg-night-card p-6 rounded-3xl border border-canvas-border dark:border-night-border space-y-4 reveal">
-          <div class="w-10 h-10 rounded-2xl bg-accent-soft dark:bg-accent-darkSoft text-accent flex items-center justify-center">
-            <i class="fa-solid fa-shield-halved"></i>
+          <div class="flex items-center gap-2.5">
+            <span class="w-8 h-8 rounded-xl bg-accent-soft dark:bg-accent-darkSoft text-accent flex items-center justify-center text-sm"><i class="fa-solid fa-shield-halved"></i></span>
+            <h3 class="font-semibold text-base">Sécurité & IA</h3>
           </div>
-          <h3 class="font-bold text-base">Sécurité & IA</h3>
           <div class="flex flex-wrap gap-2 text-xs">
-            <span class="px-2.5 py-1 rounded-lg bg-canvas-soft dark:bg-night-soft">JWT / CORS</span>
-            <span class="px-2.5 py-1 rounded-lg bg-canvas-soft dark:bg-night-soft">Analyse Réseau</span>
-            <span class="px-2.5 py-1 rounded-lg bg-canvas-soft dark:bg-night-soft">Scapy / Pandas</span>
-            <span class="px-2.5 py-1 rounded-lg bg-canvas-soft dark:bg-night-soft">Scikit-learn</span>
-            <span class="px-2.5 py-1 rounded-lg bg-canvas-soft dark:bg-night-soft">IA Locale</span>
+            <span class="px-3 py-1.5 rounded-full bg-canvas-soft dark:bg-night-soft">Analyse réseau</span>
+            <span class="px-3 py-1.5 rounded-full bg-canvas-soft dark:bg-night-soft">Scapy / Pandas</span>
+            <span class="px-3 py-1.5 rounded-full bg-canvas-soft dark:bg-night-soft">Scikit-learn</span>
+            <span class="px-3 py-1.5 rounded-full bg-canvas-soft dark:bg-night-soft">JWT / CORS</span>
+            <span class="px-3 py-1.5 rounded-full bg-canvas-soft dark:bg-night-soft">IA Locale</span>
           </div>
         </div>
-
       </div>
+
     </div>
   </section>
 
   <!-- EDUCATION, CERTIFICATIONS & LANGUAGES -->
-  <section id="education" class="py-20 sm:py-24 border-t border-canvas-border dark:border-night-border bg-canvas-soft/60 dark:bg-night-soft/30">
+  <section id="education" class="py-16 sm:py-24 border-t border-canvas-border dark:border-night-border bg-canvas-soft/60 dark:bg-night-soft/40">
     <div class="max-w-6xl mx-auto px-5 sm:px-8">
 
       <div class="max-w-2xl mb-12 reveal">
-        <p class="text-xs font-mono uppercase tracking-widest text-accent mb-3" data-i18n="edu_eyebrow">Formation</p>
-        <h2 class="font-editorial text-3xl sm:text-5xl tracking-tight text-ink dark:text-white" data-i18n="edu_title">
-          Diplômes, certifications & langues
-        </h2>
+        <p class="text-xs font-mono uppercase tracking-widest text-accent mb-2.5" data-i18n="edu_eyebrow">Formation</p>
+        <h2 class="font-editorial text-3xl sm:text-5xl text-ink dark:text-white" data-i18n="edu_title">Diplômes & Certifications</h2>
       </div>
 
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
 
         <!-- Academic Degrees -->
         <div class="lg:col-span-7 bg-canvas-card dark:bg-night-card p-7 sm:p-8 rounded-3xl border border-canvas-border dark:border-night-border space-y-6 reveal">
-          <h3 class="text-base font-bold flex items-center gap-2.5">
+          <h3 class="text-base font-semibold flex items-center gap-2.5">
             <i class="fa-solid fa-graduation-cap text-accent"></i>
-            <span data-i18n="edu_col1">Parcours Académique</span>
+            <span data-i18n="edu_academic">Parcours Académique</span>
           </h3>
 
-          <div class="space-y-6 border-l border-canvas-border dark:border-night-border pl-5">
-            <div class="space-y-1">
-              <span class="text-xs font-mono text-accent">Janv. 2027 – Mars 2029</span>
-              <h4 class="font-bold text-base sm:text-lg">Mastère Développeur Web Full Stack</h4>
-              <p class="text-xs sm:text-sm text-ink-muted dark:text-ink-lightMuted">LiveCampus · Alternance (1 sem. école / 3 sem. entreprise)</p>
-            </div>
-
-            <div class="space-y-1">
-              <div class="flex items-center gap-2">
-                <span class="text-xs font-mono text-accent font-semibold">2025 – 2026</span>
-                <span class="text-[11px] font-medium px-2.5 py-0.5 rounded-full bg-sage-soft dark:bg-emerald-950/60 text-sage dark:text-emerald-400">Diplômé</span>
+          <div class="divide-y divide-canvas-border dark:divide-night-border">
+            <div class="py-4 first:pt-0">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <h4 class="font-semibold text-base">Mastère Développeur Web Full Stack</h4>
+                <span class="text-xs font-mono text-accent">Janv. 2027 – Mars 2029</span>
               </div>
-              <h4 class="font-bold text-base sm:text-lg">Master 2 Informatique — Parcours Génie Logiciel</h4>
-              <p class="text-xs sm:text-sm text-ink-muted dark:text-ink-lightMuted">Université de Lorraine · Faculté des Sciences et Technologies (FST de Nancy)</p>
+              <p class="text-xs sm:text-sm text-ink-muted dark:text-ink-lightMuted mt-1">LiveCampus · Alternance (1 sem. école / 3 sem. entreprise)</p>
             </div>
 
-            <div class="space-y-1">
-              <span class="text-xs font-mono text-ink-muted dark:text-ink-lightMuted">2024 – 2025</span>
-              <h4 class="font-bold text-base sm:text-lg">Master 1 Ingénierie des Systèmes d'Information</h4>
-              <p class="text-xs sm:text-sm text-ink-muted dark:text-ink-lightMuted">École Supérieure d'Ingénierie en Sciences Appliquées</p>
+            <div class="py-4">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <div class="flex items-center gap-2">
+                  <h4 class="font-semibold text-base">Master 2 Informatique — Génie Logiciel</h4>
+                  <span class="px-2.5 py-0.5 rounded-full bg-sage-soft dark:bg-emerald-950/60 text-sage dark:text-emerald-400 text-[11px] font-medium">Diplômé</span>
+                </div>
+                <span class="text-xs font-mono text-ink-muted dark:text-ink-lightMuted">2025 – 2026</span>
+              </div>
+              <p class="text-xs sm:text-sm text-ink-muted dark:text-ink-lightMuted mt-1">Université de Lorraine · Faculté des Sciences et Technologies (FST de Nancy)</p>
             </div>
 
-            <div class="space-y-1">
-              <span class="text-xs font-mono text-ink-muted dark:text-ink-lightMuted">2021 – 2024</span>
-              <h4 class="font-bold text-base sm:text-lg">Licence en Génie Logiciel</h4>
-              <p class="text-xs sm:text-sm text-ink-muted dark:text-ink-lightMuted">École Supérieure d'Ingénierie en Sciences Appliquées</p>
+            <div class="py-4">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <h4 class="font-semibold text-base">Master 1 Ingénierie des Systèmes d'Information</h4>
+                <span class="text-xs font-mono text-ink-muted dark:text-ink-lightMuted">2024 – 2025</span>
+              </div>
+              <p class="text-xs sm:text-sm text-ink-muted dark:text-ink-lightMuted mt-1">École Supérieure d'Ingénierie en Sciences Appliquées</p>
+            </div>
+
+            <div class="py-4 last:pb-0">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <h4 class="font-semibold text-base">Licence en Génie Logiciel</h4>
+                <span class="text-xs font-mono text-ink-muted dark:text-ink-lightMuted">2021 – 2024</span>
+              </div>
+              <p class="text-xs sm:text-sm text-ink-muted dark:text-ink-lightMuted mt-1">École Supérieure d'Ingénierie en Sciences Appliquées</p>
             </div>
           </div>
         </div>
@@ -713,14 +749,14 @@
         <!-- Certifications & Languages -->
         <div class="lg:col-span-5 flex flex-col gap-6">
           <div class="bg-canvas-card dark:bg-night-card p-7 rounded-3xl border border-canvas-border dark:border-night-border space-y-4 reveal">
-            <h3 class="text-base font-bold flex items-center gap-2.5">
-              <i class="fa-solid fa-award text-accent"></i>
-              <span data-i18n="edu_col2">Certifications</span>
+            <h3 class="text-base font-semibold flex items-center gap-2.5">
+              <i class="fa-solid fa-certificate text-accent"></i>
+              <span data-i18n="edu_certs">Certifications</span>
             </h3>
             <ul class="space-y-3 text-sm">
               <li class="flex items-center justify-between p-3.5 rounded-2xl bg-canvas-soft dark:bg-night-soft">
                 <div>
-                  <p class="font-semibold text-xs sm:text-sm">Cisco — Introduction to Cybersecurity</p>
+                  <p class="font-semibold text-xs sm:text-sm">Cisco — Intro to Cybersecurity</p>
                   <p class="text-xs text-ink-muted dark:text-ink-lightMuted">Réseaux & Sécurité</p>
                 </div>
                 <i class="fa-solid fa-circle-check text-sage dark:text-emerald-400"></i>
@@ -743,22 +779,22 @@
           </div>
 
           <div class="bg-canvas-card dark:bg-night-card p-7 rounded-3xl border border-canvas-border dark:border-night-border space-y-4 reveal">
-            <h3 class="text-base font-bold flex items-center gap-2.5">
+            <h3 class="text-base font-semibold flex items-center gap-2.5">
               <i class="fa-solid fa-earth-europe text-accent"></i>
               <span data-i18n="lang_title">Langues</span>
             </h3>
             <div class="grid grid-cols-3 gap-3 text-center">
               <div class="p-3.5 rounded-2xl bg-canvas-soft dark:bg-night-soft">
                 <p class="font-semibold text-sm">Arabe</p>
-                <p class="text-[11px] text-accent font-mono mt-0.5">Maternelle</p>
+                <p class="text-[11px] font-mono text-accent mt-0.5">Maternelle</p>
               </div>
               <div class="p-3.5 rounded-2xl bg-canvas-soft dark:bg-night-soft">
                 <p class="font-semibold text-sm">Français</p>
-                <p class="text-[11px] text-accent font-mono mt-0.5">Courant (B2)</p>
+                <p class="text-[11px] font-mono text-accent mt-0.5">Courant (B2)</p>
               </div>
               <div class="p-3.5 rounded-2xl bg-canvas-soft dark:bg-night-soft">
                 <p class="font-semibold text-sm">Anglais</p>
-                <p class="text-[11px] text-accent font-mono mt-0.5">B2 / C1</p>
+                <p class="text-[11px] font-mono text-accent mt-0.5">B2 / C1</p>
               </div>
             </div>
           </div>
@@ -769,56 +805,48 @@
   </section>
 
   <!-- CONTACT SECTION -->
-  <section id="contact" class="py-20 sm:py-28 border-t border-canvas-border dark:border-night-border">
-    <div class="max-w-5xl mx-auto px-5 sm:px-8">
+  <section id="contact" class="py-16 sm:py-24 border-t border-canvas-border dark:border-night-border">
+    <div class="max-w-4xl mx-auto px-5 sm:px-8">
 
-      <div class="bg-canvas-card dark:bg-night-card p-7 sm:p-12 rounded-[2rem] border border-canvas-border dark:border-night-border shadow-xl shadow-ink/5 dark:shadow-black/30 space-y-10 reveal">
+      <div class="bg-canvas-card dark:bg-night-card p-7 sm:p-12 rounded-[2rem] border border-canvas-border dark:border-night-border shadow-xl shadow-ink/[0.04] dark:shadow-black/40 space-y-9 reveal">
 
-        <div class="max-w-2xl mx-auto text-center space-y-3">
-          <p class="text-xs font-mono uppercase tracking-widest text-accent" data-i18n="contact_badge">Échangeons</p>
-          <h2 class="font-editorial text-3xl sm:text-5xl text-ink dark:text-white" data-i18n="contact_title">
-            Discutons de votre équipe et de vos projets
-          </h2>
+        <div class="text-center space-y-3 max-w-xl mx-auto">
+          <p class="text-xs font-mono uppercase tracking-widest text-accent" data-i18n="contact_badge">Prêt pour l'alternance</p>
+          <h2 class="font-editorial text-3xl sm:text-5xl text-ink dark:text-white" data-i18n="contact_title">Discutons ensemble</h2>
           <p class="text-sm sm:text-base text-ink-muted dark:text-ink-lightMuted leading-relaxed" data-i18n="contact_subtitle">
-            Je suis disponible pour échanger autour d'une opportunité d'alternance dès janvier 2027 (1 sem. école / 3 sem. entreprise), en présentiel ou hybride partout en France.
+            Je recherche une alternance Full-Stack dès janvier 2027 (1 sem. école / 3 sem. entreprise). Écrivez-moi directement ou contactez mon école.
           </p>
         </div>
 
-        <!-- 3 Clean Contact Cards -->
+        <!-- 3 Aligned Contact Cards (Laura Broquet phone cleanly non-wrapping & clickable) -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <a href="mailto:elidrissi-yassine@outlook.com" class="p-5 rounded-2xl bg-canvas-soft/70 dark:bg-night-soft border border-canvas-border dark:border-night-border hover:border-accent transition flex flex-col items-center justify-center text-center gap-1.5">
-            <div class="w-10 h-10 rounded-full bg-canvas-card dark:bg-night-card flex items-center justify-center text-accent mb-1 shadow-sm">
-              <i class="fa-regular fa-envelope"></i>
-            </div>
+          <a href="mailto:elidrissi-yassine@outlook.com" class="p-5 bg-canvas-soft/70 dark:bg-night-soft border border-canvas-border dark:border-night-border rounded-2xl hover:border-accent transition flex flex-col items-center justify-center text-center gap-1.5">
+            <i class="fa-regular fa-envelope text-accent text-xl mb-1"></i>
             <p class="text-[11px] font-mono uppercase text-ink-muted dark:text-ink-lightMuted">Email</p>
-            <p class="text-xs sm:text-sm font-semibold text-ink dark:text-white break-all">elidrissi-yassine@outlook.com</p>
+            <p class="text-xs sm:text-sm font-semibold break-all">elidrissi-yassine@outlook.com</p>
           </a>
 
-          <a href="tel:+33753770839" class="p-5 rounded-2xl bg-canvas-soft/70 dark:bg-night-soft border border-canvas-border dark:border-night-border hover:border-accent transition flex flex-col items-center justify-center text-center gap-1.5">
-            <div class="w-10 h-10 rounded-full bg-canvas-card dark:bg-night-card flex items-center justify-center text-accent mb-1 shadow-sm">
-              <i class="fa-solid fa-phone"></i>
-            </div>
+          <a href="tel:+33753770839" class="p-5 bg-canvas-soft/70 dark:bg-night-soft border border-canvas-border dark:border-night-border rounded-2xl hover:border-accent transition flex flex-col items-center justify-center text-center gap-1.5">
+            <i class="fa-solid fa-phone text-accent text-xl mb-1"></i>
             <p class="text-[11px] font-mono uppercase text-ink-muted dark:text-ink-lightMuted" data-i18n="contact_phone">Téléphone</p>
-            <p class="text-xs sm:text-sm font-semibold text-ink dark:text-white whitespace-nowrap">+33 7 53 77 08 39</p>
+            <p class="text-xs sm:text-sm font-semibold whitespace-nowrap">+33 7 53 77 08 39</p>
           </a>
 
-          <a href="tel:+33652072642" class="p-5 rounded-2xl bg-canvas-soft/70 dark:bg-night-soft border border-canvas-border dark:border-night-border hover:border-accent transition flex flex-col items-center justify-center text-center gap-1.5">
-            <div class="w-10 h-10 rounded-full bg-canvas-card dark:bg-night-card flex items-center justify-center text-accent mb-1 shadow-sm">
-              <i class="fa-solid fa-building-columns"></i>
-            </div>
+          <a href="tel:+33652072642" class="p-5 bg-canvas-soft/70 dark:bg-night-soft border border-canvas-border dark:border-night-border rounded-2xl hover:border-accent transition flex flex-col items-center justify-center text-center gap-1.5">
+            <i class="fa-solid fa-school text-accent text-xl mb-1"></i>
             <p class="text-[11px] font-mono uppercase text-ink-muted dark:text-ink-lightMuted" data-i18n="contact_school">Contact École (LiveCampus)</p>
             <div class="leading-snug">
-              <p class="text-xs sm:text-sm font-semibold text-ink dark:text-white">Laura Broquet</p>
+              <p class="text-xs sm:text-sm font-semibold">Laura Broquet</p>
               <p class="text-xs font-mono font-medium text-accent whitespace-nowrap mt-0.5">06 52 07 26 42</p>
             </div>
           </a>
         </div>
 
-        <!-- Warm Contact Form -->
+        <!-- Direct Contact Form -->
         <form onsubmit="handleContactSubmit(event)" class="space-y-4 pt-6 border-t border-canvas-border dark:border-night-border">
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label for="contact-name" class="block text-xs font-medium text-ink-muted dark:text-ink-lightMuted mb-1.5" data-i18n="form_name">Votre nom / entreprise</label>
+              <label for="contact-name" class="block text-xs font-medium text-ink-muted dark:text-ink-lightMuted mb-1.5" data-i18n="form_name">Votre Nom / Entreprise</label>
               <input type="text" id="contact-name" required placeholder="Ex: Camille Martin — TechLead" class="w-full bg-canvas dark:bg-night border border-canvas-border dark:border-night-border rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-accent transition" />
             </div>
             <div>
@@ -827,15 +855,13 @@
             </div>
           </div>
           <div>
-            <label for="contact-message" class="block text-xs font-medium text-ink-muted dark:text-ink-lightMuted mb-1.5" data-i18n="form_msg">Votre message</label>
-            <textarea id="contact-message" rows="4" required placeholder="Bonjour Yassine, nous aimerions échanger au sujet d'une alternance..." class="w-full bg-canvas dark:bg-night border border-canvas-border dark:border-night-border rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-accent transition"></textarea>
+            <label for="contact-message" class="block text-xs font-medium text-ink-muted dark:text-ink-lightMuted mb-1.5" data-i18n="form_msg">Message / Proposition d'alternance</label>
+            <textarea id="contact-message" rows="4" required placeholder="Bonjour Yassine, nous aimerions échanger concernant une alternance..." class="w-full bg-canvas dark:bg-night border border-canvas-border dark:border-night-border rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-accent transition"></textarea>
           </div>
-          <div class="pt-1">
-            <button type="submit" class="w-full sm:w-auto px-8 py-3.5 rounded-full bg-accent text-white text-sm font-semibold hover:bg-accent-hover transition shadow-lg shadow-accent/20 inline-flex items-center justify-center gap-2">
-              <i class="fa-regular fa-paper-plane"></i>
-              <span data-i18n="form_btn">Envoyer un message</span>
-            </button>
-          </div>
+          <button type="submit" class="w-full sm:w-auto px-8 py-3.5 rounded-full bg-accent text-white text-sm font-medium hover:bg-accent-hover transition shadow-lg shadow-accent/20 inline-flex items-center justify-center gap-2">
+            <i class="fa-regular fa-paper-plane"></i>
+            <span data-i18n="form_btn">Envoyer le message</span>
+          </button>
         </form>
 
       </div>
@@ -843,7 +869,7 @@
   </section>
 
   <!-- FOOTER -->
-  <footer class="py-10 border-t border-canvas-border dark:border-night-border">
+  <footer class="py-10 border-t border-canvas-border dark:border-night-border bg-canvas-soft/40 dark:bg-night-soft/30">
     <div class="max-w-6xl mx-auto px-5 sm:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs sm:text-sm text-ink-muted dark:text-ink-lightMuted">
       <p>© 2026 <strong class="text-ink dark:text-white font-semibold">Yassine El Idrissi</strong> · Bethoncourt, France</p>
       <div class="flex items-center gap-5">
@@ -854,60 +880,87 @@
     </div>
   </footer>
 
-  <!-- MODAL NOTIFICATION -->
+  <!-- CUSTOM MODAL NOTIFICATION (Replaces alert()) -->
   <div id="custom-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300">
     <div class="bg-canvas-card dark:bg-night-card p-6 sm:p-8 rounded-3xl border border-canvas-border dark:border-night-border max-w-md w-full mx-4 shadow-2xl space-y-4">
       <div id="modal-icon" class="w-11 h-11 rounded-2xl bg-accent-soft dark:bg-accent-darkSoft text-accent flex items-center justify-center text-lg">
         <i class="fa-solid fa-check"></i>
       </div>
       <h3 id="modal-title" class="font-editorial text-2xl">Confirmation</h3>
-      <p id="modal-desc" class="text-sm text-ink-muted dark:text-ink-lightMuted leading-relaxed">Message transmis avec succès.</p>
-      <button onclick="closeModal()" class="w-full py-3 rounded-full bg-ink dark:bg-ink-light text-canvas dark:text-night text-sm font-medium hover:bg-accent dark:hover:bg-accent dark:hover:text-white transition">
+      <p id="modal-desc" class="text-sm text-ink-muted dark:text-ink-lightMuted leading-relaxed"></p>
+      <button onclick="closeModal()" class="w-full py-3 rounded-full bg-accent text-white text-sm font-medium hover:bg-accent-hover transition">
         Fermer
       </button>
     </div>
   </div>
 
-  <!-- INTERACTIVE SCRIPT -->
+  <!-- INTERACTIVE & I18N JAVASCRIPT -->
   <script>
-    // --- Theme Toggle (Warm Light Editorial by default for human clarity) ---
+    // --- Theme Toggle (Warm Light Editorial by default) ---
     function toggleDarkMode() {
       const html = document.documentElement;
       const icon = document.getElementById('theme-icon');
       if (html.classList.contains('dark')) {
         html.classList.remove('dark');
         icon.className = 'fa-regular fa-moon text-sm';
-        localStorage.setItem('theme', 'light');
+        localStorage.setItem('theme_s1', 'light');
       } else {
         html.classList.add('dark');
         icon.className = 'fa-regular fa-sun text-sm';
-        localStorage.setItem('theme', 'dark');
+        localStorage.setItem('theme_s1', 'dark');
       }
     }
 
-    if (localStorage.getItem('theme') === 'dark') {
+    if (localStorage.getItem('theme_s1') === 'dark') {
       document.documentElement.classList.add('dark');
       document.getElementById('theme-icon').className = 'fa-regular fa-sun text-sm';
     }
 
-    // --- Mobile Menu ---
+    // --- Mobile Navigation Toggle ---
     function toggleMobileMenu() {
       document.getElementById('mobile-menu').classList.toggle('hidden');
     }
 
-    // --- Scroll Reveal ---
-    const observer = new IntersectionObserver((entries) => {
+    // --- Hero Quick-Copy Email (iframe-safe via execCommand) ---
+    function copyHeroEmail() {
+      const email = 'elidrissi-yassine@outlook.com';
+      const label = document.getElementById('hero-copy-text');
+      const icon = document.getElementById('hero-copy-icon');
+      try {
+        const temp = document.createElement('textarea');
+        temp.value = email;
+        temp.setAttribute('readonly', '');
+        temp.style.position = 'absolute';
+        temp.style.left = '-9999px';
+        document.body.appendChild(temp);
+        temp.select();
+        document.execCommand('copy');
+        document.body.removeChild(temp);
+
+        label.textContent = currentLang === 'fr' ? 'Copié !' : 'Copied!';
+        icon.className = 'fa-solid fa-check text-xs text-emerald-500';
+        setTimeout(() => {
+          label.textContent = translations[currentLang].hero_copy_email;
+          icon.className = 'fa-regular fa-copy text-xs';
+        }, 2000);
+      } catch (err) {
+        showModal('Email', email);
+      }
+    }
+
+    // --- Scroll Reveal Observer ---
+    const revealObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
+          revealObserver.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.12 });
+    }, { threshold: 0.08 });
 
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-    // --- Koryx Preview Simulation ---
+    // --- Koryx Live Interactive Demo ---
     let isSpiked = false;
     function simulateTelemetrySpike() {
       isSpiked = !isSpiked;
@@ -917,20 +970,20 @@
       const ramBar = document.getElementById('bar-ram');
       const tempVal = document.getElementById('metric-temp');
       const tempBar = document.getElementById('bar-temp');
-      const box = document.getElementById('ai-output-box');
+      const aiBox = document.getElementById('ai-output-box');
 
       if (isSpiked) {
         cpuVal.textContent = '86.4%';
         cpuBar.style.width = '86%';
-        ramVal.textContent = '12.1 / 16 GB';
+        ramVal.textContent = '12.2 / 16 GB';
         ramBar.style.width = '76%';
-        tempVal.textContent = '69°C';
+        tempVal.textContent = '68°C';
         tempVal.className = 'font-mono font-semibold text-amber-400';
-        tempBar.style.width = '69%';
+        tempBar.style.width = '68%';
         tempBar.className = 'bg-amber-400 h-full rounded-full transition-all duration-500';
-        box.textContent = currentLang === 'fr'
-          ? 'Pic d\'activité détecté. Koryx suit l\'évolution thermique et vous alerte en cas de saturation prolongée.'
-          : 'Workload spike detected. Koryx is tracking thermal behavior and will alert you if saturation persists.';
+        aiBox.textContent = currentLang === 'fr'
+          ? 'Pic de charge détecté. Koryx surveille la température et identifie les processus les plus sollicités.'
+          : 'Workload spike detected. Koryx monitors thermal limits and highlights the most active processes.';
       } else {
         cpuVal.textContent = '14.2%';
         cpuBar.style.width = '14%';
@@ -940,30 +993,29 @@
         tempVal.className = 'font-mono font-semibold text-emerald-400';
         tempBar.style.width = '38%';
         tempBar.className = 'bg-emerald-400 h-full rounded-full transition-all duration-500';
-        box.textContent = translations[currentLang].ai_msg_default;
+        aiBox.textContent = translations[currentLang].ai_msg_default;
       }
     }
 
     function triggerAiDiagnostic() {
       const box = document.getElementById('ai-output-box');
       const status = document.getElementById('ai-status');
-
-      status.textContent = currentLang === 'fr' ? 'Analyse en cours...' : 'Analyzing...';
-      status.className = 'text-amber-400 font-mono text-[11px] animate-pulse';
+      status.textContent = currentLang === 'fr' ? 'Analyse...' : 'Analyzing...';
+      status.className = 'font-mono text-[11px] text-amber-400 animate-pulse';
       box.textContent = currentLang === 'fr'
-        ? 'Lecture des derniers relevés de performance...'
-        : 'Reviewing recent performance snapshots...';
+        ? 'Lecture des derniers relevés système et vérification thermique...'
+        : 'Reviewing recent system snapshots and thermal stability...';
 
       setTimeout(() => {
-        status.textContent = currentLang === 'fr' ? 'Diagnostic terminé' : 'Diagnostic complete';
-        status.className = 'text-emerald-400 font-mono text-[11px]';
+        status.textContent = currentLang === 'fr' ? 'Terminé' : 'Complete';
+        status.className = 'font-mono text-[11px] text-emerald-400';
         box.textContent = currentLang === 'fr'
-          ? 'Tout fonctionne de manière fluide : mémoire bien répartie, disque réactif et aucun ralentissement anormal détecté.'
-          : 'Everything is running smoothly: balanced memory usage, responsive storage, and no abnormal slowdowns detected.';
+          ? 'Tout est au vert : mémoire bien répartie, disque réactif et refroidissement parfaitement silencieux.'
+          : 'All green: balanced memory usage, responsive storage, and quiet thermal behavior.';
       }, 850);
     }
 
-    // --- Modal & Form ---
+    // --- Modal Helper ---
     function showModal(title, desc) {
       const modal = document.getElementById('custom-modal');
       document.getElementById('modal-title').textContent = title;
@@ -981,9 +1033,9 @@
     function handleContactSubmit(e) {
       e.preventDefault();
       const name = document.getElementById('contact-name').value;
-      const title = currentLang === 'fr' ? 'Message bien envoyé' : 'Message sent';
+      const title = currentLang === 'fr' ? 'Message envoyé' : 'Message sent';
       const desc = currentLang === 'fr'
-        ? `Merci ${name} ! Votre message a bien été enregistré. Vous pouvez aussi m'écrire directement à elidrissi-yassine@outlook.com.`
+        ? `Merci ${name} ! Votre message a bien été enregistré. Vous pouvez également me joindre directement à elidrissi-yassine@outlook.com.`
         : `Thank you ${name}! Your message has been noted. You can also reach me directly at elidrissi-yassine@outlook.com.`;
       showModal(title, desc);
       e.target.reset();
@@ -1006,59 +1058,65 @@
         hero_desc: 'Diplômé d\'un <strong class="text-ink dark:text-white font-semibold">Master 2 en Génie Logiciel</strong> (Université de Lorraine), je développe des applications complètes en <strong class="text-ink dark:text-white font-semibold">Python, FastAPI et React</strong>. Je rejoins le Mastère Full-Stack LiveCampus dès janvier 2027 pour apporter ma rigueur technique et mon esprit d\'équipe en entreprise.',
         hero_cta_primary: "Parler d'une alternance",
         hero_cta_secondary: "Découvrir Koryx",
+        hero_copy_email: "Copier email",
         meta_loc: "Bethoncourt (25) · Mobilité toute la France",
         meta_license: "Permis B",
-        portrait_role: "Full-Stack · Python & React",
-        portrait_status: "À l'écoute",
+        card_status: "À l'écoute",
         about_eyebrow: "À propos",
-        about_title: "Derrière le code, une approche pragmatique et humaine.",
-        bio_tag: "Mon état d'esprit",
-        bio_p1: "Curieux, pragmatique et orienté résultats, j'aime concevoir des applications fiables qui simplifient vraiment le quotidien des utilisateurs.",
-        bio_p2: "Au fil de mon Master 2 et de mes quatre stages en entreprise, j'ai appris à faire le pont entre des backends robustes en Python et des interfaces web fluides en React. Ce qui m'anime le plus : comprendre un besoin concret, écrire un code clair et durable, et progresser collectivement au sein d'une équipe produit.",
-        val_1: "Code clair & maintenable",
-        val_2: "Sens du produit",
-        val_3: "Esprit d'équipe",
-        val_4: "Autonomie & curiosité",
-        alt_label: "Objectif 2027",
-        alt_title: "Alternance Full-Stack dès janvier 2027",
-        alt_desc: 'Mastère Développeur Web Full-Stack avec un rythme idéal pour s\'impliquer pleinement sur vos projets : <strong class="text-white">1 semaine école / 3 semaines entreprise</strong>.',
-        bento_m2: "Master 2 Génie Logiciel (Univ. de Lorraine)",
-        bento_exp: "Full-Stack, Sécurité SOC & Développement Web",
-        koryx_eyebrow: "Projet phare · 2026",
-        koryx_intro: "Une application desktop Windows conçue pour suivre la santé d'un ordinateur en temps réel et obtenir des diagnostics clairs grâce à l'IA embarquée.",
-        koryx_overview_label: "Vue d'ensemble",
-        koryx_p1_title: "Moteur Backend Temps Réel",
-        koryx_p1_desc: "Architecture asynchrone en Python et FastAPI conçue pour collecter les métriques système en continu avec une empreinte légère.",
-        koryx_p2_title: "Interface Claire & Réactive",
-        koryx_p2_desc: "Tableau de bord moderne conçu avec React et Tailwind CSS pour rendre l'état du matériel lisible au premier coup d'œil.",
-        koryx_p3_title: "Suivi Continu & Alertes",
-        koryx_p3_desc: "Stockage local embarqué (SQLite) permettant de suivre l'historique des performances et d'anticiper les pics de charge.",
-        koryx_p4_title: "Diagnostic IA & App Autonome",
-        koryx_p4_desc: "Assistant IA intégré traduisant les données techniques en conseils simples, livré en exécutable Windows prêt à l'emploi.",
-        koryx_btn_repo: "Voir sur GitHub",
-        koryx_btn_dl: "Télécharger (.exe)",
-        sim_spike: "Simuler charge",
-        sim_ai: "Diagnostic IA",
-        ai_status_ready: "Prêt à analyser",
-        ai_msg_default: "Système fluide et silencieux. Aucun processus bloquant détecté et températures parfaitement maîtrisées.",
+        about_title: "Un ingénieur curieux, pragmatique et attaché à la qualité.",
+        bento_story_tag: "Ma démarche",
+        bento_story_p1: "Ce qui me motive dans le développement logiciel, c'est de transformer un problème concret en un outil simple, stable et agréable à utiliser au quotidien.",
+        bento_story_p2: "Au fil de mon Master 2 et de mes quatre stages en entreprise — du développement web à la cybersécurité (SOC) — j'ai appris à écrire du code clair, à collaborer efficacement en Agile et à garder toujours l'utilisateur final au centre des décisions techniques.",
+        tag_team: "Esprit d'équipe",
+        tag_clean: "Code maintenable",
+        tag_curious: "Curiosité produit",
+        tag_agile: "Culture Agile & DevOps",
+        bento_alt_eyebrow: "Prochaine étape",
+        bento_alt_title: "Alternance dès janvier 2027",
+        bento_alt_desc: 'Mastère Développeur Web Full-Stack avec <strong class="text-white">LiveCampus</strong> sur un rythme très opérationnel : <strong class="text-white">1 semaine école / 3 semaines entreprise</strong>.',
+        bento_alt_school: "Référente : Laura Broquet",
+        pillar1_title: "Full-Stack Moderne",
+        pillar1_desc: "Du backend asynchrone Python/FastAPI aux interfaces réactives React et TypeScript, avec un souci constant de clarté.",
+        pillar2_title: "Fiabilité & Sécurité",
+        pillar2_desc: "Formé à l'analyse réseau (SOC) et aux bonnes pratiques DevOps (Docker, CI/CD) pour livrer des applications sereines en production.",
+        pillar3_title: "IA Appliquée",
+        pillar3_desc: "Intégration pragmatique de modèles locaux et d'API IA pour automatiser les diagnostics et enrichir l'expérience utilisateur.",
+        koryx_eyebrow: "Projet Phare · 2026",
+        koryx_intro: "Une application desktop Windows pensée pour rendre la santé matérielle d'un ordinateur immédiatement compréhensible : suivi en temps réel, gestion des processus et diagnostic assisté par IA.",
+        koryx_repo: "Voir sur GitHub",
+        koryx_dl: "Télécharger l'App (.exe)",
+        koryx_arch_title: "Vue d'ensemble",
+        k_item1_t: "Collecte Temps Réel",
+        k_item1_d: "Backend asynchrone Python & FastAPI dédié au suivi léger et continu des ressources système.",
+        k_item2_t: "Interface Claire & Réactive",
+        k_item2_d: "Tableau de bord moderne conçu en React et Tailwind CSS pour lire l'état matériel d'un seul coup d'œil.",
+        k_item3_t: "Historique & Diagnostic IA",
+        k_item3_d: "Persistance locale SQLite pour analyser les tendances et assistant IA intégré, distribué en exécutable autonome.",
+        koryx_btn_spike: "Simuler charge",
+        koryx_btn_ai: "Diagnostic IA",
+        koryx_cpu_sub: "Charge nominale",
+        koryx_temp_lbl: "Température",
+        koryx_temp_sub: "Optimal",
+        ai_status_ready: "Prêt",
+        ai_msg_default: "Système fluide et silencieux. Aucun processus bloquant détecté et températures parfaitement équilibrées.",
         exp_eyebrow: "Expériences",
-        exp_title: "Parcours en entreprise",
+        exp_title: "Parcours professionnel",
         skills_eyebrow: "Savoir-faire",
-        skills_title: "Boîte à outils technique",
+        skills_title: "Compétences techniques",
         edu_eyebrow: "Formation",
-        edu_title: "Diplômes, certifications & langues",
-        edu_col1: "Parcours Académique",
-        edu_col2: "Certifications",
+        edu_title: "Diplômes & Certifications",
+        edu_academic: "Parcours Académique",
+        edu_certs: "Certifications",
         lang_title: "Langues",
-        contact_badge: "Échangeons",
-        contact_title: "Discutons de votre équipe et de vos projets",
-        contact_subtitle: "Je suis disponible pour échanger autour d'une opportunité d'alternance dès janvier 2027 (1 sem. école / 3 sem. entreprise), en présentiel ou hybride partout en France.",
+        contact_badge: "Prêt pour l'alternance",
+        contact_title: "Discutons ensemble",
+        contact_subtitle: "Je recherche une alternance Full-Stack dès janvier 2027 (1 sem. école / 3 sem. entreprise). Écrivez-moi directement ou contactez mon école.",
         contact_phone: "Téléphone",
         contact_school: "Contact École (LiveCampus)",
-        form_name: "Votre nom / entreprise",
+        form_name: "Votre Nom / Entreprise",
         form_email: "Email de contact",
-        form_msg: "Votre message",
-        form_btn: "Envoyer un message"
+        form_msg: "Message / Proposition d'alternance",
+        form_btn: "Envoyer le message"
       },
       en: {
         nav_sub: "Full-Stack Software Engineer",
@@ -1067,65 +1125,71 @@
         nav_exp: "Experience",
         nav_skills: "Skills",
         nav_edu: "Education",
-        nav_contact: "Get in touch",
+        nav_contact: "Contact Me",
         hero_pill: "Open for Apprenticeship · January 2027 (1 wk / 3 wks)",
-        hero_hello: "Hello, I'm Yassine El Idrissi",
+        hero_hello: "Hi, I'm Yassine El Idrissi",
         hero_headline: 'I build <span class="italic text-accent">reliable</span> software and interfaces crafted for real people.',
-        hero_desc: 'Holder of a <strong class="text-ink dark:text-white font-semibold">Master 2 in Software Engineering</strong> (University of Lorraine), I craft end-to-end applications with <strong class="text-ink dark:text-white font-semibold">Python, FastAPI, and React</strong>. Joining LiveCampus Full-Stack Master\'s in January 2027 to bring technical rigor and strong teamwork to your company.',
-        hero_cta_primary: "Discuss an Apprenticeship",
+        hero_desc: 'Holder of a <strong class="text-ink dark:text-white font-semibold">Master 2 in Software Engineering</strong> (University of Lorraine), I develop end-to-end applications in <strong class="text-ink dark:text-white font-semibold">Python, FastAPI, and React</strong>. I am joining the LiveCampus Full-Stack Master\'s in January 2027 to bring technical rigor and team spirit to a company.',
+        hero_cta_primary: "Discuss an apprenticeship",
         hero_cta_secondary: "Explore Koryx",
-        meta_loc: "Bethoncourt, France · Nationwide mobility",
-        meta_license: "Driver's License",
-        portrait_role: "Full-Stack · Python & React",
-        portrait_status: "Available",
+        hero_copy_email: "Copy email",
+        meta_loc: "Bethoncourt (France) · Nationwide mobility",
+        meta_license: "Driver's license",
+        card_status: "Available",
         about_eyebrow: "About me",
-        about_title: "Behind the code, a grounded and human approach.",
-        bio_tag: "How I work",
-        bio_p1: "Curious, pragmatic, and impact-driven, I enjoy building reliable applications that genuinely make everyday work easier.",
-        bio_p2: "Through my Master's degree and four company internships, I've learned to bridge resilient Python backends with clean React interfaces. What motivates me most is understanding real user needs, writing maintainable code, and growing together within a product team.",
-        val_1: "Clean & maintainable code",
-        val_2: "Product mindset",
-        val_3: "Team player",
-        val_4: "Autonomous & curious",
-        alt_label: "Goal 2027",
-        alt_title: "Full-Stack Apprenticeship starting Jan. 2027",
-        alt_desc: 'Pursuing a Full-Stack Web Developer Master\'s with an ideal rhythm for long-term impact: <strong class="text-white">1 week school / 3 weeks company</strong>.',
-        bento_m2: "Master 2 Software Engineering (Univ. of Lorraine)",
-        bento_exp: "Full-Stack, SOC Security & Web Dev",
+        about_title: "A curious, pragmatic engineer focused on software craft.",
+        bento_story_tag: "My approach",
+        bento_story_p1: "What drives me in software engineering is turning real-world problems into simple, dependable tools that people genuinely enjoy using every day.",
+        bento_story_p2: "Through my Master's degree and four company internships — spanning full-stack web development to cybersecurity (SOC) — I learned to write maintainable code, collaborate smoothly in Agile teams, and keep end users at the center of every technical choice.",
+        tag_team: "Team spirit",
+        tag_clean: "Maintainable code",
+        tag_curious: "Product mindset",
+        tag_agile: "Agile & DevOps",
+        bento_alt_eyebrow: "Next chapter",
+        bento_alt_title: "Apprenticeship from Jan. 2027",
+        bento_alt_desc: 'Full-Stack Web Developer Master\'s with <strong class="text-white">LiveCampus</strong> on a company-first rhythm: <strong class="text-white">1 week school / 3 weeks company</strong>.',
+        bento_alt_school: "School contact: Laura Broquet",
+        pillar1_title: "Modern Full-Stack",
+        pillar1_desc: "From asynchronous Python/FastAPI backends to responsive React and TypeScript interfaces built with clarity.",
+        pillar2_title: "Reliability & Security",
+        pillar2_desc: "Trained in network analysis (SOC) and DevOps habits (Docker, CI/CD) to ship calm, resilient production apps.",
+        pillar3_title: "Applied AI",
+        pillar3_desc: "Pragmatic integration of local models and AI APIs to automate diagnostics and elevate the user experience.",
         koryx_eyebrow: "Featured Project · 2026",
-        koryx_intro: "A Windows desktop application designed to monitor computer health in real time and offer clear guidance through embedded AI.",
-        koryx_overview_label: "Overview",
-        koryx_p1_title: "Real-Time Backend Engine",
-        koryx_p1_desc: "Asynchronous Python & FastAPI architecture designed to collect live system metrics continuously with a light footprint.",
-        koryx_p2_title: "Clear & Responsive Interface",
-        koryx_p2_desc: "Modern dashboard built with React and Tailwind CSS to make hardware status easy to read at a glance.",
-        koryx_p3_title: "Continuous Tracking & Alerts",
-        koryx_p3_desc: "Embedded local storage (SQLite) to review performance history and anticipate workload spikes proactively.",
-        koryx_p4_title: "AI Diagnostics & Standalone App",
-        koryx_p4_desc: "Integrated AI assistant turning technical data into simple advice, packaged as a ready-to-use Windows app.",
-        koryx_btn_repo: "View on GitHub",
-        koryx_btn_dl: "Download (.exe)",
-        sim_spike: "Simulate load",
-        sim_ai: "AI Diagnostic",
-        ai_status_ready: "Ready to analyze",
+        koryx_intro: "A Windows desktop application designed to make computer health immediately understandable: real-time monitoring, process control, and AI-assisted diagnostics.",
+        koryx_repo: "View on GitHub",
+        koryx_dl: "Download App (.exe)",
+        koryx_arch_title: "High-level overview",
+        k_item1_t: "Real-Time Telemetry",
+        k_item1_d: "Asynchronous Python & FastAPI backend built for lightweight, continuous system tracking.",
+        k_item2_t: "Clear & Responsive UI",
+        k_item2_d: "Modern React and Tailwind CSS dashboard designed to read hardware health at a glance.",
+        k_item3_t: "History & Embedded AI",
+        k_item3_d: "Local SQLite persistence to analyze performance trends with an integrated AI advisor, shipped as a standalone app.",
+        koryx_btn_spike: "Simulate load",
+        koryx_btn_ai: "AI Diagnostic",
+        koryx_cpu_sub: "Nominal load",
+        koryx_temp_lbl: "Temperature",
+        koryx_temp_sub: "Optimal",
+        ai_status_ready: "Ready",
         ai_msg_default: "System running smoothly and quietly. No blocking processes detected and temperatures remain well balanced.",
         exp_eyebrow: "Experience",
         exp_title: "Work history",
         skills_eyebrow: "Capabilities",
-        skills_title: "Technical toolkit",
+        skills_title: "Technical skills",
         edu_eyebrow: "Background",
-        edu_title: "Education, certifications & languages",
-        edu_col1: "Academic Background",
-        edu_col2: "Certifications",
+        edu_title: "Education & Certifications",
+        edu_academic: "Academic Background",
+        edu_certs: "Certifications",
         lang_title: "Languages",
-        contact_badge: "Let's talk",
-        contact_title: "Let's talk about your team and projects",
-        contact_subtitle: "Available to discuss an apprenticeship opportunity starting January 2027 (1 week school / 3 weeks company), on-site or hybrid across France.",
+        contact_badge: "Ready for apprenticeship",
+        contact_title: "Let's talk",
+        contact_subtitle: "Seeking a Full-Stack apprenticeship starting January 2027 (1 wk school / 3 wks company). Reach out directly or through my school.",
         contact_phone: "Phone",
         contact_school: "School Contact (LiveCampus)",
-        form_name: "Your name / company",
-        form_email: "Contact email",
-        form_msg: "Your message",
+        form_name: "Your Name / Company",
+        form_email: "Contact Email",
+        form_msg: "Message / Apprenticeship Offer",
         form_btn: "Send message"
       }
     };
@@ -1133,7 +1197,6 @@
     function switchLang() {
       currentLang = currentLang === 'fr' ? 'en' : 'fr';
       document.getElementById('lang-toggle').textContent = currentLang === 'fr' ? 'EN' : 'FR';
-
       document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
         if (translations[currentLang][key]) {
